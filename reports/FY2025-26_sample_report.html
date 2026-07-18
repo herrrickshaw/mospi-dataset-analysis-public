@@ -152,7 +152,7 @@
       <div class="eyebrow">MoSPI Dataset Analysis — FY2025-26 Sample Report</div>
       <h1>India's trade, currency &amp; policy snapshot for FY2025-26 — every figure in one unit</h1>
       <p class="dek">A single consolidated reference for the fiscal year this whole repo has been tracking: merchandise trade, top chapters, country concentration, PLI scheme funding, currency and reserves — pulled from the datasets already collected for the bulletins above, cross-checked against independent sources, and standardised to one unit throughout.</p>
-      <span class="unit-flag">ALL VALUES IN US$ MILLION UNLESS MARKED — ₹ crore figures converted at the FY2024-25 average rate (₹84.68/US$, the latest completed fiscal-year average)</span>
+      <span class="unit-flag">ALL VALUES IN US$ MILLION UNLESS MARKED — ₹ crore figures (PLI schemes) each converted at that scheme's own elapsed-period average USD/INR rate, not one blanket rate</span>
       <div class="source-line">SOURCES: TRADESTAT (tradestat.commerce.gov.in), TIA Portal (trade-analytics.commerce.gov.in), PIB press releases, RBI Weekly Statistical Supplement — all previously retrieved for this repo's other bulletins, recombined here. Retrieved/compiled 2026-07-18.</div>
     </div>
 
@@ -208,25 +208,25 @@
     <section class="block">
       <div class="block-head">
         <h2 class="block-title">PLI scheme funding, converted to US$ Million</h2>
-        <p class="block-note">Original figures in ₹ crore; converted at ₹84.68/US$ (see methodology below).</p>
+        <p class="block-note">Each scheme converted at <b>its own elapsed-period average rate</b> (see methodology below) — not one blanket rate for every row.</p>
       </div>
       <div class="data-table-wrap">
         <table class="data-table">
-          <thead><tr><th>Scheme</th><th>₹ Crore (original)</th><th>US$ Million</th><th>Covers</th></tr></thead>
+          <thead><tr><th>Scheme</th><th>₹ Crore (original)</th><th>Period averaged</th><th>Rate (₹/US$)</th><th>US$ Million</th><th>Covers</th></tr></thead>
           <tbody>
-            <tr><td>PLI Auto &amp; Auto Components</td><td>25,938</td><td>3,063.1</td><td>HS87 (vehicles)</td></tr>
-            <tr><td>PLI ACC Battery Storage</td><td>18,100</td><td>2,137.5</td><td>EV value chain</td></tr>
-            <tr><td>PLI Bulk Drugs</td><td>6,940</td><td>819.6</td><td>HS29/HS30 (APIs, pharma)</td></tr>
-            <tr><td>PLI Textiles (MMF)</td><td>10,683</td><td>1,261.6</td><td>Mismatch vs. HS61/62</td></tr>
-            <tr><td>PLI Specialty Steel 1.0/1.1</td><td>44,106</td><td>5,208.5</td><td>HS72/73 (iron &amp; steel)</td></tr>
-            <tr><td>PLI Specialty Steel 1.2</td><td>11,887</td><td>1,403.8</td><td>HS72/73 (iron &amp; steel)</td></tr>
-            <tr><td>PLI White Goods (committed)</td><td>11,198</td><td>1,322.4</td><td>HS84 (compressors)</td></tr>
-            <tr><td>PLI White Goods (production target)</td><td>190,050</td><td>22,443.3</td><td>Cumulative, FY2028-29</td></tr>
-            <tr><td><b>PLI total cumulative outlay, 14 sectors (Dec 2025)</b></td><td><b>197,000</b></td><td><b>23,264.1</b></td><td>All sectors</td></tr>
+            <tr><td>PLI Auto &amp; Auto Components</td><td>25,938</td><td>FY22-23–FY24-25</td><td>82.61</td><td>3,139.8</td><td>HS87 (vehicles)</td></tr>
+            <tr><td>PLI ACC Battery Storage</td><td>18,100</td><td>FY21-22–FY24-25</td><td>80.58</td><td>2,246.1</td><td>EV value chain</td></tr>
+            <tr><td>PLI Bulk Drugs</td><td>6,940</td><td>FY22-23–FY24-25</td><td>82.61</td><td>840.1</td><td>HS29/HS30 (APIs, pharma)</td></tr>
+            <tr><td>PLI Textiles (MMF)</td><td>10,683</td><td>FY21-22–FY24-25</td><td>80.58</td><td>1,325.7</td><td>Mismatch vs. HS61/62</td></tr>
+            <tr><td>PLI Specialty Steel 1.0/1.1</td><td>44,106</td><td>FY21-22–FY24-25</td><td>80.58</td><td>5,473.4</td><td>HS72/73 (iron &amp; steel)</td></tr>
+            <tr><td>PLI Specialty Steel 1.2</td><td>11,887</td><td>FY24-25 only<sup>†</sup></td><td>84.68</td><td>1,403.8</td><td>HS72/73 (iron &amp; steel)</td></tr>
+            <tr><td>PLI White Goods (committed)</td><td>11,198</td><td>FY21-22–FY24-25</td><td>80.58</td><td>1,389.6</td><td>HS84 (compressors)</td></tr>
+            <tr><td>PLI White Goods (production target)</td><td>190,050</td><td>FY21-22–FY24-25</td><td>80.58</td><td>23,584.5</td><td>Cumulative, FY2028-29</td></tr>
+            <tr><td><b>PLI total cumulative outlay, 14 sectors (Dec 2025)</b></td><td><b>197,000</b></td><td>FY19-20–FY24-25</td><td>77.91</td><td><b>25,285.6</b></td><td>All sectors</td></tr>
           </tbody>
         </table>
       </div>
-      <div class="methodology"><b>Conversion methodology:</b> FY2025-26 has no completed fiscal-year-average exchange rate yet (the fiscal year isn't over), so these conversions use ₹84.68/US$ — the FY2024-25 average, the most recent completed FY average this repo has computed (12-month Apr-Mar average of this repo's own INR/USD connector series). This is an approximation for comparability, not these schemes' own official USD accounting — PLI outlays are budgeted and disbursed in rupees.</div>
+      <div class="methodology"><b>Conversion methodology:</b> each scheme is converted at the <b>average of this repo's own FY-average USD/INR rates across the fiscal years the scheme has actually been active</b> (e.g. Auto &amp; Auto Components was approved Sept 2021 with disbursement from FY2022-23, so it's averaged over FY2022-23–FY2024-25, not a single blanket rate). This replaces an earlier version of this report that applied one fixed FY2024-25 rate to every row regardless of each scheme's own timeline — a real methodology error, corrected here. <sup>†</sup>PLI Specialty Steel 1.2 was only launched Nov 2025 (FY2025-26, still open) — no FY2025-26 average exists yet, so it uses the latest completed FY average (FY2024-25, ₹84.68) as the closest available proxy, flagged distinctly rather than blended with the multi-year schemes above. All rupee crore figures are still these schemes' own budgeted/disbursed unit — USD Million here is this report's own arithmetic for comparability, not official USD accounting.</div>
     </section>
 
     <section class="block">
@@ -261,9 +261,10 @@
       <ul>
         <li><b>This report re-derives every figure from datasets already collected</b> for this repo's other bulletins — no new data collection. See each linked chart's own errata for original sourcing.</li>
         <li><b>Services trade for FY2025-26 is not yet published</b> — this repo's services/overall-balance figures run only through FY2024-25 (published one year behind goods trade), so no FY2025-26 services surplus or true "overall balance" figure exists yet. Don't combine the FY2025-26 goods deficit above with an FY2024-25 services number as if both were the same year.</li>
-        <li><b>All ₹ crore figures (PLI schemes) are converted to US$ Million</b> at a single fixed rate (₹84.68/US$, FY2024-25 average) for comparability — this is this report's own arithmetic, not an official USD accounting these schemes use themselves.</li>
+        <li><b>All ₹ crore figures (PLI schemes) are converted to US$ Million</b> at each scheme's own elapsed-period average exchange rate (₹77.91–84.68/US$, depending on the scheme — see the PLI table's "Period averaged" column) for comparability — this is this report's own arithmetic, not an official USD accounting these schemes use themselves. An earlier version of this report used one blanket FY2024-25 rate for every scheme regardless of its actual timeline; that was a methodology error and has been corrected.</li>
         <li><b>FY2025-26 is still a provisional fiscal year on every source cited here</b> — expect all figures above to revise as the year closes and later data vintages are published.</li>
-        <li>Underlying data: <a href="../data/tradestat_hsn_export_import_2018-19_to_2025-26.json">tradestat_hsn_export_import</a>, <a href="../data/trade_data_cross_validation_2026-07-18.json">trade_data_cross_validation</a>, <a href="../data/hsn_historical_trends_2018-19_to_2025-26.json">hsn_historical_trends</a>, <a href="../data/sector_country_priority_and_pli_coverage_2026-07-18.json">sector_country_priority_and_pli_coverage</a>, <a href="../data/export_destination_priority_and_pli_coverage_2026-07-18.json">export_destination_priority_and_pli_coverage</a>, <a href="../data/rbi_forex_reserves_2015-01_to_2025-06.json">rbi_forex_reserves</a>, <a href="../data/rbi_usd_inr_exchange_rate_2015-01_to_2026-07.json">rbi_usd_inr_exchange_rate</a>, <a href="../data/gdp_growth_rate_2012-13_to_2025-26.json">gdp_growth_rate</a>.</li>
+        <li>Underlying data: <a href="../data/fy2025_26_sample_report_2026-07-18.json">fy2025_26_sample_report_2026-07-18.json</a> (this report's own consolidated dataset, incl. the period-matched PLI conversion table and external validation notes), plus source datasets <a href="../data/tradestat_hsn_export_import_2018-19_to_2025-26.json">tradestat_hsn_export_import</a>, <a href="../data/trade_data_cross_validation_2026-07-18.json">trade_data_cross_validation</a>, <a href="../data/hsn_historical_trends_2018-19_to_2025-26.json">hsn_historical_trends</a>, <a href="../data/sector_country_priority_and_pli_coverage_2026-07-18.json">sector_country_priority_and_pli_coverage</a>, <a href="../data/export_destination_priority_and_pli_coverage_2026-07-18.json">export_destination_priority_and_pli_coverage</a>, <a href="../data/rbi_forex_reserves_2015-01_to_2025-06.json">rbi_forex_reserves</a>, <a href="../data/rbi_usd_inr_exchange_rate_2015-01_to_2026-07.json">rbi_usd_inr_exchange_rate</a>, <a href="../data/gdp_growth_rate_2012-13_to_2025-26.json">gdp_growth_rate</a>.</li>
+        <li><b>Validated against NITI Aayog's Trade Watch Quarterly</b> (8th edition, Q4 FY2025-26, via <a href="https://www.pib.gov.in/PressReleasePage.aspx?PRID=2277232">PIB PRID=2277232</a>): India's blended goods+services trade reached $1.84 trillion in FY2025-26 (exports +4.2%, imports +6.5% y-o-y) — this repo's goods-only figures show export growth of just +0.92% over the same year, explained by services exports growing faster (+9.0% per NITI Aayog) and pulling the blended rate up, not a discrepancy. NITI Aayog's pharma-sector thematic figure ($35.8bn pharma+API exports) is ~$10.7bn higher than this report's own HS30-only figure ($25,073.4M) because it includes API exports that sit in HS29, not HS30 — consistent with this repo's existing PLI Bulk Drugs finding.</li>
       </ul>
     </div>
 
@@ -336,7 +337,7 @@
     { status: "flag", text: "<b>TIA Portal's export total</b> ($451,070.0M) reads 2.1% / $9,300M higher than TRADESTAT and PIB — flagged as a data-vintage difference, not reconciled further." },
     { status: "flag", text: "<b>Two forex-reserves vintages exist</b>: the MoSPI-connector series (stale at $698,100.0M, Jun 2025) and this repo's own RBI weekly scrape ($675,157.0M, 10 Jul 2026) — kept visually and numerically distinct throughout, never silently merged." },
     { status: "flag", text: "<b>No FY2025-26 services-trade figure exists yet</b> — RBI's services data runs one year behind goods trade. The FY2025-26 goods deficit above cannot be combined with an 'overall balance' figure for the same year." },
-    { status: "pass", text: "<b>All PLI ₹ crore figures</b> converted with one consistent rate (₹84.68/US$) throughout this report — no mixed-rate arithmetic." },
+    { status: "pass", text: "<b>All PLI ₹ crore figures</b> converted at each scheme's own elapsed-period average rate (₹77.91–84.68/US$ depending on the scheme's actual timeline) — not one blanket rate applied indiscriminately." },
     { status: "pass", text: "<b>Top-12 chapter and country-ranking figures</b> cross-checked against this repo's own hsn_historical_trends, sector_country_priority, and export_destination_priority datasets — all three already independently built and internally consistent." }
   ];
   var log = document.getElementById("consistencyLog");

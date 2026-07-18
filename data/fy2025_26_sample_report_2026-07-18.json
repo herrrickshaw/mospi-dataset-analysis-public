@@ -1,0 +1,48 @@
+{
+  "purpose": "Underlying data for reports/FY2025-26_sample_report.html/.pdf -- a consolidated, unit-standardized (US$ Million) FY2025-26 snapshot re-derived from this repo's other datasets, with a cross-source consistency-check log and period-matched PLI currency conversions.",
+  "retrieved": "2026-07-18",
+  "currency_conversion_methodology": "Each rupee-crore figure is converted using the AVERAGE of this repo's own FY-average USD/INR rates across the fiscal years the scheme has actually been active/disbursing -- not one blanket rate applied to every row. A scheme approved in FY2021-22 with disbursement through FY2024-25 is averaged over those four FY-average rates; a scheme launched in FY2025-26 (no completed FY average exists yet) uses the latest completed FY average (FY2024-25) as the closest available proxy, flagged distinctly. This corrects an earlier version of this report that applied a single FY2024-25 rate to every scheme regardless of its own timeline.",
+  "fy_avg_usd_inr_rates_used": {
+    "2019-20": 70.90, "2020-21": 74.23, "2021-22": 74.50, "2022-23": 80.36, "2023-24": 82.79, "2024-25": 84.68
+  },
+  "trade_balance_cross_validation_usd_million": {
+    "tradestat": {"exports": 441745.9, "imports": 776013.7, "deficit": -334267.7},
+    "tia_portal": {"exports": 451070.0, "imports": 776013.65, "deficit_implied": -324943.7},
+    "pib": {"exports": 441780.0, "imports": 774970.0, "deficit": -333190.0}
+  },
+  "pli_scheme_funding_usd_million": [
+    {"scheme": "PLI Auto & Auto Components", "rs_crore": 25938, "period_averaged": "FY2022-23 to FY2024-25", "rate_used": 82.61, "usd_million": 3139.8, "covers": "HS87 (vehicles)"},
+    {"scheme": "PLI ACC Battery Storage", "rs_crore": 18100, "period_averaged": "FY2021-22 to FY2024-25", "rate_used": 80.58, "usd_million": 2246.1, "covers": "EV value chain"},
+    {"scheme": "PLI Bulk Drugs", "rs_crore": 6940, "period_averaged": "FY2022-23 to FY2024-25", "rate_used": 82.61, "usd_million": 840.1, "covers": "HS29/HS30 (APIs, pharma)"},
+    {"scheme": "PLI Textiles (MMF)", "rs_crore": 10683, "period_averaged": "FY2021-22 to FY2024-25", "rate_used": 80.58, "usd_million": 1325.7, "covers": "Mismatch vs. HS61/62"},
+    {"scheme": "PLI Specialty Steel 1.0/1.1", "rs_crore": 44106, "period_averaged": "FY2021-22 to FY2024-25", "rate_used": 80.58, "usd_million": 5473.4, "covers": "HS72/73 (iron & steel)"},
+    {"scheme": "PLI Specialty Steel 1.2", "rs_crore": 11887, "period_averaged": "FY2024-25 only (launched Nov 2025 / FY2025-26, no completed FY avg yet)", "rate_used": 84.68, "usd_million": 1403.8, "covers": "HS72/73 (iron & steel)"},
+    {"scheme": "PLI White Goods (committed)", "rs_crore": 11198, "period_averaged": "FY2021-22 to FY2024-25", "rate_used": 80.58, "usd_million": 1389.6, "covers": "HS84 (compressors)"},
+    {"scheme": "PLI White Goods (cumulative production target)", "rs_crore": 190050, "period_averaged": "FY2021-22 to FY2024-25", "rate_used": 80.58, "usd_million": 23584.5, "covers": "Cumulative, FY2028-29"},
+    {"scheme": "PLI total cumulative outlay, 14 sectors (Dec 2025)", "rs_crore": 197000, "period_averaged": "FY2019-20 to FY2024-25", "rate_used": 77.91, "usd_million": 25285.6, "covers": "All sectors"}
+  ],
+  "currency_and_reserves_usd_million": {
+    "usd_inr_spot": {"value": 96.3665, "as_of": "2026-07-17"},
+    "usd_inr_fy2024_25_avg": {"value": 84.68, "as_of": "FY2024-25"},
+    "forex_mospi_connector": {"value_usd_million": 698100.0, "as_of": "2025-06", "vintage": "13 months stale"},
+    "forex_rbi_weekly_scrape": {"value_usd_million": 675157.0, "as_of": "2026-07-10", "vintage": "current, use this one"},
+    "forex_all_time_peak": {"value_usd_million": 728494.0, "as_of": "2026-02-27"}
+  },
+  "consistency_checks": [
+    {"status": "pass", "text": "Import totals agree across TRADESTAT ($776,013.7M) and TIA Portal ($776,013.65M) to within $0.05M."},
+    {"status": "pass", "text": "HS27 export chapter matches exactly between TRADESTAT ($55,871.2M) and TIA Portal ($55,871.21M)."},
+    {"status": "pass", "text": "PIB's official export/deficit figures ($441,780.0M / -$333,190.0M) agree with TRADESTAT within 0.3%."},
+    {"status": "flag", "text": "TIA Portal's export total ($451,070.0M) reads 2.1% / $9,300M higher than TRADESTAT and PIB -- flagged as a data-vintage difference, not reconciled further."},
+    {"status": "flag", "text": "Two forex-reserves vintages exist: the MoSPI-connector series (stale at $698,100.0M, Jun 2025) and this repo's own RBI weekly scrape ($675,157.0M, 10 Jul 2026) -- kept visually and numerically distinct, never silently merged."},
+    {"status": "flag", "text": "No FY2025-26 services-trade figure exists yet -- RBI's services data runs one year behind goods trade."},
+    {"status": "pass", "text": "All PLI rupee crore figures now converted at each scheme's own elapsed-period average rate (Rs 77.91-84.68/US$ depending on scheme), not one blanket rate."},
+    {"status": "pass", "text": "Top-12 chapter and country-ranking figures cross-checked against this repo's own hsn_historical_trends, sector_country_priority, and export_destination_priority datasets."},
+    {"status": "flag", "text": "NITI Aayog's Trade Watch Quarterly (PIB PRID=2277232, released 23 Jun 2026) reports India's FY2025-26 total trade (goods+services) at $1.84 trillion with exports +4.2% / imports +6.5% y-o-y (blended). This repo's own goods-only TRADESTAT figures show export growth of only +0.92% and import growth of +7.60% FY2024-25 to FY2025-26 -- the gap is explained by services trade growing faster than goods on the export side (NITI Aayog cites +9.0% services export growth for the same period), not a data error."},
+    {"status": "flag", "text": "NITI Aayog's Trade Watch Quarterly Q4 FY2025-26 thematic focus (pharmaceuticals) cites India's pharmaceutical + API exports at $35.8bn against global API/pharma demand of ~$1.3 trillion. This repo's own HS30 (pharmaceutical formulations only) FY2025-26 export figure is $25,073.4M -- the ~$10.7bn gap is API exports sitting in HS29 (organic chemicals), consistent with this repo's own PLI Bulk Drugs finding that Bulk Drugs PLI supports HS30 indirectly via HS29."}
+  ],
+  "external_validation_sources": [
+    {"source": "NITI Aayog Trade Watch Quarterly, 8th edition, Q4 FY2025-26 (Jan-Mar 2026)", "via": "PIB press release PRID=2277232, released 23 Jun 2026", "url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2277232", "full_publication": "https://niti.gov.in/sites/default/files/2026-06/Trade-Watch-Quarterly-Jan-March-Q4-FY26.pdf"},
+    {"source": "USISPF U.S.-India Bilateral Trade Data Analysis 2022", "note": "Calendar-year (not fiscal-year) US BEA data -- confirms India ran a goods+services trade SURPLUS with the USA of $45.68bn in CY2022, consistent with this repo's own finding that the USA is India's one major partner in overall bilateral surplus."},
+    {"source": "IJCRT2105171, \"An Analytical Study On Indian Import Export System Of India\" (2021, using FY2016-17 data)", "note": "Confirms China was already India's largest import-source AND largest trade-deficit country back in FY2016-17, and the USA was already the largest trade-surplus country -- both findings are decade-plus structural features, not recent developments."}
+  ]
+}
