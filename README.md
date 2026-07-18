@@ -117,6 +117,14 @@ Underlying data: [`data/hsn_historical_trends_2018-19_to_2025-26.json`](data/hsn
 
 Underlying data: [`data/fertiliser_fuel_price_transmission_2012_to_2026.json`](data/fertiliser_fuel_price_transmission_2012_to_2026.json).
 
+## Are import-dependent sectors getting government attention?
+
+[`charts/import_dependency_policy_gap_analysis.html`](charts/import_dependency_policy_gap_analysis.html) — open in a browser — cross-references this repo's own 12-chapter import ranking (value and growth, FY2018-19 → FY2025-26) against a compiled six-month roundup of PIB-reported government schemes (Budget 2026-27, Cabinet Decisions Feb–Jun 2026, PLI/ISM 2.0 scorecards), to check whether the sectors India depends on most for imports are actually getting matching policy attention.
+
+**Headline: the fastest-growing high-value import (fertilisers, +118.9%) had no production-capacity scheme in the six-month window — until three days before this analysis.** The one chapter with strong, matched coverage is **electrical machinery (HS85)**: Semiconductor Mission 2.0 (₹76,000 crore) and the bulk of 836 approved PLI applications sit directly on it. Everything else is partial at best: **mineral fuels (HS27, 26.2% of the entire import bill)** gets only diffuse, adjacent levers (coal gasification, CCUS, battery/solar PLI) with nothing sized to its scale; **plastics (HS39)**, **inorganic chemicals (HS28)**, and **aircraft & spacecraft (HS88)** have no matching scheme at all in the window. **Fertilisers (HS31)** is the most interesting case: only a demand-side subsidy appeared in the six-month recap, but the Cabinet approved the **National Investment Policy for Urea-2026** on 15 July 2026 — three days before this bulletin — targeting roughly the exact size of India's current urea import gap. Supplementary verification also found a real, Cabinet-approved edible-oil self-sufficiency mission (NMEO-Oilseeds, ₹10,103 crore) that likewise never surfaced in the "achievements" recap despite edible oils being the repo's third-fastest-growing import and the sector with the sharpest CPI swing documented in the bulletin above — a visibility gap, not a scheme gap.
+
+Underlying data: [`data/import_dependency_policy_gap_analysis_2026-07-18.json`](data/import_dependency_policy_gap_analysis_2026-07-18.json).
+
 ## GDP growth trend, with revision history
 
 [`charts/gdp_growth_trend.html`](charts/gdp_growth_trend.html) — open in a browser — real (constant-price) GDP growth by fiscal year, FY2012-13 through FY2025-26, from the MoSPI connector's NAS dataset. Bars show the latest revised estimate for each year; a tick marks where the original First Advance Estimate landed, so the gap between tick and bar visualizes how much each year's number moved as later data came in.
