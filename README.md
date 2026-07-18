@@ -125,6 +125,14 @@ Underlying data: [`data/fertiliser_fuel_price_transmission_2012_to_2026.json`](d
 
 Underlying data: [`data/import_dependency_policy_gap_analysis_2026-07-18.json`](data/import_dependency_policy_gap_analysis_2026-07-18.json).
 
+## Where India's forex actually goes — country by country, with a decade of policy history
+
+[`charts/country_trade_deficit_and_policy_history.html`](charts/country_trade_deficit_and_policy_history.html) — open in a browser — ranks India's FY2025-26 bilateral trade balance by partner country (Commerce Ministry TIA Portal), then traces the policy history behind the five biggest deficit relationships back several years — not just the six-month window used above — to check whether sustained attention has actually narrowed each gap. Was also prompted by a look at the Commerce Ministry's **NIRYAT portal** (niryat.gov.in) for visualization ideas; direct access was blocked at the TLS level (the same DGFT-family bot protection this repo has run into before), so its World Map/Commodity/Table-view design and traffic-light target-tracking pattern are described here from public documentation rather than a first-hand look.
+
+**Headline: China alone is a -$112.2bn bilateral deficit — more than double the next-largest — and six years of Atmanirbhar Bharat/PLI hasn't closed it.** China still supplies an estimated 62% of India's electronic components despite PLI (launched March 2020) and its 2023 expansion to 14 sectors. **Russia is the fastest-moving entry on the list**: with no formal import-substitution scheme behind it, Russian oil went from ~2.5% of India's crude imports before 2022 to 35.8–35.9% in each of the last two fiscal years — a market-driven shift (discounted pricing, settled in UAE dirhams to route around sanctions exposure) that made Russia India's #2 deficit country from a near-zero base in four years. **UAE (-$26.5bn) and Switzerland (-$23.1bn)** are almost entirely gold/rough-diamond bullion flows tied to the gems-and-jewellery re-export trade — a deliberately open door, not an import-substitution gap. **Indonesia and Malaysia (palm oil)** show the sharpest contrast between effort and outcome: the National Mission on Edible Oils - Oil Palm has run since August 2021 (₹11,040 crore), yet India remains roughly 57% import-dependent on edible oil, costing an estimated $20.56bn/year in forex.
+
+Underlying data: [`data/country_trade_deficit_and_policy_history_2026-07-18.json`](data/country_trade_deficit_and_policy_history_2026-07-18.json).
+
 ## GDP growth trend, with revision history
 
 [`charts/gdp_growth_trend.html`](charts/gdp_growth_trend.html) — open in a browser — real (constant-price) GDP growth by fiscal year, FY2012-13 through FY2025-26, from the MoSPI connector's NAS dataset. Bars show the latest revised estimate for each year; a tick marks where the original First Advance Estimate landed, so the gap between tick and bar visualizes how much each year's number moved as later data came in.
