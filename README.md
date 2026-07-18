@@ -61,6 +61,12 @@ Underlying data: [`data/cpi_statewise_trend_2025-01_to_2026-06.json`](data/cpi_s
 
 [`charts/cpi_india_heatmap.html`](charts/cpi_india_heatmap.html) — open in a browser — a choropleth of India shaded by June 2026 CPI year-on-year inflation for the 13 states in this dataset (all other states/UTs shown in gray as "not tracked", not as low inflation). State boundaries come from amCharts' `amcharts4-geodata` (`india2023Low`, MIT-licensed), reprojected to SVG locally — no external map tiles or API calls at render time.
 
+## RBI foreign exchange reserves trend
+
+[`charts/rbi_forex_reserves_trend.html`](charts/rbi_forex_reserves_trend.html) — open in a browser — a decade of India's total forex reserves (Jan 2015 – Jun 2025, the last month this connector has data for), with the two notable drawdown cycles called out directly on the chart: the **2022 drawdown** (-17%, Aug 2021 to Sep 2022, rupee defense amid Fed tightening) and the **2024–25 drawdown** (-11%, Sep 2024's all-time high of $705.8bn to $630.6bn by Jan 2025). Reserves are up **+112%** over the decade, from $328.7bn to $698.1bn.
+
+Underlying data: [`data/rbi_forex_reserves_2015-01_to_2025-06.json`](data/rbi_forex_reserves_2015-01_to_2025-06.json).
+
 ## Known quirks / caveats
 
 - **RBI forex reserves lag hard** — requesting 2025/2026 explicitly still only returned data through June 2025. Don't assume this series is current to the same month.
