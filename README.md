@@ -95,6 +95,16 @@ Underlying data: [`data/rupee_real_exchange_rate_2015_to_2026.json`](data/rupee_
 
 Underlying data: [`data/tradestat_hsn_export_import_2018-19_to_2025-26.json`](data/tradestat_hsn_export_import_2018-19_to_2025-26.json) (goods, all 98 HS chapters) and [`data/services_trade_and_overall_balance_2015-16_to_2024-25.json`](data/services_trade_and_overall_balance_2015-16_to_2024-25.json) (services + combined balance).
 
+## HSN-wise historical trends — which imports are growing fastest?
+
+[`charts/hsn_historical_trends.html`](charts/hsn_historical_trends.html) — open in a browser — the same TRADESTAT chapter-level data as the trade-balance bulletin above, re-cut to track each HS-2-digit chapter's own 8-year trajectory (FY2018-19 → FY2025-26) rather than just its latest-year snapshot. Ranks the top-12 import and top-12 export chapters by FY2025-26 value (independently-scaled sparklines per chapter), then re-ranks the same 12 import chapters by **CAGR** to separate "large" from "fast-growing."
+
+**Headline: the biggest imports aren't the fastest-moving ones.** Mineral fuels (HS27) is by far the largest single import ($203.4bn) but has grown only **+21.2%** (2.8% CAGR) over eight years — largely a price story. The real acceleration is in **Fertilisers (HS31, +118.9%, 11.8% CAGR)** — plausibly global fertiliser price shocks since 2022 stacked on rising volumes — followed by **Electrical machinery (HS85, +101.5%, 10.5% CAGR)** and **Animal/vegetable fats & oils (HS15, +97.9%, 10.2% CAGR)**. Top 12 import chapters account for **81.5%** of all FY2025-26 imports. On the export side, **Electrical machinery (HS85) has quadrupled** (+324.1%, 22.9% CAGR, $12.7bn → $54.0bn) — by far the fastest mover on either side of the ledger — while **Pearls, gems & jewellery (HS71)** is the only top-12 chapter shrinking on either side (**-29.9%**).
+
+Read against the trade-balance bulletin: the chapters driving the *deficit* (mineral fuels, gems/jewellery) are not the chapters driving its *momentum* — fertilisers, electronics components, and edible oils are where new import dependency is actually building.
+
+Underlying data: [`data/hsn_historical_trends_2018-19_to_2025-26.json`](data/hsn_historical_trends_2018-19_to_2025-26.json).
+
 ## GDP growth trend, with revision history
 
 [`charts/gdp_growth_trend.html`](charts/gdp_growth_trend.html) — open in a browser — real (constant-price) GDP growth by fiscal year, FY2012-13 through FY2025-26, from the MoSPI connector's NAS dataset. Bars show the latest revised estimate for each year; a tick marks where the original First Advance Estimate landed, so the gap between tick and bar visualizes how much each year's number moved as later data came in.

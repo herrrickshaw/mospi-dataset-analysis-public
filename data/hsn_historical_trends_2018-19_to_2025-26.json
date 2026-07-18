@@ -1,0 +1,451 @@
+{
+  "purpose": "Full 8-year trajectory (not just latest-year snapshot) for the top-12 import and top-12 export HS-2-digit chapters by FY2025-26 value, ranked separately by growth rate (CAGR) to distinguish 'large' imports from 'fast-growing' ones.",
+  "source": "Directorate General of Commercial Intelligence and Statistics (DGCI&S), via tradestat.commerce.gov.in/eidb -- Commodity-wise Export and Commodity-wise Import reports, 2-digit HS chapter level",
+  "currency": "US$ Million",
+  "years_covered": ["2018-19","2019-20","2020-21","2021-22","2022-23","2023-24","2024-25","2025-26"],
+  "retrieved": "2026-07-18",
+  "method": "Same TRADESTAT scrape as data/tradestat_hsn_export_import_2018-19_to_2025-26.json (Laravel/Livewire session + CSRF token via cookie jar, 8 POST requests each returning 2 fiscal years). This file re-derives rankings by CAGR and total growth from that same underlying by_chapter data -- not a new data pull.",
+  "cagr_method": "((latest / first) ** (1/7) - 1) * 100, i.e. 7-period compound annual growth rate from FY2018-19 to FY2025-26. FY2025-26 is the most recent data available (updated 19 May 2026 per source) and may be a provisional/partial fiscal year.",
+  "totals": {
+    "total_imports_latest_fy2025_26": 776013.6,
+    "total_exports_latest_fy2025_26": 441745.9,
+    "top12_import_share_pct": 81.5,
+    "top12_export_share_pct": 66.7
+  },
+  "top12_imports_by_value": [
+  {
+    "hs": "27",
+    "name": "Mineral fuels & oils",
+    "series": [
+      167871.9,
+      153646.5,
+      99703.5,
+      194857.1,
+      260921.0,
+      219053.6,
+      218456.0,
+      203415.4
+    ],
+    "first": 167871.9,
+    "latest": 203415.4,
+    "growth_pct": 21.2,
+    "cagr_pct": 2.8
+  },
+  {
+    "hs": "71",
+    "name": "Pearls, gems & jewellery",
+    "series": [
+      64720.2,
+      54493.8,
+      55198.9,
+      81663.7,
+      73930.3,
+      78473.6,
+      88975.7,
+      109430.2
+    ],
+    "first": 64720.2,
+    "latest": 109430.2,
+    "growth_pct": 69.1,
+    "cagr_pct": 7.8
+  },
+  {
+    "hs": "85",
+    "name": "Electrical machinery",
+    "series": [
+      52048.9,
+      49188.3,
+      46691.6,
+      62489.6,
+      67637.3,
+      79300.7,
+      88596.4,
+      104852.7
+    ],
+    "first": 52048.9,
+    "latest": 104852.7,
+    "growth_pct": 101.5,
+    "cagr_pct": 10.5
+  },
+  {
+    "hs": "84",
+    "name": "Machinery, mechanical appliances",
+    "series": [
+      43840.4,
+      43367.9,
+      37032.0,
+      50586.8,
+      54377.0,
+      57408.9,
+      64302.1,
+      74019.5
+    ],
+    "first": 43840.4,
+    "latest": 74019.5,
+    "growth_pct": 68.8,
+    "cagr_pct": 7.8
+  },
+  {
+    "hs": "29",
+    "name": "Organic chemicals",
+    "series": [
+      22389.8,
+      19815.8,
+      19690.3,
+      28522.5,
+      28975.8,
+      26745.1,
+      26590.5,
+      25410.7
+    ],
+    "first": 22389.8,
+    "latest": 25410.7,
+    "growth_pct": 13.5,
+    "cagr_pct": 1.8
+  },
+  {
+    "hs": "39",
+    "name": "Plastics",
+    "series": [
+      15246.9,
+      14212.1,
+      13308.5,
+      19994.2,
+      23122.9,
+      21830.6,
+      22116.0,
+      22234.5
+    ],
+    "first": 15246.9,
+    "latest": 22234.5,
+    "growth_pct": 45.8,
+    "cagr_pct": 5.5
+  },
+  {
+    "hs": "15",
+    "name": "Animal/veg fats & oils",
+    "series": [
+      9994.4,
+      9867.1,
+      11308.1,
+      19354.9,
+      21122.3,
+      15059.5,
+      17591.6,
+      19777.0
+    ],
+    "first": 9994.4,
+    "latest": 19777.0,
+    "growth_pct": 97.9,
+    "cagr_pct": 10.2
+  },
+  {
+    "hs": "72",
+    "name": "Iron & steel",
+    "series": [
+      12582.3,
+      10734.1,
+      8278.9,
+      12612.8,
+      17718.3,
+      18645.7,
+      17400.3,
+      15753.4
+    ],
+    "first": 12582.3,
+    "latest": 15753.4,
+    "growth_pct": 25.2,
+    "cagr_pct": 3.3
+  },
+  {
+    "hs": "90",
+    "name": "Optical/medical instruments",
+    "series": [
+      9631.4,
+      9251.1,
+      8572.3,
+      11331.2,
+      11671.8,
+      12922.2,
+      13842.1,
+      15375.3
+    ],
+    "first": 9631.4,
+    "latest": 15375.3,
+    "growth_pct": 59.6,
+    "cagr_pct": 6.9
+  },
+  {
+    "hs": "31",
+    "name": "Fertilisers",
+    "series": [
+      6661.9,
+      6704.5,
+      6872.8,
+      12765.7,
+      15322.5,
+      8923.7,
+      8285.1,
+      14580.2
+    ],
+    "first": 6661.9,
+    "latest": 14580.2,
+    "growth_pct": 118.9,
+    "cagr_pct": 11.8
+  },
+  {
+    "hs": "28",
+    "name": "Inorganic chemicals",
+    "series": [
+      7624.6,
+      6366.4,
+      6884.6,
+      10242.9,
+      12841.5,
+      9142.4,
+      11377.1,
+      14179.7
+    ],
+    "first": 7624.6,
+    "latest": 14179.7,
+    "growth_pct": 86.0,
+    "cagr_pct": 9.3
+  },
+  {
+    "hs": "88",
+    "name": "Aircraft & spacecraft",
+    "series": [
+      7615.4,
+      9971.3,
+      5744.1,
+      4995.8,
+      11169.7,
+      12697.5,
+      13911.6,
+      13774.8
+    ],
+    "first": 7615.4,
+    "latest": 13774.8,
+    "growth_pct": 80.9,
+    "cagr_pct": 8.8
+  }
+],
+  "top12_exports_by_value": [
+  {
+    "hs": "27",
+    "name": "Mineral fuels & oils",
+    "series": [
+      47920.3,
+      42708.8,
+      26907.7,
+      69570.1,
+      101241.9,
+      87602.4,
+      67046.0,
+      55871.2
+    ],
+    "first": 47920.3,
+    "latest": 55871.2,
+    "growth_pct": 16.6,
+    "cagr_pct": 2.2
+  },
+  {
+    "hs": "85",
+    "name": "Electrical machinery",
+    "series": [
+      12727.8,
+      15187.8,
+      14213.9,
+      20178.7,
+      28608.6,
+      34412.5,
+      44049.6,
+      53976.3
+    ],
+    "first": 12727.8,
+    "latest": 53976.3,
+    "growth_pct": 324.1,
+    "cagr_pct": 22.9
+  },
+  {
+    "hs": "84",
+    "name": "Machinery, mechanical appliances",
+    "series": [
+      20965.5,
+      20835.0,
+      18954.0,
+      25410.1,
+      27476.8,
+      30057.1,
+      33475.2,
+      36629.6
+    ],
+    "first": 20965.5,
+    "latest": 36629.6,
+    "growth_pct": 74.7,
+    "cagr_pct": 8.3
+  },
+  {
+    "hs": "71",
+    "name": "Pearls, gems & jewellery",
+    "series": [
+      40449.2,
+      36085.9,
+      26163.9,
+      39268.6,
+      38112.5,
+      32853.1,
+      29958.4,
+      28343.8
+    ],
+    "first": 40449.2,
+    "latest": 28343.8,
+    "growth_pct": -29.9,
+    "cagr_pct": -5.0
+  },
+  {
+    "hs": "87",
+    "name": "Vehicles",
+    "series": [
+      18096.3,
+      16711.8,
+      13640.3,
+      19762.5,
+      21219.9,
+      20889.3,
+      22648.4,
+      25973.4
+    ],
+    "first": 18096.3,
+    "latest": 25973.4,
+    "growth_pct": 43.5,
+    "cagr_pct": 5.3
+  },
+  {
+    "hs": "30",
+    "name": "Pharmaceuticals",
+    "series": [
+      14754.1,
+      16289.3,
+      19384.0,
+      19396.2,
+      19861.9,
+      22105.8,
+      24577.8,
+      25073.4
+    ],
+    "first": 14754.1,
+    "latest": 25073.4,
+    "growth_pct": 69.9,
+    "cagr_pct": 7.9
+  },
+  {
+    "hs": "29",
+    "name": "Organic chemicals",
+    "series": [
+      18239.6,
+      17487.3,
+      17949.7,
+      22048.8,
+      21377.4,
+      20311.5,
+      20120.7,
+      20408.8
+    ],
+    "first": 18239.6,
+    "latest": 20408.8,
+    "growth_pct": 11.9,
+    "cagr_pct": 1.6
+  },
+  {
+    "hs": "10",
+    "name": "Cereals",
+    "series": [
+      8160.2,
+      6672.4,
+      10103.5,
+      12882.0,
+      13860.6,
+      10994.0,
+      12752.4,
+      12007.5
+    ],
+    "first": 8160.2,
+    "latest": 12007.5,
+    "growth_pct": 47.1,
+    "cagr_pct": 5.7
+  },
+  {
+    "hs": "73",
+    "name": "Iron/steel articles",
+    "series": [
+      7290.2,
+      7034.7,
+      6596.8,
+      8838.5,
+      9812.0,
+      9939.1,
+      10179.4,
+      10409.0
+    ],
+    "first": 7290.2,
+    "latest": 10409.0,
+    "growth_pct": 42.8,
+    "cagr_pct": 5.2
+  },
+  {
+    "hs": "72",
+    "name": "Iron & steel",
+    "series": [
+      9742.0,
+      9277.5,
+      12123.9,
+      22906.2,
+      13397.5,
+      11859.4,
+      9251.1,
+      10316.6
+    ],
+    "first": 9742.0,
+    "latest": 10316.6,
+    "growth_pct": 5.9,
+    "cagr_pct": 0.8
+  },
+  {
+    "hs": "62",
+    "name": "Apparel, not knitted",
+    "series": [
+      8336.0,
+      7994.8,
+      5941.9,
+      7845.6,
+      8494.0,
+      7804.4,
+      8303.1,
+      8172.5
+    ],
+    "first": 8336.0,
+    "latest": 8172.5,
+    "growth_pct": -2.0,
+    "cagr_pct": -0.3
+  },
+  {
+    "hs": "61",
+    "name": "Apparel, knitted",
+    "series": [
+      7820.4,
+      7514.8,
+      6348.0,
+      8175.1,
+      7710.1,
+      6740.6,
+      7703.9,
+      7642.1
+    ],
+    "first": 7820.4,
+    "latest": 7642.1,
+    "growth_pct": -2.3,
+    "cagr_pct": -0.3
+  }
+]
+}
