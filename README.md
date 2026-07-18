@@ -83,6 +83,18 @@ That's then read against the framework China was scrutinized under: the US Treas
 
 Underlying data: [`data/rupee_real_exchange_rate_2015_to_2026.json`](data/rupee_real_exchange_rate_2015_to_2026.json).
 
+## Trade balance — is India an export-surplus country?
+
+[`charts/trade_balance_hsn_analysis.html`](charts/trade_balance_hsn_analysis.html) — open in a browser — HSN (2-digit HS chapter) merchandise export and import data from the Commerce Ministry's own **TRADESTAT** database (`tradestat.commerce.gov.in`, not MoSPI/RBI), summed across all 98 tracked chapters to reconstruct India's national trade balance for FY2018-19 through FY2025-26.
+
+**Verdict: no.** India has run a merchandise trade deficit in **every one of the 8 fiscal years** on record here, and it's widening — from **-$184.0bn (FY2018-19) to -$334.3bn (FY2025-26)**. Exports covered 64.2% of the import bill in FY2018-19; they cover just **56.9%** now. **Mineral fuels (HS27, -$147.5bn)** and **pearls/gems/jewellery (HS71, -$81.1bn)** are the two largest deficit-driving chapters; **pharmaceuticals, vehicles, cereals and apparel** are the strongest surplus chapters. This closes the loop on the currency and reserves segments above: a persistent, widening goods deficit is exactly the kind of structural pressure that would push the rupee down over time, independent of any single shock — the backdrop the RBI has been spending reserves to lean against.
+
+**How it was pulled**: TRADESTAT is a Laravel/Livewire app whose report URLs return `405` on a cold GET — visiting the search page first (to pick up a session cookie + CSRF token) then POSTing the form fields works, and each query returns two fiscal years at once, so 8 requests (4 per trade direction) covered the full 8-year window.
+
+This is **goods trade only** — India separately runs a large services-trade surplus (software/IT exports, captured in RBI's Balance of Payments data, not here) that materially offsets the current-account picture; see the chart's caveats before treating this as the whole external-sector story.
+
+Underlying data: [`data/tradestat_hsn_export_import_2018-19_to_2025-26.json`](data/tradestat_hsn_export_import_2018-19_to_2025-26.json) (all 98 HS chapters, both trade directions, all 8 years).
+
 ## GDP growth trend, with revision history
 
 [`charts/gdp_growth_trend.html`](charts/gdp_growth_trend.html) — open in a browser — real (constant-price) GDP growth by fiscal year, FY2012-13 through FY2025-26, from the MoSPI connector's NAS dataset. Bars show the latest revised estimate for each year; a tick marks where the original First Advance Estimate landed, so the gap between tick and bar visualizes how much each year's number moved as later data came in.

@@ -1,0 +1,426 @@
+<title>India's Trade Balance — HSN-wise Export/Import Analysis</title>
+<meta name="hz:canvas-width" content="1080">
+<style>
+  :root {
+    color-scheme: light;
+    --page-bg:      #eef1ea;
+    --surface:      #fcfcfa;
+    --ink:          #14180f;
+    --ink-2:        #4f5348;
+    --ink-muted:    #82867a;
+    --rule:         #d7dace;
+    --rule-strong:  #c3c7b8;
+    --accent:       #1f5f5b;
+    --accent-soft:  #dbe9e6;
+    --alert:        #a5402c;
+    --alert-soft:   #f3ded7;
+    --data-line:    #2a78d6;
+    --data-fill:    rgba(42,120,214,0.18);
+    --imp-line:     #eb6834;
+    --imp-fill:     rgba(235,104,52,0.14);
+    --deficit-fill: rgba(165,64,44,0.22);
+    --pos-bar:      #2a78d6;
+    --neg-bar:      #a5402c;
+    --chart-surface:#fcfcfb;
+    --chart-grid:   #e1e0d9;
+    --chart-axis:   #c3c2b7;
+    --font-display: "Iowan Old Style","Palatino Linotype","Book Antiqua",Georgia,serif;
+    --font-body: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    --font-mono: "IBM Plex Mono","SF Mono",Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      color-scheme: dark;
+      --page-bg:      #12151a;
+      --surface:      #1a1e21;
+      --ink:          #f2f1ea;
+      --ink-2:        #c1c4b7;
+      --ink-muted:    #8b8f83;
+      --rule:         #2a2e28;
+      --rule-strong:  #383c33;
+      --accent:       #58bdb5;
+      --accent-soft:  #1d3634;
+      --alert:        #e0785f;
+      --alert-soft:   #3a241d;
+      --data-line:    #3987e5;
+      --data-fill:    rgba(57,135,229,0.22);
+      --imp-line:     #d95926;
+      --imp-fill:     rgba(217,89,38,0.18);
+      --deficit-fill: rgba(224,120,95,0.20);
+      --pos-bar:      #3987e5;
+      --neg-bar:      #e0785f;
+      --chart-surface:#1a1a19;
+      --chart-grid:   #2c2c2a;
+      --chart-axis:   #383835;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --page-bg:#12151a; --surface:#1a1e21; --ink:#f2f1ea; --ink-2:#c1c4b7; --ink-muted:#8b8f83;
+    --rule:#2a2e28; --rule-strong:#383c33; --accent:#58bdb5; --accent-soft:#1d3634; --alert:#e0785f; --alert-soft:#3a241d;
+    --data-line:#3987e5; --data-fill:rgba(57,135,229,0.22); --imp-line:#d95926; --imp-fill:rgba(217,89,38,0.18);
+    --deficit-fill:rgba(224,120,95,0.20); --pos-bar:#3987e5; --neg-bar:#e0785f;
+    --chart-surface:#1a1a19; --chart-grid:#2c2c2a; --chart-axis:#383835;
+  }
+  :root[data-theme="light"] {
+    color-scheme: light;
+    --page-bg:#eef1ea; --surface:#fcfcfa; --ink:#14180f; --ink-2:#4f5348; --ink-muted:#82867a;
+    --rule:#d7dace; --rule-strong:#c3c7b8; --accent:#1f5f5b; --accent-soft:#dbe9e6; --alert:#a5402c; --alert-soft:#f3ded7;
+    --data-line:#2a78d6; --data-fill:rgba(42,120,214,0.18); --imp-line:#eb6834; --imp-fill:rgba(235,104,52,0.14);
+    --deficit-fill:rgba(165,64,44,0.22); --pos-bar:#2a78d6; --neg-bar:#a5402c;
+    --chart-surface:#fcfcfb; --chart-grid:#e1e0d9; --chart-axis:#c3c2b7;
+  }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  .bulletin { background: var(--page-bg); color: var(--ink); font-family: var(--font-body); padding: 40px 20px 56px; display: flex; justify-content: center; }
+  .sheet { width: 100%; max-width: 1080px; display: flex; flex-direction: column; gap: 32px; }
+
+  .masthead { border-bottom: 2px solid var(--ink); padding-bottom: 16px; display: flex; flex-direction: column; gap: 6px; }
+  .eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); display: flex; gap: 10px; align-items: center; }
+  .eyebrow::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); display: inline-block; }
+  h1 { font-family: var(--font-display); font-weight: 500; font-size: clamp(26px, 3.6vw, 36px); margin: 2px 0 0; text-wrap: balance; letter-spacing: -0.01em; }
+  .dek { font-size: 14px; color: var(--ink-2); max-width: 76ch; line-height: 1.55; margin: 4px 0 0; }
+  .source-line { font-family: var(--font-mono); font-size: 11px; color: var(--ink-muted); margin-top: 6px; }
+
+  .verdict { background: var(--alert-soft); border: 1px solid var(--alert); padding: 18px 22px; display: flex; flex-direction: column; gap: 6px; }
+  .verdict-label { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--alert); }
+  .verdict-answer { font-family: var(--font-display); font-size: clamp(20px, 2.6vw, 26px); font-weight: 600; color: var(--ink); text-wrap: balance; }
+  .verdict-sub { font-size: 13.5px; color: var(--ink-2); line-height: 1.55; max-width: 74ch; }
+  .verdict-sub b { color: var(--ink); }
+
+  .stat-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
+  .stat-tile { background: var(--surface); padding: 16px 18px; display: flex; flex-direction: column; gap: 6px; }
+  .stat-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-muted); }
+  .stat-value { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 26px; font-weight: 600; letter-spacing: -0.02em; }
+  .stat-sub { font-size: 12.5px; color: var(--ink-2); }
+  .stat-sub b { color: var(--ink); }
+
+  section.block { display: flex; flex-direction: column; gap: 14px; }
+  .block-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; border-bottom: 1px solid var(--rule-strong); padding-bottom: 8px; }
+  .block-title { font-family: var(--font-display); font-size: 21px; margin: 0; }
+  .block-note { font-size: 12.5px; color: var(--ink-muted); max-width: 50ch; text-align: right; }
+
+  .chart-card { background: var(--chart-surface); border: 1px solid var(--rule-strong); padding: 20px 22px 14px; position: relative; }
+  .chart-card svg { width: 100%; display: block; overflow: visible; }
+  #tradeChart { height: 340px; }
+  #divergingChart { height: 460px; }
+  .grid-line { stroke: var(--chart-grid); stroke-width: 1; }
+  .axis-line { stroke: var(--chart-axis); stroke-width: 1; }
+  .axis-label { font-family: var(--font-mono); font-size: 10.5px; fill: var(--ink-muted); }
+  .exp-line { fill: none; stroke: var(--data-line); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .imp-line { fill: none; stroke: var(--imp-line); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .deficit-band { fill: var(--deficit-fill); }
+  .end-label { font-family: var(--font-mono); font-size: 11px; font-weight: 600; }
+  .covid-label { font-family: var(--font-mono); font-size: 10px; fill: var(--ink-muted); }
+  .callout-box { fill: var(--rule); opacity: 0.5; }
+  .bar-label { font-family: var(--font-mono); font-size: 11px; fill: var(--ink); }
+  .cat-label { font-family: var(--font-body); font-size: 12px; fill: var(--ink-2); }
+  .tooltip {
+    position: absolute; pointer-events: none; background: var(--ink); color: var(--page-bg);
+    font-family: var(--font-mono); font-size: 11px; padding: 7px 10px; border-radius: 2px; line-height: 1.6;
+    opacity: 0; transition: opacity 0.08s ease; white-space: nowrap; z-index: 5; max-width: 320px; text-wrap: balance;
+  }
+  .legend-row { display: flex; gap: 22px; flex-wrap: wrap; font-size: 12px; color: var(--ink-2); align-items: center; }
+  .legend-item { display: flex; align-items: center; gap: 8px; }
+  .legend-swatch { width: 16px; height: 3px; border-radius: 2px; display: inline-block; }
+  .legend-note { font-size: 12px; color: var(--ink-muted); line-height: 1.55; max-width: 78ch; }
+  .legend-note b { color: var(--ink-2); }
+
+  .prose { display: flex; flex-direction: column; gap: 12px; font-size: 14.5px; line-height: 1.65; color: var(--ink-2); max-width: 78ch; }
+  .prose p { margin: 0; }
+  .prose b { color: var(--ink); }
+
+  details.table-view { border-top: 1px solid var(--rule-strong); padding-top: 10px; }
+  details.table-view summary { cursor: pointer; font-size: 12.5px; color: var(--ink-2); font-family: var(--font-mono); }
+  .data-table-wrap { overflow-x: auto; margin-top: 12px; max-height: 420px; overflow-y: auto; }
+  table.data-table { border-collapse: collapse; width: 100%; font-family: var(--font-mono); font-size: 11px; }
+  table.data-table th, table.data-table td { padding: 5px 10px; text-align: right; border-bottom: 1px solid var(--rule); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  table.data-table th:first-child, table.data-table td:first-child { text-align: left; }
+  table.data-table td:nth-child(2) { text-align: left; white-space: normal; min-width: 220px; }
+  table.data-table thead th { color: var(--ink-muted); font-weight: 500; text-transform: uppercase; font-size: 10px; letter-spacing: 0.04em; position: sticky; top: 0; background: var(--surface); }
+
+  .errata {
+    border: 1px solid var(--rule-strong); border-left: 3px solid var(--alert); background: var(--surface);
+    padding: 16px 20px; display: flex; flex-direction: column; gap: 10px;
+  }
+  .errata-title { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--alert); }
+  .errata ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; }
+  .errata li { font-size: 13px; line-height: 1.5; color: var(--ink-2); }
+  .errata li b { color: var(--ink); }
+
+  footer.colophon { text-align: center; font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-muted); padding-top: 8px; }
+</style>
+
+<div class="bulletin">
+  <div class="sheet">
+    <div class="masthead">
+      <div class="eyebrow">MoSPI/Commerce Ministry Dataset Analysis — Statistical Bulletin</div>
+      <h1>Is India an export-surplus country?</h1>
+      <p class="dek">HSN (chapter-level) merchandise export and import data from the Ministry of Commerce's own TRADESTAT database, FY2018-19 through FY2025-26, summed across all 98 tracked HS chapters to reconstruct the national trade balance from the ground up.</p>
+      <div class="source-line">SOURCE: Directorate General of Commercial Intelligence and Statistics (DGCI&amp;S), via tradestat.commerce.gov.in/eidb — Commodity-wise Export and Commodity-wise Import reports, 2-digit HS chapter level, US$ Million, retrieved 18 Jul 2026</div>
+    </div>
+
+    <div class="verdict">
+      <div class="verdict-label">The verdict</div>
+      <div class="verdict-answer">No. India has run a merchandise trade deficit every year on record here — and it's widening.</div>
+      <div class="verdict-sub">Imports have exceeded exports in <b>all 8 fiscal years</b> from FY2018-19 to FY2025-26, without exception. The deficit has grown from <b>-$184.0bn to -$334.3bn</b> — exports covered 64.2% of the import bill in FY2018-19; they cover just <b>56.9%</b> now. This is goods trade only — India separately runs a large services-trade surplus (software/IT exports) that isn't in this dataset; see the caveats below.</div>
+    </div>
+
+    <div class="stat-strip" id="statStrip"></div>
+
+    <section class="block">
+      <div class="block-head">
+        <h2 class="block-title">Exports vs. imports, FY2018-19 – FY2025-26</h2>
+        <p class="block-note">The shaded gap between the lines is the trade deficit.</p>
+      </div>
+      <div class="chart-card">
+        <svg id="tradeChart" viewBox="0 0 1000 340" preserveAspectRatio="none"></svg>
+        <div class="tooltip" id="tradeTooltip"></div>
+      </div>
+      <div class="legend-row">
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--data-line)"></span> Exports</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--imp-line)"></span> Imports</span>
+      </div>
+      <p class="legend-note">FY2020-21's much narrower gap is the COVID-19 import crash (India's imports fell further than its exports during lockdowns) — a one-off, not a structural improvement; the deficit resumed widening the very next year. <b>FY2025-26 is the most recent data available</b> (updated 19 May 2026 per the source), not necessarily a complete fiscal year.</p>
+      <details class="table-view">
+        <summary>View export/import/balance table, all 8 fiscal years</summary>
+        <div class="data-table-wrap"><table class="data-table" id="totalsTable"></table></div>
+      </details>
+    </section>
+
+    <section class="block">
+      <div class="block-head">
+        <h2 class="block-title">What's driving the deficit — HS chapters, FY2025-26</h2>
+        <p class="block-note">Top 8 deficit and top 8 surplus chapters, by net trade balance.</p>
+      </div>
+      <div class="chart-card">
+        <svg id="divergingChart" viewBox="0 0 1000 460" preserveAspectRatio="none"></svg>
+        <div class="tooltip" id="divTooltip"></div>
+      </div>
+      <p class="legend-note"><b>Mineral fuels (HS27)</b> alone accounts for a <b>-$147.5bn</b> deficit — India imports far more crude oil and refined fuel than it exports, by design (import-dependent energy needs). <b>Pearls, gems &amp; jewellery (HS71)</b> is the second-largest deficit chapter, at <b>-$81.1bn</b>, driven mainly by gold and rough-diamond imports that are only partly re-exported as cut stones and jewellery. Pharmaceuticals, vehicles, cereals and apparel are the strongest surplus chapters — all comfortably export-led.</p>
+      <details class="table-view">
+        <summary>View all 98 HS chapters, FY2025-26 (export, import, balance)</summary>
+        <div class="data-table-wrap"><table class="data-table" id="chapterTable"></table></div>
+      </details>
+    </section>
+
+    <section class="block prose">
+      <h2 class="block-title" style="border:none; padding:0;">How this connects to the rupee's slide</h2>
+      <p>This closes the loop on the currency and reserves segments elsewhere in this repo. A persistent, widening merchandise trade deficit means India needs to buy more foreign currency (to pay for those imports) than it earns from exports, year after year — structural downward pressure on the rupee that has nothing to do with any single shock. That's the backdrop the RBI has been intervening against: spending down reserves (from a $728.5bn peak to a $666.9bn trough) specifically to slow a depreciation this trade picture would otherwise make worse, not to engineer a competitive devaluation.</p>
+      <p>It also means the rupee's real depreciation (see the effective-buying-power segment) isn't just noise — a genuinely widening gap between what India earns abroad and what it spends abroad is exactly the kind of fundamental that currency markets price in over time, on top of whatever short-term shocks hit in any given month.</p>
+    </section>
+
+    <div class="errata">
+      <div class="errata-title">Errata &amp; methodology caveats</div>
+      <ul>
+        <li><b>This is merchandise (goods) trade only</b>, from the Ministry of Commerce's DGCI&amp;S database — it does not include services trade. India runs a large, separate <b>services-trade surplus</b> (principally software and IT/BPO exports), which the RBI's own Balance of Payments data captures and which materially offsets the goods deficit at the current-account level. This bulletin does not compute that offset — don't read "India's goods trade deficit" as "India's overall external position is unsustainable" without it.</li>
+        <li><b>2-digit HS chapter level</b> (99 possible chapters, 98 populated) — coarser than the 8-digit tariff-line detail TRADESTAT can also provide, but the right granularity for a national total: chapter values sum exactly to the whole by construction.</li>
+        <li><b>How this was pulled:</b> TRADESTAT's search forms are a Laravel/Livewire app requiring an active session — a plain HTTP GET to the report URL returns <code>405</code> without first visiting the site to establish a session cookie and CSRF token. Once that's in place, a standard form POST works and returns two fiscal years of data per query, so 4 queries per trade direction (8 total) covered all 8 years.</li>
+        <li><b>FY2025-26 is the most recent, not necessarily complete</b> — the source states data last updated 19 May 2026; treat this year's figures as provisional/in-progress rather than a closed fiscal year like the others.</li>
+        <li>Figures are in <b>US$ Million</b> as reported by TRADESTAT (report currency option selected at query time); TRADESTAT also offers ₹ Crore and quantity-based views not pulled here.</li>
+      </ul>
+    </div>
+
+    <footer class="colophon">herrrickshaw/mospi-dataset-analysis — derived from Ministry of Commerce (DGCI&amp;S) TRADESTAT data, not an official Commerce Ministry publication</footer>
+  </div>
+</div>
+
+<script>
+(function () {
+  var years = ["2018-19","2019-20","2020-21","2021-22","2022-23","2023-24","2024-25","2025-26"];
+  var exports_ = [330078.1,313361.1,291808.5,422004.4,451070.0,437072.1,437704.5,441745.9];
+  var imports_ = [514078.4,474709.3,394435.9,613052.1,715968.9,678214.8,721200.3,776013.7];
+
+  function fmtBn(n) { return "$" + (n/1000).toFixed(1) + "bn"; }
+
+  // ---- Stat strip ----
+  var statStrip = document.getElementById("statStrip");
+  var stats = [
+    { label: "Latest deficit — FY2025-26", value: "-$334.3bn", sub: "up from <b>-$184.0bn</b> in FY2018-19" },
+    { label: "Export cover of imports", value: "56.9%", sub: "down from <b>64.2%</b> in FY2018-19 — worsening, not improving" },
+    { label: "Deficit widened by", value: "+$150.3bn", sub: "over the 8 fiscal years on record" },
+    { label: "Single biggest driver", value: "-$147.5bn", sub: "HS27, mineral fuels &amp; oils — energy imports alone" }
+  ];
+  stats.forEach(function (s) {
+    var el = document.createElement("div");
+    el.className = "stat-tile";
+    el.innerHTML = '<div class="stat-label">' + s.label + '</div><div class="stat-value">' + s.value + '</div><div class="stat-sub">' + s.sub + '</div>';
+    statStrip.appendChild(el);
+  });
+
+  var svgns = "http://www.w3.org/2000/svg";
+  function el(tag, attrs) {
+    var e = document.createElementNS(svgns, tag);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    return e;
+  }
+
+  // ---- Trade chart (export vs import lines + deficit band) ----
+  var svg = document.getElementById("tradeChart");
+  var W = 1000, H = 340, padL = 56, padR = 16, padT = 24, padB = 30;
+  var plotW = W - padL - padR, plotH = H - padT - padB;
+  var vMin = 0, vMax = 850000;
+  var n = years.length;
+
+  function xFor(i) { return padL + (i / (n - 1)) * plotW; }
+  function yFor(v) { return padT + plotH - ((v - vMin) / (vMax - vMin)) * plotH; }
+
+  var ticks = [0, 200000, 400000, 600000, 800000];
+  ticks.forEach(function (t) {
+    var y = yFor(t);
+    svg.appendChild(el("line", { x1: padL, x2: W - padR, y1: y, y2: y, class: "grid-line" }));
+    var lbl = el("text", { x: padL - 8, y: y + 3, class: "axis-label", "text-anchor": "end" });
+    lbl.textContent = "$" + (t/1000) + "bn";
+    svg.appendChild(lbl);
+  });
+  svg.appendChild(el("line", { x1: padL, x2: padL, y1: padT, y2: H - padB, class: "axis-line" }));
+  svg.appendChild(el("line", { x1: padL, x2: W - padR, y1: H - padB, y2: H - padB, class: "axis-line" }));
+
+  years.forEach(function (yr, i) {
+    var lbl = el("text", { x: xFor(i), y: H - padB + 16, class: "axis-label", "text-anchor": "middle" });
+    lbl.textContent = yr;
+    svg.appendChild(lbl);
+  });
+
+  // COVID callout
+  var covidX0 = xFor(1.6), covidX1 = xFor(2.4);
+  svg.appendChild(el("rect", { x: covidX0, y: padT, width: covidX1 - covidX0, height: plotH, class: "callout-box" }));
+  var covidLbl = el("text", { x: xFor(2), y: padT - 8, class: "covid-label", "text-anchor": "middle" });
+  covidLbl.textContent = "COVID-19 import crash";
+  svg.appendChild(covidLbl);
+
+  var impPts = imports_.map(function (v, i) { return xFor(i).toFixed(1) + "," + yFor(v).toFixed(1); });
+  var expPtsRev = exports_.map(function (v, i) { return xFor(i).toFixed(1) + "," + yFor(v).toFixed(1); }).reverse();
+  svg.appendChild(el("path", { d: "M" + impPts.join(" L") + " L" + expPtsRev.join(" L") + " Z", class: "deficit-band" }));
+
+  function linePath(values) { return values.map(function (v, i) { return (i === 0 ? "M" : "L") + xFor(i).toFixed(1) + "," + yFor(v).toFixed(1); }).join(" "); }
+  svg.appendChild(el("path", { d: linePath(exports_), class: "exp-line" }));
+  svg.appendChild(el("path", { d: linePath(imports_), class: "imp-line" }));
+
+  exports_.forEach(function (v, i) { svg.appendChild(el("circle", { cx: xFor(i), cy: yFor(v), r: 3, fill: "var(--data-line)" })); });
+  imports_.forEach(function (v, i) { svg.appendChild(el("circle", { cx: xFor(i), cy: yFor(v), r: 3, fill: "var(--imp-line)" })); });
+
+  var endExpLbl = el("text", { x: xFor(n - 1) - 6, y: yFor(exports_[n - 1]) - 10, class: "end-label", "text-anchor": "end", fill: "var(--data-line)" });
+  endExpLbl.textContent = fmtBn(exports_[n - 1]);
+  svg.appendChild(endExpLbl);
+  var endImpLbl = el("text", { x: xFor(n - 1) - 6, y: yFor(imports_[n - 1]) + 16, class: "end-label", "text-anchor": "end", fill: "var(--imp-line)" });
+  endImpLbl.textContent = fmtBn(imports_[n - 1]);
+  svg.appendChild(endImpLbl);
+
+  var crosshair = el("line", { x1: 0, x2: 0, y1: padT, y2: H - padB, stroke: "var(--ink-muted)", "stroke-width": 1, opacity: 0 });
+  svg.appendChild(crosshair);
+  var hitArea = el("rect", { x: padL, y: padT, width: plotW, height: plotH, fill: "transparent" });
+  svg.appendChild(hitArea);
+  var tooltip = document.getElementById("tradeTooltip");
+  var chartCard = svg.parentElement;
+
+  hitArea.addEventListener("mousemove", function (evt) {
+    var rect = svg.getBoundingClientRect();
+    var mx = ((evt.clientX - rect.left) / rect.width) * W;
+    var i = Math.max(0, Math.min(n - 1, Math.round((mx - padL) / plotW * (n - 1))));
+    var x = xFor(i);
+    crosshair.setAttribute("x1", x); crosshair.setAttribute("x2", x); crosshair.style.opacity = 1;
+    var cardRect = chartCard.getBoundingClientRect();
+    tooltip.style.left = ((x / W) * cardRect.width) + "px";
+    tooltip.style.top = ((yFor(exports_[i]) / H) * cardRect.height - 14) + "px";
+    tooltip.style.transform = "translate(-50%, -100%)";
+    tooltip.style.opacity = 1;
+    var bal = exports_[i] - imports_[i];
+    tooltip.innerHTML = "FY" + years[i] + " &nbsp; export <b>" + fmtBn(exports_[i]) + "</b> &nbsp; import <b>" + fmtBn(imports_[i]) + "</b><br>balance <b>-" + fmtBn(Math.abs(bal)) + "</b>";
+  });
+  hitArea.addEventListener("mouseleave", function () { crosshair.style.opacity = 0; tooltip.style.opacity = 0; });
+
+  // ---- totals table ----
+  var totalsTable = document.getElementById("totalsTable");
+  var tthead = "<thead><tr><th>Fiscal Year</th><th>Export (US$ Mn)</th><th>Import (US$ Mn)</th><th>Balance</th><th>Cover %</th></tr></thead>";
+  var trows = years.map(function (yr, i) {
+    var bal = exports_[i] - imports_[i];
+    var cover = (exports_[i] / imports_[i] * 100).toFixed(1);
+    return "<tr><td>FY" + yr + "</td><td>" + exports_[i].toLocaleString() + "</td><td>" + imports_[i].toLocaleString() + "</td><td>" + bal.toFixed(1) + "</td><td>" + cover + "%</td></tr>";
+  }).reverse().join("");
+  totalsTable.innerHTML = tthead + "<tbody>" + trows + "</tbody>";
+
+  // ---- Diverging bar chart: top deficit + top surplus chapters ----
+  var deficitChapters = [
+    ["HS27", "Mineral fuels & oils", -147544.2],
+    ["HS71", "Pearls, gems & jewellery", -81086.4],
+    ["HS85", "Electrical machinery", -50876.4],
+    ["HS84", "Machinery & mech. appliances", -37389.9],
+    ["HS15", "Animal/vegetable fats & oils", -17549.1],
+    ["HS39", "Plastics", -14637.1],
+    ["HS31", "Fertilisers", -14423.8],
+    ["HS88", "Aircraft & spacecraft", -12108.8]
+  ];
+  var surplusChapters = [
+    ["HS30", "Pharmaceuticals", 21441.3],
+    ["HS87", "Vehicles", 16612.1],
+    ["HS10", "Cereals", 11882.5],
+    ["HS62", "Apparel (woven)", 7278.7],
+    ["HS61", "Apparel (knitted)", 6823.6],
+    ["HS03", "Fish & seafood", 6726.6],
+    ["HS63", "Other textile articles", 5318.2],
+    ["HS02", "Meat", 5201.9]
+  ];
+  var divData = deficitChapters.concat(surplusChapters.slice().reverse());
+
+  var dsvg = document.getElementById("divergingChart");
+  var DW = 1000, DH = 460, DpadL = 210, DpadR = 90, DpadT = 10, DpadB = 10;
+  var DplotW = DW - DpadL - DpadR;
+  var rowH = (DH - DpadT - DpadB) / divData.length;
+  var maxAbs = Math.max.apply(null, divData.map(function (d) { return Math.abs(d[2]); }));
+  var DxMid = DpadL + DplotW / 2;
+  var scale = (DplotW / 2 - 10) / maxAbs;
+
+  dsvg.appendChild(el("line", { x1: DxMid, x2: DxMid, y1: DpadT, y2: DH - DpadB, class: "axis-line" }));
+
+  var divTooltip = document.getElementById("divTooltip");
+  var dchartCard = dsvg.parentElement;
+
+  divData.forEach(function (d, i) {
+    var y0 = DpadT + i * rowH;
+    var barH = rowH * 0.62;
+    var val = d[2];
+    var barW = Math.abs(val) * scale;
+    var x = val < 0 ? DxMid - barW : DxMid;
+    var rect = el("rect", { x: x, y: y0 + (rowH - barH) / 2, width: barW, height: barH, fill: val < 0 ? "var(--neg-bar)" : "var(--pos-bar)" });
+    dsvg.appendChild(rect);
+
+    var catLbl = el("text", { x: DpadL - 12, y: y0 + rowH / 2 + 4, class: "cat-label", "text-anchor": "end" });
+    catLbl.textContent = d[0] + " " + d[1];
+    dsvg.appendChild(catLbl);
+
+    var valLbl = el("text", {
+      x: val < 0 ? DxMid - 8 : DxMid + 8, y: y0 + rowH / 2 + 4,
+      class: "bar-label", "text-anchor": val < 0 ? "end" : "start"
+    });
+    valLbl.textContent = (val < 0 ? "-" : "+") + "$" + (Math.abs(val) / 1000).toFixed(1) + "bn";
+    dsvg.appendChild(valLbl);
+
+    rect.addEventListener("mousemove", function (evt) {
+      var rect2 = dsvg.getBoundingClientRect();
+      var cardRect = dchartCard.getBoundingClientRect();
+      divTooltip.style.left = ((evt.clientX - rect2.left) / rect2.width * DW / DW) * cardRect.width + "px";
+      divTooltip.style.left = (((x + (val < 0 ? 0 : barW) ) / DW) * cardRect.width) + "px";
+      divTooltip.style.top = (((y0) / DH) * cardRect.height - 8) + "px";
+      divTooltip.style.transform = "translate(-50%, -100%)";
+      divTooltip.style.opacity = 1;
+      divTooltip.innerHTML = "<b>" + d[0] + " " + d[1] + "</b><br>FY2025-26 balance: " + (val < 0 ? "-" : "+") + "$" + (Math.abs(val)/1000).toFixed(1) + "bn";
+    });
+    rect.addEventListener("mouseleave", function () { divTooltip.style.opacity = 0; });
+  });
+
+  // divider between deficit and surplus groups
+  var midY = DpadT + 8 * rowH;
+  dsvg.appendChild(el("line", { x1: DpadL - 200, x2: DW - DpadR + 80, y1: midY, y2: midY, stroke: "var(--rule-strong)", "stroke-width": 1, "stroke-dasharray": "3 3" }));
+
+  // ---- chapter table (all 98, FY2025-26) ----
+  var chapterRows = [["27", "Mineral Fuels, Mineral Oils And Products Of Their Distillation; Bituminous Substances; Mineral Waxes.", 55871.2, 203415.4, -147544.2], ["71", "Natural Or Cultured Pearls,Precious Or Semiprecious Stones,Pre.Metals,Clad With Pre.Metal And Artcls Thereof;Imit.Jewlry;Coin.", 28343.8, 109430.2, -81086.4], ["85", "Electrical Machinery And Equipment And Parts Thereof; Sound Recorders And Reproducers, Television Image And Sound Recorders And Reproducers,And Parts.", 53976.3, 104852.7, -50876.4], ["84", "Nuclear Reactors, Boilers, Machinery And Mechanical Appliances; Parts Thereof.", 36629.6, 74019.5, -37389.9], ["15", "Animal Or Vegetable Fats And Oils And Their Cleavage Products; Pre. Edible Fats; Animal Or Vegetable Waxex.", 2227.9, 19777.0, -17549.1], ["39", "Plastic And Articles Thereof.", 7597.4, 22234.5, -14637.1], ["31", "Fertilisers.", 156.3, 14580.2, -14423.9], ["88", "Aircraft, Spacecraft, And Parts Thereof.", 1665.9, 13774.8, -12108.9], ["90", "Optical, Photographic Cinematographic Measuring, Checking Precision, Medical Or Surgical Inst. And Apparatus Parts And Accessories Thereof;", 5679.8, 15375.3, -9695.5], ["28", "Inorganic Chemicals; Organic Or Inorganic Compounds Of Precious Metals, Of Rare-Earth Metals, Or Radi. Elem. Or Of Isotopes.", 4495.5, 14179.7, -9684.2], ["74", "Copper And Articles Thereof.", 3358.8, 12780.3, -9421.5], ["26", "Ores, Slag And Ash.", 2139.2, 10402.8, -8263.6], ["72", "Iron And Steel", 10316.6, 15753.4, -5436.8], ["29", "Organic Chemicals", 20408.8, 25410.7, -5001.9], ["08", "Edible Fruit And Nuts; Peel Or Citrus Fruit Or Melons.", 1891.0, 5870.2, -3979.2], ["47", "Pulp Of Wood Or Of Other Fibrous Cellulosic Material; Waste And Scrap Of Paper Or Paperboard.", 1.0, 3348.0, -3347.0], ["25", "Salt; Sulphur; Earths And Stone; Plastering Materials, Lime And Cement.", 2281.8, 5288.3, -3006.5], ["76", "Aluminium And Articles Thereof.", 7017.7, 10001.9, -2984.2], ["70", "Glass And Glassware.", 1170.4, 3123.7, -1953.3], ["44", "Wood And Articles Of Wood; Wood Charcoal.", 593.6, 2398.4, -1804.8], ["38", "Miscellaneous Chemical Products.", 7113.4, 8857.1, -1743.7], ["07", "Edible Vegetables And Certain Roots And Tubers.", 2258.4, 3651.9, -1393.5], ["98", "Project Goods; Some Special Uses.", 12.5, 1175.7, -1163.2], ["75", "Nickel And Articles Thereof.", 185.0, 1187.7, -1002.7], ["22", "Beverages, Spirits And Vinegar.", 453.4, 1420.0, -966.6], ["35", "Albuminoidal Substances; Modified Starches; Glues; Enzymes.", 436.3, 1198.9, -762.6], ["18", "Cocoa And Cocoa Preparations.", 317.9, 1028.3, -710.4], ["91", "Clocks And Watches And Parts Thereof.", 88.7, 792.5, -703.8], ["82", "Tools Implements, Cutlery, Spoons And Forks, Of Base Metal; Parts Thereof Of Base Metal.", 1148.9, 1697.2, -548.3], ["59", "Impregnated, Coated, Covered Or Laminated Textile Fabrics; Textile Articles Of A Kind Suitable For Industrial Use.", 436.9, 938.0, -501.1], ["81", "Other Base Metals; Cermets; Articles Thereof.", 297.3, 773.4, -476.1], ["80", "Tin And Articles Thereof.", 52.0, 518.0, -466.0], ["60", "Knitted Or Crocheted Fabrics.", 494.6, 950.1, -455.5], ["89", "Ships, Boats And Floating Structures.", 4110.8, 4560.2, -449.4], ["48", "Paper And Paperboard; Articles Of Paper Pulp, Of Paper Or Of Paperboard.", 2602.8, 3040.1, -437.3], ["34", "Soap, Organic Surface-Active Agents, Washing Preparations, Lubricating Preparations, Artificial Waxes, Prepared Waxes, Polishing Or Scouring Prep.", 1063.3, 1430.2, -366.9], ["54", "Man-Made Filaments.", 1620.8, 1958.2, -337.4], ["86", "Railway Or Tramway Locomotives, Rolling-Stock And Parts Thereof; Railway Or Tramway Track Fixtures And Fittings And Parts Thereof; Mechanical", 504.1, 808.5, -304.4], ["83", "Miscellaneous Articles Of Base Metal.", 1026.2, 1292.3, -266.1], ["79", "Zinc And Articles Thereof.", 878.7, 1100.4, -221.7], ["37", "Photographic Or Cinematographic Goods.", 23.7, 238.8, -215.1], ["51", "Wool, Fine Or Coarse Animal Hair, Horsehair Yarn And Woven Fabric.", 151.8, 335.3, -183.5], ["97", "Works Of Art Collectors' Pieces And Antiques.", 176.3, 286.5, -110.2], ["14", "Vegetable Plaiting Materials; Vegetable Products Not Elsewhere Specified Or Included.", 44.4, 132.4, -88.0], ["95", "Toys, Games And Sports Requisites; Parts And Accessories Thereof.", 602.7, 638.7, -36.0], ["66", "Umbrellas, Sun Umbrellas, Walking-Sticks, Seat-Sticks, Whips,Riding-Crops And Parts Thereof.", 6.5, 41.0, -34.5], ["92", "Musical Instruments; Parts And Accessories Of Such Articles.", 53.4, 85.4, -32.0], ["99", "Miscellaneous Goods.", 0.3, 6.6, -6.3], ["45", "Cork And Articles Of Cork.", 6.6, 12.0, -5.4], ["43", "Furskins And Artificial Fur, Manufactures Thereof.", 4.5, 7.2, -2.7], ["01", "Live Animals.", 25.4, 24.5, 0.9], ["41", "Raw Hides And Skins (Other Than Furskins) And Leather", 399.1, 391.0, 8.1], ["06", "Live Trees And Other Plants; Bulbs; Roots And The Like; Cut Flowers And Ornamental Foliage.", 92.5, 76.5, 16.0], ["50", "Silk", 257.1, 208.1, 49.0], ["46", "Manufactures Of Straw, Of Esparto Or Of Other Plaiting Materials; Basketware And Wickerwork.", 64.3, 9.4, 54.9], ["96", "Miscellaneous Manufactured Articles.", 705.4, 646.2, 59.2], ["65", "Headgear And Parts Thereof.", 117.4, 47.0, 70.4], ["78", "Lead And Articles Thereof.", 1268.7, 1171.1, 97.6], ["40", "Rubber And Articles Thereof.", 5074.9, 4975.4, 99.5], ["56", "Wadding, Felt And Nonwovens; Spacial Yarns; Twine, Cordage, Ropes And Cables And Articles Thereof.", 608.4, 481.4, 127.0], ["58", "Special Woven Fabrics; Tufted Textile Fabrics; Lace; Tapestries; Trimmings; Embroidery.", 390.0, 241.1, 148.9], ["49", "Printed Bookds, Newspapers, Pictures And Other Products Of The Printing Industry; Manuscripts, Typescripts And Plans.", 463.4, 249.2, 214.2], ["05", "Products Of Animal Origin, Not Elsewhere Specified Or Included.", 373.6, 54.6, 319.0], ["53", "Other Vegetable Textile Fibres; Paper Yarn And Woven Fabrics Of Paper Yarn.", 881.6, 540.6, 341.0], ["32", "Tanning Or Dyeing Extracts; Tannins And Their Deri. Dyes, Pigments And Other Colouring Matter; Paints And Ver; Putty And Other Mastics; Inks.", 3171.6, 2685.6, 486.0], ["11", "Products Of The Milling Industry; Malt; Starches; Inulin; Wheat Gluten.", 626.3, 123.8, 502.5], ["55", "Man-Made Staple Fibres.", 1575.3, 1071.8, 503.5], ["94", "Furniture; Bedding, Mattresses, Mattress Supports, Cushions And Similar Stuffed Furnishing; Lamps And Lighting Fittings Not Elsewhere Specified Or Inc", 2484.8, 1967.0, 517.8], ["36", "Explosives; Pyrotechnic Products; Matches; Pyrophoric Alloys; Certain Combustible Preparations.", 559.8, 31.2, 528.6], ["67", "Prepared Feathers And Down And Articles Made Of Feathers Or Of Down; Artificial Flowers; Articles Of Human Hair.", 665.5, 38.0, 627.5], ["93", "Arms And Ammunition; Parts And Accessories Thereof.", 818.5, 127.0, 691.5], ["19", "Preparations Of Cereals, Flour, Starch Or Milk; Pastrycooks Products.", 988.0, 233.0, 755.0], ["13", "Lac; Gums, Resins And Other Vegetable Saps And Extracts.", 1210.7, 437.2, 773.5], ["16", "Preparations Of Meat, Of Fish Or Of Crustaceans, Molluscs Or Other Aquatic Invertebrates", 808.8, 8.3, 800.5], ["04", "Dairy Produce; Birds' Eggs; Natural Honey; Edible Prod. Of Animal Origin, Not Elsewhere Spec. Or Included.", 918.8, 79.8, 839.0], ["68", "Articles Of Stone, Plaster, Cement, Asbestos, Mica Or Similar Materials.", 2029.9, 1162.9, 867.0], ["20", "Preparations Of Vegetables, Fruit, Nuts Or Other Parts Of Plants.", 1245.0, 275.7, 969.3], ["17", "Sugars And Sugar Confectionery.", 2464.9, 1445.0, 1019.9], ["12", "Oil Seeds And Olea. Fruits; Misc. Grains, Seeds And Fruit; Industrial Or Medicinal Plants; Straw And Fodder.", 1956.5, 866.5, 1090.0], ["33", "Essential Oils And Resinoids; Perfumery, Cosmetic Or Toilet Preparations.", 2656.3, 1535.7, 1120.6], ["23", "Residues And Waste From The Food Industries; Prepared Animal Foder.", 2240.9, 868.9, 1372.0], ["69", "Ceramic Products.", 2703.7, 1043.7, 1660.0], ["21", "Miscellaneous Edible Preparations.", 1960.5, 262.6, 1697.9], ["57", "Carpets And Other Textile Floor Coverings.", 1974.3, 177.8, 1796.5], ["24", "Tobacco And Manufactured Tobacco Substitutes.", 1949.0, 145.4, 1803.6], ["64", "Footwear, Gaiters And The Like; Parts Of Such Articles.", 2462.2, 628.8, 1833.4], ["42", "Articles Of Leather,Saddlery And Harness;Travel Goods, Handbags And Similar Cont.Articles Of Animal Gut(Othr Thn Silk-Wrm)Gut.", 2645.6, 532.2, 2113.4], ["52", "Cotton.", 5983.5, 2128.8, 3854.7], ["09", "Coffee, Tea, Mate And Spices.", 5424.4, 1281.7, 4142.7], ["73", "Articles Of Iron Or Steel", 10409.0, 5748.6, 4660.4], ["02", "Meat And Edible Meat Offal.", 5215.4, 13.5, 5201.9], ["63", "Other Made Up Textile Articles; Sets; Worn Clothing And Worn Textile Articles; Rags", 5995.3, 677.1, 5318.2], ["03", "Fish And Crustaceans, Molluscs And Other Aquatic Invertabrates.", 7016.2, 289.6, 6726.6], ["61", "Articles Of Apparel And Clothing Accessories, Knitted Or Corcheted.", 7642.1, 818.5, 6823.6], ["62", "Articles Of Apparel And Clothing Accessories, Not Knitted Or Crocheted.", 8172.5, 893.8, 7278.7], ["10", "Cereals.", 12007.5, 125.0, 11882.5], ["87", "Vehicles Other Than Railway Or Tramway Rolling Stock, And Parts And Accessories Thereof.", 25973.4, 9361.2, 16612.2], ["30", "Pharmaceutical Products", 25073.4, 3632.0, 21441.4]];
+  var chapterTable = document.getElementById("chapterTable");
+  var chead = "<thead><tr><th>HS</th><th>Commodity</th><th>Export FY25-26</th><th>Import FY25-26</th><th>Balance</th></tr></thead>";
+  var crows = chapterRows.map(function (r) {
+    return "<tr><td>" + r[0] + "</td><td>" + r[1] + "</td><td>" + r[2].toLocaleString() + "</td><td>" + r[3].toLocaleString() + "</td><td>" + r[4].toLocaleString() + "</td></tr>";
+  }).join("");
+  chapterTable.innerHTML = chead + "<tbody>" + crows + "</tbody>";
+})();
+</script>
