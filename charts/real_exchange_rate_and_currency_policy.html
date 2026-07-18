@@ -110,6 +110,12 @@
   .cite { font-size: 11.5px; color: var(--ink-muted); }
   .cite a { color: var(--accent); }
 
+  .verdict { background: var(--accent-soft); border: 1px solid var(--accent); padding: 18px 22px; display: flex; flex-direction: column; gap: 6px; }
+  .verdict-label { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); }
+  .verdict-answer { font-family: var(--font-display); font-size: clamp(20px, 2.6vw, 26px); font-weight: 600; color: var(--ink); text-wrap: balance; }
+  .verdict-sub { font-size: 13.5px; color: var(--ink-2); line-height: 1.55; max-width: 72ch; }
+  .verdict-sub b { color: var(--ink); }
+
   details.table-view { border-top: 1px solid var(--rule-strong); padding-top: 10px; }
   details.table-view summary { cursor: pointer; font-size: 12.5px; color: var(--ink-2); font-family: var(--font-mono); }
   .data-table-wrap { overflow-x: auto; margin-top: 12px; }
@@ -171,6 +177,11 @@
 
     <section class="block prose">
       <h2 class="block-title" style="border:none; padding:0;">Is this what China was accused of?</h2>
+      <div class="verdict">
+        <div class="verdict-label">The verdict</div>
+        <div class="verdict-answer">China fits the definition of currency manipulation. India does not.</div>
+        <div class="verdict-sub">China was <b>formally designated a currency manipulator in August 2019</b> for a mechanism it ran for years: buying foreign currency and accumulating reserves to hold the yuan artificially <b>weak</b>, subsidizing exports. India's RBI is currently doing the <b>opposite</b> — selling reserves to stop the rupee falling further, not buying dollars to push it down. Same word ("manipulation") would describe two opposite actions; only one of them is what actually happened here.</div>
+      </div>
       <p>The U.S. Treasury's framework for labeling a trading partner a "currency manipulator" (from the 2015 Trade Facilitation and Trade Enforcement Act) rests on three tests, evaluated together: a <b>bilateral goods trade surplus with the US</b> above a set threshold (originally $20bn), a <b>current account surplus</b> above roughly 2–3% of GDP, and — the test that actually matters here — <b>persistent, one-sided FX intervention</b>: net <i>purchases</i> of foreign currency exceeding about 2% of GDP over 12 months, repeated in at least 6 of those months. Meeting all three gets the formal label; meeting two lands a country on a "Monitoring List." China was formally designated a manipulator in August 2019 and had the label removed in January 2020, after agreeing to currency provisions in the Phase One trade deal.</p>
       <p>China's own long-run pattern, as the Brookings piece lays out, was letting the renminbi appreciate only slowly and grudgingly — about 25% against the dollar since 2005 by the article's account — despite years of U.S. pressure for faster movement, while Beijing treated exchange-rate management as a legitimate development tool rather than a trade weapon. The mechanism behind the "manipulator" concern was China <b>buying foreign currency and selling its own</b> — accumulating reserves — specifically to keep the renminbi cheaper than it would otherwise be, subsidizing Chinese exports.</p>
       <p class="pull">India's own reserves chart above shows the RBI doing the opposite: selling foreign currency, not buying it — reserves fell from a $728.5bn peak to a $666.9bn trough, an 8.5% drawdown, precisely while the rupee was depreciating.</p>
