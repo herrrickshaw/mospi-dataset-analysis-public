@@ -1,0 +1,65 @@
+{
+  "fetched_at": "2026-07-18",
+  "source": "MoSPI MCP connector (api.mospi.gov.in)",
+  "connector_health": {
+    "list_datasets": "ok",
+    "get_indicators_NAS": "upstream 500 from api.mospi.gov.in, fell back to bundled local indicator definitions",
+    "get_data_CPI": "ok",
+    "get_data_IIP": "ok (required explicit type=General param)",
+    "get_data_WPI": "ok",
+    "get_data_RBI_forex": "ok, but data lagged to June 2025 despite requesting 2025,2026"
+  },
+  "cpi": {
+    "dataset": "CPI",
+    "base_year": "2024",
+    "series": "Current",
+    "state": "All India",
+    "latest_month": "June 2026",
+    "general_index": [
+      {"sector": "Rural", "index": 107.24, "inflation_yoy_pct": 4.74},
+      {"sector": "Urban", "index": 106.69, "inflation_yoy_pct": 3.92},
+      {"sector": "Combined", "index": 107.00, "inflation_yoy_pct": 4.38}
+    ],
+    "food_and_beverages": [
+      {"sector": "Rural", "index": 106.70, "inflation_yoy_pct": 5.21},
+      {"sector": "Urban", "index": 107.46, "inflation_yoy_pct": 4.79},
+      {"sector": "Combined", "index": 106.98, "inflation_yoy_pct": 5.05}
+    ]
+  },
+  "iip": {
+    "dataset": "IIP",
+    "base_year": "2011-12",
+    "type": "General",
+    "category": "General",
+    "series": [
+      {"year": 2026, "month": "January", "index": 169.9, "growth_rate_yoy_pct": 5.1},
+      {"year": 2026, "month": "February", "index": 158.8, "growth_rate_yoy_pct": 5.1},
+      {"year": 2026, "month": "March", "index": 173.2, "growth_rate_yoy_pct": 4.1}
+    ]
+  },
+  "wpi": {
+    "dataset": "WPI",
+    "base_year": "2011-12",
+    "major_group": "Wholesale price index",
+    "series": [
+      {"year": 2026, "month": "January", "index_value": 157.6},
+      {"year": 2026, "month": "February", "index_value": 158.4},
+      {"year": 2026, "month": "March", "index_value": 160.8},
+      {"year": 2026, "month": "April", "index_value": 167}
+    ]
+  },
+  "rbi_forex_reserves": {
+    "dataset": "RBI",
+    "sub_indicator_code": 47,
+    "type": "Total",
+    "currency": "US $ Millions",
+    "series": [
+      {"year": "2025", "month": "January", "value": 630607.39},
+      {"year": "2025", "month": "February", "value": 638698.41},
+      {"year": "2025", "month": "March", "value": 668326.22},
+      {"year": "2025", "month": "April", "value": 688428.34},
+      {"year": "2025", "month": "May", "value": 691308.97},
+      {"year": "2025", "month": "June", "value": 698117.77}
+    ]
+  }
+}
