@@ -1,5 +1,11 @@
 # IMPORT EXPORT Dataset Analysis - Inspired by NITI Aayog Trade watch
 
+> **This repo has been split into two independent, actively-maintained repos** — kept here for history, but new work happens in the split successors:
+> - [`india-trade-data-analysis`](https://github.com/herrrickshaw/india-trade-data-analysis) — MoSPI macro indicators (CPI/WPI/GDP), currency &amp; forex, TRADESTAT trade-balance/HSN analysis, the five-year synthesis, the FY2025-26 sample report, and the Colab notebook.
+> - [`india-trade-sector-policy-recommendations`](https://github.com/herrrickshaw/india-trade-sector-policy-recommendations) — PLI scheme coverage, import-dependency policy gaps, country-by-country trade-relationship history, and the tiered sector/policy recommendations bulletin (incl. a CBAM export-risk flag and a declining-export-sector flag, both cross-checked against NITI Aayog's Trade Watch Quarterly).
+>
+> Everything below is unchanged from before the split and still resolves correctly in this repo — it's just no longer where new sections get added.
+
 A record of accessing India's official statistics via the **MoSPI (Ministry of Statistics and Programme Implementation)** data API/connector, plus a snapshot of the latest published figures pulled on 2026-07-18.
 
 This repo reads chronologically — each section was added as a new question came up, often building on the one before it. The **[five-year synthesis](#five-year-synthesis-trade-currency--policy-fy2021-22-to-fy2025-26)** near the end re-cuts every thread below to one consistent window if you want the short version first.
