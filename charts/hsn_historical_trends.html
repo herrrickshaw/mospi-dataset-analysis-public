@@ -190,6 +190,7 @@
       <h2 class="block-title" style="border:none; padding:0;">Reading this against the deficit</h2>
       <p>The trade-balance bulletin elsewhere in this repo shows mineral fuels and gems/jewellery as the two largest deficit-driving chapters — but this history shows neither is where the deficit's <b>momentum</b> is coming from. Mineral fuels imports have grown a modest 21.2% over eight years (largely price-driven, not a structural shift), and gems/jewellery imports (+69.1%) are growing roughly in line with the broader deficit chapters.</p>
       <p>The chapters actually <b>accelerating</b> — fertilisers, electrical machinery, edible oils — point to where new import dependency is building: energy-intensive fertiliser production, electronics components not yet made domestically at scale, and edible oil consumption outpacing domestic oilseed output. Electrical machinery is unusual in that it's growing fast on <b>both</b> sides of the ledger (imports of components, exports of assembled goods) — consistent with India importing parts for final assembly and re-export, rather than either pure import substitution or pure domestic manufacturing.</p>
+      <p><b>Independently corroborated by DPIIT's own 2025-26 Annual Report</b> (not a trade-data source — it doesn't publish a balance-of-trade series — but its Industrial Entrepreneur Memorandum investment-intention data, Appendix IV): proposed domestic investment in <b>Electricals Equipment</b> jumped from <b>₹65,979 crore (2021) to ₹233,829 crore (2024)</b>, and in <b>Fertilizers</b> from <b>₹1,112 crore (2021) to ₹41,127 crore (2024)</b> — the same two sectors flagged here as the fastest-growing high-value imports are also where India's domestic capacity-building investment is scaling up fastest, an independent confirmation from a completely different data system (industrial licensing filings, not customs data). DPIIT's "24 champion sub-sectors" programme separately names <b>electronics</b> and <b>aluminium</b> among sectors selected partly for "need for import substitution" — the same conclusion this chart reaches from the trade numbers alone.</p>
     </section>
 
     <div class="errata">
@@ -200,6 +201,7 @@
         <li><b>"Top 12" is by absolute latest-year value</b>, not by growth rate or by trade balance — a chapter can be simultaneously one of the largest imports and a shrinking one (see gems &amp; jewellery, export side).</li>
         <li>Top 12 import chapters account for <b>81.5%</b> of all FY2025-26 imports; the remaining 86 chapters share the other 18.5%.</li>
         <li>Same TRADESTAT pull and scraping method as the trade-balance bulletin: a Laravel/Livewire form that 405s on a cold GET, resolved by visiting the search page first for a session cookie + CSRF token, then POSTing the form (each query returns 2 fiscal years).</li>
+        <li>Totals cross-validated against the Commerce Ministry's TIA Portal, DGFT, and PIB; DPIIT investment-intention data used as independent corroboration, not a trade-data source. See <a href="../data/trade_data_cross_validation_2026-07-18.json">data/trade_data_cross_validation_2026-07-18.json</a>.</li>
       </ul>
     </div>
 

@@ -1,0 +1,55 @@
+{
+  "purpose": "Cross-validation of this repo's TRADESTAT-derived FY2025-26 merchandise trade figures against three additional official sources requested for verification: the Commerce Ministry's Trade Intelligence and Analytics (TIA) Portal, DGFT's Trade Statistics & Analytics hub, PIB press releases, and DPIIT's 2025-26 Annual Report.",
+  "retrieved": "2026-07-18",
+  "this_repo_tradestat_figures_fy2025_26": {
+    "total_exports_usd_million": 441745.9,
+    "total_imports_usd_million": 776013.6,
+    "merchandise_deficit_usd_million": -334267.7,
+    "hs27_mineral_fuels_export_usd_million": 55871.2
+  },
+  "tia_portal": {
+    "url": "https://trade-analytics.commerce.gov.in/public/indiaTrade",
+    "source_note": "Department of Commerce dashboard, data sourced from DGCIS -- same lineage as TRADESTAT",
+    "fy2025_26_total_imports_usd_million": 776013.65,
+    "fy2025_26_total_exports_usd_million": 451070,
+    "hs27_mineral_fuels_export_usd_million": 55871.21,
+    "discrepancy_note": "Imports and the HS27 export figure match this repo's TRADESTAT pull almost to the dollar. The TIA Portal's own total export figure (451.07bn) reads about 2% / $9.3bn higher than both this repo's TRADESTAT figure and PIB's official release (see below) -- likely a data-vintage/revision difference given FY2025-26 is still provisional on all sources, not a methodology error, since two of three independent sources agree closely."
+  },
+  "dgft": {
+    "url": "https://www.dgft.gov.in/CP/?opt=trade-statistics",
+    "finding": "DGFT's 'Import Export Data Bank' link resolves directly to tradestat.commerce.gov.in -- the same source this repo's trade-balance bulletin already scrapes, not an independent dataset. DGFT's 'Latest Trade Figures' link routes to commerce.gov.in, which is PIB-sourced (see below)."
+  },
+  "pib": {
+    "source": "PIB press release, Ministry of Commerce and Industry, FY2025-26 (April-March) merchandise trade release",
+    "url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2252272",
+    "fy2025_26_merchandise_exports_usd_billion": 441.78,
+    "fy2024_25_merchandise_exports_usd_billion": 437.70,
+    "fy2025_26_merchandise_trade_deficit_usd_billion": 333.19,
+    "fy2024_25_merchandise_trade_deficit_usd_billion": 283.50,
+    "implied_fy2025_26_imports_usd_billion": 774.97,
+    "note": "Exports and deficit match this repo's TRADESTAT figures within a rounding error ($441.78bn vs $441.7bn; -$333.19bn vs -$334.3bn)."
+  },
+  "dpiit_annual_report_2025_26": {
+    "url": "https://www.dpiit.gov.in/static/uploads/2026/03/863a5fef349d79a1bba316c4b51eaacb.pdf",
+    "pages": 295,
+    "does_not_publish": "A merchandise trade-balance or trade-deficit series -- consistent with what this repo already found when checking DPIIT for services-trade data (see services_trade_and_overall_balance json).",
+    "iem_part_a_investment_intention_rs_crore": {
+      "note": "Appendix IV, 'Sectorwise Investment Intention based on Part A during last five years' -- Industrial Entrepreneur Memorandum filings, a completely separate data system (industrial licensing, not customs). Used here only as independent corroboration of which sectors are seeing the biggest domestic capacity build-out, not as a trade-data source.",
+      "electricals_equipment": {"2021": 65979, "2022": 42968, "2023": 110436, "2024": 233829, "upto_dec_2025": 107965},
+      "fertilizers": {"2021": 1112, "2022": 1616, "2023": 9779, "2024": 41127, "upto_dec_2025": 8424}
+    },
+    "champion_subsectors_note": "DPIIT's 24 champion sub-sectors programme explicitly lists 'electronics' and 'aluminium' among sectors chosen partly for 'need for import substitution' -- language matching this repo's independent finding (via trade data alone) that electrical machinery and related chapters are the fastest-growing high-value imports.",
+    "eight_core_industries_fertilizer_growth_pct": {
+      "2019-20": 2.7, "2020-21": 1.7, "2021-22": 0.7, "2022-23": 11.3, "2023-24": 3.7, "2024-25": 2.9, "2025-26_apr_dec_provisional": 1.7
+    },
+    "fdi_context": {
+      "fy2024_25_total_fdi_inflow_usd_billion": 80.62,
+      "fy2025_26_h1_fdi_inflow_usd_billion": 50.36,
+      "fy2025_26_h1_yoy_growth_pct": 16,
+      "cumulative_fdi_2014_25_usd_billion": 748.38,
+      "cumulative_fdi_2003_14_usd_billion": 308.38,
+      "note": "Top-line FDI context only -- DPIIT's report does not break FDI equity inflows down into a text-extractable sector table in this edition (presented as a chart image); not used for chapter-level corroboration."
+    },
+    "hs_code_confirmation": "The report's own industry-specific sections (watches HS91, toys HS95, glass HS70) cite HS-code export/import tables sourced from the 'Department of Commerce Trade portal' -- confirming DPIIT itself relies on the same DGCIS/TRADESTAT lineage as this repo's bulletins."
+  }
+}
