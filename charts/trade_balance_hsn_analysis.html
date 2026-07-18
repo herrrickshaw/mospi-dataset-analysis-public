@@ -106,6 +106,7 @@
   #tradeChart { height: 340px; }
   #divergingChart { height: 460px; }
   .grid-line { stroke: var(--chart-grid); stroke-width: 1; }
+  .zero-line { stroke: var(--chart-axis); stroke-width: 1.25; }
   .axis-line { stroke: var(--chart-axis); stroke-width: 1; }
   .axis-label { font-family: var(--font-mono); font-size: 10.5px; fill: var(--ink-muted); }
   .exp-line { fill: none; stroke: var(--data-line); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
@@ -163,8 +164,8 @@
 
     <div class="verdict">
       <div class="verdict-label">The verdict</div>
-      <div class="verdict-answer">No. India has run a merchandise trade deficit every year on record here — and it's widening.</div>
-      <div class="verdict-sub">Imports have exceeded exports in <b>all 8 fiscal years</b> from FY2018-19 to FY2025-26, without exception. The deficit has grown from <b>-$184.0bn to -$334.3bn</b> — exports covered 64.2% of the import bill in FY2018-19; they cover just <b>56.9%</b> now. This is goods trade only — India separately runs a large services-trade surplus (software/IT exports) that isn't in this dataset; see the caveats below.</div>
+      <div class="verdict-answer">No — in goods alone, or goods plus services. But services trade cuts the gap roughly in half.</div>
+      <div class="verdict-sub">Imports have exceeded exports in <b>all 8 fiscal years</b> of merchandise data (FY2018-19 to FY2025-26), widening from <b>-$184.0bn to -$334.3bn</b>. Adding in India's own services-trade surplus (from RBI's Balance of Payments data — see the new segment below) narrows the FY2024-25 gap from <b>-$283.5bn to -$94.6bn</b>, and in the COVID year the combined position was nearly balanced. Still a deficit every year on record — just a much smaller one than goods-only headlines suggest.</div>
     </div>
 
     <div class="stat-strip" id="statStrip"></div>
@@ -205,16 +206,39 @@
       </details>
     </section>
 
+    <section class="block">
+      <div class="block-head">
+        <h2 class="block-title">Adding services: the fuller picture</h2>
+        <p class="block-note">Goods balance (red) + services net (teal, stacked on top) = overall balance (marker).</p>
+      </div>
+      <div class="chart-card">
+        <svg id="servicesChart" viewBox="0 0 1000 380" preserveAspectRatio="none"></svg>
+        <div class="tooltip" id="servicesTooltip"></div>
+      </div>
+      <div class="legend-row">
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--neg-bar)"></span> Goods balance (deficit)</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--accent)"></span> Services net (surplus)</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--ink)"></span> Overall balance</span>
+      </div>
+      <p class="legend-note">Services data is India's <b>"Non-factor Services"</b> category from RBI's Balance of Payments "Invisibles" series (via the MoSPI connector's RBI dataset) — principally software, IT/BPO, business and travel services — converted from ₹ Crore to US$ billion using fiscal-year-average exchange rates built from this repo's own currency segment. <b>DPIIT itself doesn't publish services-trade statistics</b> — its main public data product is a goods import-monitoring system, not a trade-balance series. The Commerce Ministry's own DGCI&amp;S does track services exports directly, via annual "Service Exports Reporting Form" (SERF) reports, but those are PDF/Excel releases, not a queryable database like TRADESTAT, so RBI's BoP series is used here instead — the two should tell a consistent story, but haven't been cross-checked against each other line by line.</p>
+      <details class="table-view">
+        <summary>View goods / services / overall balance table, FY2018-19 – FY2024-25</summary>
+        <div class="data-table-wrap"><table class="data-table" id="servicesTable"></table></div>
+      </details>
+    </section>
+
     <section class="block prose">
       <h2 class="block-title" style="border:none; padding:0;">How this connects to the rupee's slide</h2>
-      <p>This closes the loop on the currency and reserves segments elsewhere in this repo. A persistent, widening merchandise trade deficit means India needs to buy more foreign currency (to pay for those imports) than it earns from exports, year after year — structural downward pressure on the rupee that has nothing to do with any single shock. That's the backdrop the RBI has been intervening against: spending down reserves (from a $728.5bn peak to a $666.9bn trough) specifically to slow a depreciation this trade picture would otherwise make worse, not to engineer a competitive devaluation.</p>
-      <p>It also means the rupee's real depreciation (see the effective-buying-power segment) isn't just noise — a genuinely widening gap between what India earns abroad and what it spends abroad is exactly the kind of fundamental that currency markets price in over time, on top of whatever short-term shocks hit in any given month.</p>
+      <p>This closes the loop on the currency and reserves segments elsewhere in this repo. Even with services trade included, India ran a current-account-style deficit every year from FY2018-19 to FY2024-25 — meaning India still needed to buy more foreign currency than it earned, just by a smaller margin than the goods numbers alone suggest. That's structural downward pressure on the rupee that has nothing to do with any single shock, and it's the backdrop the RBI has been intervening against: spending down reserves (from a $728.5bn peak to a $666.9bn trough) specifically to slow a depreciation this trade picture would otherwise make worse, not to engineer a competitive devaluation.</p>
+      <p>It also means the rupee's real depreciation (see the effective-buying-power segment) isn't just noise — a genuinely widening gap between what India earns abroad and what it spends abroad, even net of its strongest export sector, is exactly the kind of fundamental that currency markets price in over time, on top of whatever short-term shocks hit in any given month.</p>
     </section>
 
     <div class="errata">
       <div class="errata-title">Errata &amp; methodology caveats</div>
       <ul>
-        <li><b>This is merchandise (goods) trade only</b>, from the Ministry of Commerce's DGCI&amp;S database — it does not include services trade. India runs a large, separate <b>services-trade surplus</b> (principally software and IT/BPO exports), which the RBI's own Balance of Payments data captures and which materially offsets the goods deficit at the current-account level. This bulletin does not compute that offset — don't read "India's goods trade deficit" as "India's overall external position is unsustainable" without it.</li>
+        <li><b>The HSN-chapter charts above are merchandise (goods) trade only</b>, from the Ministry of Commerce's DGCI&amp;S database — the "Adding services" segment further down brings in India's separate <b>services-trade surplus</b> from RBI's Balance of Payments data to give the fuller picture.</li>
+        <li><b>Services figures are converted from ₹ Crore using fiscal-year-average USD/INR rates</b> computed from this repo's own monthly currency series (12-month average, Apr–Mar) — a reasonable approximation, not RBI's own official FY-average rate, which may differ slightly.</li>
+        <li><b>Services data (RBI BoP) runs FY2015-16 to FY2024-25; goods data (TRADESTAT) runs FY2018-19 to FY2025-26</b> — the combined "goods + services" comparison in this bulletin is only shown for the 7 fiscal years where both overlap (FY2018-19 to FY2024-25).</li>
         <li><b>2-digit HS chapter level</b> (99 possible chapters, 98 populated) — coarser than the 8-digit tariff-line detail TRADESTAT can also provide, but the right granularity for a national total: chapter values sum exactly to the whole by construction.</li>
         <li><b>How this was pulled:</b> TRADESTAT's search forms are a Laravel/Livewire app requiring an active session — a plain HTTP GET to the report URL returns <code>405</code> without first visiting the site to establish a session cookie and CSRF token. Once that's in place, a standard form POST works and returns two fiscal years of data per query, so 4 queries per trade direction (8 total) covered all 8 years.</li>
         <li><b>FY2025-26 is the most recent, not necessarily complete</b> — the source states data last updated 19 May 2026; treat this year's figures as provisional/in-progress rather than a closed fiscal year like the others.</li>
@@ -422,5 +446,92 @@
     return "<tr><td>" + r[0] + "</td><td>" + r[1] + "</td><td>" + r[2].toLocaleString() + "</td><td>" + r[3].toLocaleString() + "</td><td>" + r[4].toLocaleString() + "</td></tr>";
   }).join("");
   chapterTable.innerHTML = chead + "<tbody>" + crows + "</tbody>";
+
+  // ---- Services segment: goods + services composition chart ----
+  var svcYears = ["2018-19","2019-20","2020-21","2021-22","2022-23","2023-24","2024-25"];
+  var svcData = [
+    { goods: -184.0, services: 82.1 },
+    { goods: -161.3, services: 85.0 },
+    { goods: -102.6, services: 88.5 },
+    { goods: -191.0, services: 107.6 },
+    { goods: -264.9, services: 143.6 },
+    { goods: -241.1, services: 162.8 },
+    { goods: -283.5, services: 188.9 }
+  ];
+
+  var ssvg = document.getElementById("servicesChart");
+  var SW = 1000, SH = 380, SpadL = 56, SpadR = 16, SpadT = 24, SpadB = 30;
+  var SplotW = SW - SpadL - SpadR, SplotH = SH - SpadT - SpadB;
+  var SvMin = -320, SvMax = 20;
+  var sn = svcYears.length;
+  var sSlot = SplotW / sn;
+  var sBarW = sSlot * 0.5;
+
+  function sxCenter(i) { return SpadL + sSlot * i + sSlot / 2; }
+  function syFor(v) { return SpadT + SplotH - ((v - SvMin) / (SvMax - SvMin)) * SplotH; }
+
+  var sTicks = [-300, -200, -100, 0];
+  sTicks.forEach(function (t) {
+    var y = syFor(t);
+    ssvg.appendChild(el("line", { x1: SpadL, x2: SW - SpadR, y1: y, y2: y, class: t === 0 ? "zero-line" : "grid-line" }));
+    var lbl = el("text", { x: SpadL - 8, y: y + 3, class: "axis-label", "text-anchor": "end" });
+    lbl.textContent = "$" + t + "bn";
+    ssvg.appendChild(lbl);
+  });
+  ssvg.appendChild(el("line", { x1: SpadL, x2: SW - SpadR, y1: syFor(0), y2: syFor(0), stroke: "var(--chart-axis)", "stroke-width": 1.25 }));
+  ssvg.appendChild(el("line", { x1: SpadL, x2: SpadL, y1: SpadT, y2: SH - SpadB, class: "axis-line" }));
+
+  var svcTooltip = document.getElementById("servicesTooltip");
+  var svcChartCard = ssvg.parentElement;
+
+  svcData.forEach(function (d, i) {
+    var cx = sxCenter(i);
+    var overall = d.goods + d.services;
+
+    // goods segment: 0 down to d.goods
+    var goodsTop = syFor(0), goodsBot = syFor(d.goods);
+    var goodsRect = el("rect", { x: cx - sBarW / 2, y: Math.min(goodsTop, goodsBot), width: sBarW, height: Math.abs(goodsBot - goodsTop), fill: "var(--neg-bar)" });
+    ssvg.appendChild(goodsRect);
+
+    // services segment: stacked from d.goods up to overall
+    var svcTop = syFor(overall), svcBot = syFor(d.goods);
+    var svcRect = el("rect", { x: cx - sBarW / 2, y: Math.min(svcTop, svcBot), width: sBarW, height: Math.abs(svcBot - svcTop), fill: "var(--accent)" });
+    ssvg.appendChild(svcRect);
+
+    // overall marker
+    var oy = syFor(overall);
+    ssvg.appendChild(el("line", { x1: cx - sBarW / 2 - 4, x2: cx + sBarW / 2 + 4, y1: oy, y2: oy, stroke: "var(--ink)", "stroke-width": 2.5 }));
+    var oLbl = el("text", { x: cx, y: oy - 8, class: "bar-label", "text-anchor": "middle" });
+    oLbl.textContent = "-$" + Math.abs(overall).toFixed(1) + "bn";
+    ssvg.appendChild(oLbl);
+
+    var xlbl = el("text", { x: cx, y: SH - SpadB + 16, class: "axis-label", "text-anchor": "middle" });
+    xlbl.textContent = "FY" + svcYears[i];
+    ssvg.appendChild(xlbl);
+
+    var hit = el("rect", { x: SpadL + sSlot * i, y: SpadT, width: sSlot, height: SplotH, fill: "transparent" });
+    hit.addEventListener("mousemove", function (evt) {
+      var cardRect = svcChartCard.getBoundingClientRect();
+      var svgRect = ssvg.getBoundingClientRect();
+      var scaleX = svgRect.width / SW, scaleY = svgRect.height / SH;
+      var px = (svgRect.left - cardRect.left) + cx * scaleX;
+      var py = (svgRect.top - cardRect.top) + oy * scaleY;
+      svcTooltip.style.left = px + "px";
+      svcTooltip.style.top = (py - 12) + "px";
+      svcTooltip.style.transform = "translate(-50%, -100%)";
+      svcTooltip.style.opacity = 1;
+      svcTooltip.innerHTML = "<b>FY" + svcYears[i] + "</b><br>Goods: -$" + Math.abs(d.goods).toFixed(1) + "bn &nbsp; Services: +$" + d.services.toFixed(1) + "bn<br>Overall: -$" + Math.abs(overall).toFixed(1) + "bn";
+    });
+    hit.addEventListener("mouseleave", function () { svcTooltip.style.opacity = 0; });
+    ssvg.appendChild(hit);
+  });
+
+  var svcTable = document.getElementById("servicesTable");
+  var sthead = "<thead><tr><th>Fiscal Year</th><th>Goods balance (US$ bn)</th><th>Services net (US$ bn)</th><th>Overall (US$ bn)</th></tr></thead>";
+  var srows = svcData.map(function (d, i) {
+    var overall = d.goods + d.services;
+    return "<tr><td>FY" + svcYears[i] + "</td><td>" + d.goods.toFixed(1) + "</td><td>+" + d.services.toFixed(1) + "</td><td>" + overall.toFixed(1) + "</td></tr>";
+  }).reverse().join("");
+  svcTable.innerHTML = sthead + "<tbody>" + srows + "</tbody>";
 })();
 </script>
