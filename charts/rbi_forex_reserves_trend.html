@@ -245,6 +245,44 @@
     return e;
   }
 
+  // Monotone cubic Hermite spline (same shape rule as d3.curveMonotoneX): smooth,
+  // but tangents are clamped so the curve never overshoots past a point's neighbors —
+  // it can't invent a peak or dip that isn't in the underlying weekly reading.
+  function monotonePath(pts, close) {
+    var n = pts.length;
+    if (n < 2) return "";
+    if (n === 2) {
+      return "M" + pts[0].x.toFixed(2) + "," + pts[0].y.toFixed(2) + " L" + pts[1].x.toFixed(2) + "," + pts[1].y.toFixed(2);
+    }
+    var dx = new Array(n - 1), dy = new Array(n - 1), m = new Array(n - 1);
+    for (var i = 0; i < n - 1; i++) {
+      dx[i] = pts[i + 1].x - pts[i].x;
+      dy[i] = pts[i + 1].y - pts[i].y;
+      m[i] = dx[i] === 0 ? 0 : dy[i] / dx[i];
+    }
+    var t = new Array(n);
+    t[0] = m[0];
+    t[n - 1] = m[n - 2];
+    for (var i = 1; i < n - 1; i++) {
+      if (m[i - 1] === 0 || m[i] === 0 || (m[i - 1] > 0) !== (m[i] > 0)) {
+        t[i] = 0;
+      } else {
+        var w1 = 2 * dx[i] + dx[i - 1], w2 = dx[i] + 2 * dx[i - 1];
+        t[i] = (w1 + w2) / (w1 / m[i - 1] + w2 / m[i]);
+      }
+    }
+    var d = "M" + pts[0].x.toFixed(2) + "," + pts[0].y.toFixed(2);
+    for (var i = 0; i < n - 1; i++) {
+      var cp1x = pts[i].x + dx[i] / 3;
+      var cp1y = pts[i].y + t[i] * dx[i] / 3;
+      var cp2x = pts[i + 1].x - dx[i] / 3;
+      var cp2y = pts[i + 1].y - t[i + 1] * dx[i] / 3;
+      d += " C" + cp1x.toFixed(2) + "," + cp1y.toFixed(2) + " " + cp2x.toFixed(2) + "," + cp2y.toFixed(2) + " " + pts[i + 1].x.toFixed(2) + "," + pts[i + 1].y.toFixed(2);
+    }
+    if (close) d += " L" + pts[n - 1].x.toFixed(2) + "," + (H - padB) + " L" + pts[0].x.toFixed(2) + "," + (H - padB) + " Z";
+    return d;
+  }
+
   var ticks = [300, 400, 500, 600, 700];
   ticks.forEach(function (t) {
     var y = yFor(t);
@@ -276,21 +314,15 @@
   callout("2024-09-01", "2025-01-01", "2024–25 drawdown, -11%", 1);
   callout("2026-02-27", "2026-06-26", "War shock & slide, -8.5%", 0);
 
-  // area under the connector (confident) segment only
-  var areaPts = connectorValues.map(function (v, i) { return xForDate(connectorMonths[i]).toFixed(1) + "," + yFor(v).toFixed(1); });
-  var areaD = "M" + xForDate(connectorMonths[0]).toFixed(1) + "," + yFor(connectorValues[0]).toFixed(1) + " L" + areaPts.join(" L") +
-    " L" + xForDate(connectorMonths[connectorMonths.length - 1]).toFixed(1) + "," + (H - padB) +
-    " L" + xForDate(connectorMonths[0]).toFixed(1) + "," + (H - padB) + " Z";
-  svg.appendChild(el("path", { d: areaD, class: "rbi-area" }));
+  // solid connector line + area, both as a monotone smooth curve (no invented peaks/dips)
+  var connectorPts = connectorValues.map(function (v, i) { return { x: xForDate(connectorMonths[i]), y: yFor(v) }; });
+  svg.appendChild(el("path", { d: monotonePath(connectorPts, true), class: "rbi-area" }));
+  svg.appendChild(el("path", { d: monotonePath(connectorPts, false), class: "rbi-line" }));
 
-  // solid connector line
-  var lineD = connectorValues.map(function (v, i) { return (i === 0 ? "M" : "L") + xForDate(connectorMonths[i]).toFixed(1) + "," + yFor(v).toFixed(1); }).join(" ");
-  svg.appendChild(el("path", { d: lineD, class: "rbi-line" }));
-
-  // dashed web-extension line, starting from the last connector point
+  // dashed web-extension line, starting from the last connector point — also smoothed
   var webChain = [{ date: connectorMonths[connectorMonths.length - 1], value: connectorValues[connectorValues.length - 1] }].concat(webPoints);
-  var webD = webChain.map(function (p, i) { return (i === 0 ? "M" : "L") + xForDate(p.date).toFixed(1) + "," + yFor(p.value).toFixed(1); }).join(" ");
-  svg.appendChild(el("path", { d: webD, class: "rbi-line-web" }));
+  var webPts = webChain.map(function (p) { return { x: xForDate(p.date), y: yFor(p.value) }; });
+  svg.appendChild(el("path", { d: monotonePath(webPts, false), class: "rbi-line-web" }));
 
   webPoints.forEach(function (p) {
     svg.appendChild(el("circle", { cx: xForDate(p.date), cy: yFor(p.value), r: 3.2, class: "web-dot" }));
