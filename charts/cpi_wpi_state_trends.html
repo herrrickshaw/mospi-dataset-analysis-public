@@ -115,6 +115,13 @@
   .block-title { font-family: var(--font-display); font-size: 21px; margin: 0; }
   .block-note { font-size: 12.5px; color: var(--ink-muted); max-width: 46ch; text-align: right; }
 
+  .legend-row { display: flex; gap: 22px; flex-wrap: wrap; font-size: 12px; color: var(--ink-2); align-items: center; }
+  .legend-item { display: flex; align-items: center; gap: 8px; }
+  .legend-swatch { width: 14px; height: 3px; border-radius: 2px; display: inline-block; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .legend-note { font-size: 12px; color: var(--ink-muted); line-height: 1.5; max-width: 74ch; }
+  .legend-note b { color: var(--ink-2); }
+
   /* CPI small multiples grid */
   .panel-grid {
     display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1px;
@@ -192,6 +199,12 @@
         <p class="block-note">Panels share one index scale (100–110) and are ranked by latest year-on-year inflation, hottest first.</p>
       </div>
       <div class="panel-grid" id="cpiGrid"></div>
+      <div class="legend-row">
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--data-line)"></span> State</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--accent)"></span> All India (benchmark)</span>
+        <span class="legend-item"><span class="legend-dot" style="background:var(--alert)"></span> YoY inflation ≥ 5%</span>
+      </div>
+      <p class="legend-note">Panels are ranked by <b>latest</b> year-on-year inflation, hottest first — but that YoY figure is only computable for <b>January 2026 onward</b> in this series, since the base-year-2024 series has no 2024 comparison months to diff against. The sparkline itself still covers the full Jan 2025–Jun 2026 window; only the labeled % is limited to the last six months.</p>
       <details class="table-view">
         <summary>View full CPI index table (18 months × 14 states)</summary>
         <div class="data-table-wrap"><table class="data-table" id="cpiTable"></table></div>
@@ -207,6 +220,7 @@
         <svg id="wpiChart" viewBox="0 0 920 300" preserveAspectRatio="none"></svg>
         <div class="tooltip" id="wpiTooltip"></div>
       </div>
+      <p class="legend-note">Unlike the CPI panels above, this line plots the raw <b>index level</b> (base 2011-12 = 100), not a year-on-year percentage — WPI's release doesn't carry a comparable inflation-rate field in this connector, so the index itself is the only figure available here.</p>
       <details class="table-view">
         <summary>View full WPI index table (16 months)</summary>
         <div class="data-table-wrap"><table class="data-table" id="wpiTable"></table></div>
