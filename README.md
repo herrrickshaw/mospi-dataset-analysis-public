@@ -49,6 +49,14 @@ This repo currently documents that workflow as exercised through the MoSPI MCP c
 
 Raw responses: [`data/mospi_snapshot_2026-07-18.json`](data/mospi_snapshot_2026-07-18.json).
 
+## State-wise CPI vs. national WPI trends
+
+[`charts/cpi_wpi_state_trends.html`](charts/cpi_wpi_state_trends.html) — open in a browser — charts Combined-sector CPI (base 2024) across 14 major states plus the All-India benchmark from January 2025 through June 2026, ranked by latest year-on-year inflation, alongside the national WPI trend over the same window (WPI has no state-level breakdown in MoSPI's data).
+
+Headline: **Telangana runs hottest at +6.36% YoY**, **NCT of Delhi coolest at +2.96%**, against an All-India print of +4.38%. WPI broke a year of near-flat readings (~154–158) with a sharp run to 167 in April 2026.
+
+Underlying data: [`data/cpi_statewise_trend_2025-01_to_2026-06.json`](data/cpi_statewise_trend_2025-01_to_2026-06.json), [`data/wpi_national_trend_2025-01_to_2026-04.json`](data/wpi_national_trend_2025-01_to_2026-04.json).
+
 ## Known quirks / caveats
 
 - **RBI forex reserves lag hard** — requesting 2025/2026 explicitly still only returned data through June 2025. Don't assume this series is current to the same month.
