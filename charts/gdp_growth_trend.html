@@ -113,6 +113,8 @@
   .legend-item { display: flex; align-items: center; gap: 8px; }
   .legend-swatch { width: 14px; height: 14px; border-radius: 2px; }
   .legend-tick { width: 16px; height: 2px; background: var(--tick); display: inline-block; }
+  .legend-note { font-size: 12px; color: var(--ink-muted); line-height: 1.5; max-width: 72ch; }
+  .legend-note b { color: var(--ink-2); }
 
   .errata {
     border: 1px solid var(--rule-strong); border-left: 3px solid var(--alert); background: var(--surface);
@@ -159,6 +161,7 @@
         <span class="legend-item"><span class="legend-swatch" style="background:var(--neg)"></span> Contraction (latest estimate)</span>
         <span class="legend-item"><span class="legend-tick"></span> First Advance Estimate</span>
       </div>
+      <p class="legend-note"><b>First Advance Estimate</b> is MoSPI's first cut at a year's GDP growth, released about a month after the fiscal year ends, before full data is in. <b>Latest</b> is whatever revision — Second Advance, Provisional, First/Second/Third Revised, or Final — is the most recent one MoSPI has published for that year since. The distance between tick and bar is that year's revision so far, not a forecast error against some final truth: even "Final Estimates" can predate a later methodology change.</p>
       <details class="table-view">
         <summary>View full revision table (First Advance → latest, all 14 years)</summary>
         <div class="data-table-wrap"><table class="data-table" id="gdpTable"></table></div>
