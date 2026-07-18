@@ -1,4 +1,4 @@
-<title>RBI Foreign Exchange Reserves — 2015–2025</title>
+<title>RBI Foreign Exchange Reserves — 2015–2026</title>
 <meta name="hz:canvas-width" content="1080">
 <style>
   :root {
@@ -83,7 +83,7 @@
   section.block { display: flex; flex-direction: column; gap: 14px; }
   .block-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; border-bottom: 1px solid var(--rule-strong); padding-bottom: 8px; }
   .block-title { font-family: var(--font-display); font-size: 20px; margin: 0; }
-  .block-note { font-size: 12.5px; color: var(--ink-muted); max-width: 46ch; text-align: right; }
+  .block-note { font-size: 12.5px; color: var(--ink-muted); max-width: 50ch; text-align: right; }
 
   .chart-card { background: var(--chart-surface); border: 1px solid var(--rule-strong); padding: 20px 22px 14px; position: relative; }
   .chart-card svg { width: 100%; height: 340px; display: block; overflow: visible; }
@@ -92,6 +92,9 @@
   .axis-label { font-family: var(--font-mono); font-size: 10.5px; fill: var(--ink-muted); }
   .rbi-area { fill: url(#areaFade); }
   .rbi-line { fill: none; stroke: var(--data-line); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .rbi-line-web { fill: none; stroke: var(--data-line); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1 5; }
+  .web-dot { fill: var(--chart-surface); stroke: var(--data-line); stroke-width: 2; }
+  .gap-label { font-family: var(--font-mono); font-size: 10px; fill: var(--ink-muted); }
   .callout-box { fill: var(--alert-soft); }
   .callout-text { font-family: var(--font-mono); font-size: 10px; fill: var(--alert); }
   .peak-label, .low-label { font-family: var(--font-mono); font-size: 11px; font-weight: 600; fill: var(--ink); }
@@ -99,10 +102,15 @@
   .tooltip {
     position: absolute; pointer-events: none; background: var(--ink); color: var(--page-bg);
     font-family: var(--font-mono); font-size: 11px; padding: 6px 9px; border-radius: 2px; line-height: 1.5;
-    transform: translate(-50%, -115%); white-space: nowrap; opacity: 0; transition: opacity 0.08s ease;
+    transform: translate(-50%, -115%); white-space: nowrap; opacity: 0; transition: opacity 0.08s ease; max-width: 260px; text-wrap: balance;
   }
   .crosshair { stroke: var(--ink-muted); stroke-width: 1; opacity: 0; }
   .hover-target { fill: transparent; }
+
+  .legend-row { display: flex; gap: 20px; flex-wrap: wrap; font-size: 12px; color: var(--ink-2); }
+  .legend-item { display: flex; align-items: center; gap: 7px; }
+  .legend-swatch { width: 18px; height: 2px; background: var(--data-line); display: inline-block; }
+  .legend-swatch.dashed { background: none; border-top: 2px dashed var(--data-line); height: 0; }
 
   .errata {
     border: 1px solid var(--rule-strong); border-left: 3px solid var(--alert); background: var(--surface);
@@ -128,9 +136,9 @@
   <div class="sheet">
     <div class="masthead">
       <div class="eyebrow">MoSPI Dataset Analysis — Statistical Bulletin</div>
-      <h1>A decade of RBI reserve-building, twice interrupted</h1>
-      <p class="dek">India's foreign exchange reserves, monthly, January 2015 through June 2025 — the last month this connector has data for. Reserves more than doubled over the decade, through two sharp drawdowns.</p>
-      <div class="source-line">SOURCE: api.mospi.gov.in via MoSPI MCP connector · RBI dataset, indicator "Foreign Exchange Reserve Monthly" · Total reserves, US$ millions (shown here in US$ billions)</div>
+      <h1>Record reserves, then a $53bn shock</h1>
+      <p class="dek">India's foreign exchange reserves, January 2015 through the latest available reading. The MoSPI connector's own data stops in June 2025 — everything from September 2025 onward is bridged in from RBI's public Weekly Statistical Supplement releases, shown as a dashed, separately-sourced extension.</p>
+      <div class="source-line">SOURCE: Jan 2015–Jun 2025 via api.mospi.gov.in (MoSPI MCP connector) · Sep 2025–Jul 2026 via RBI Weekly Statistical Supplement press releases (rbi.org.in), retrieved 18 Jul 2026</div>
     </div>
 
     <div class="stat-strip" id="statStrip"></div>
@@ -138,7 +146,7 @@
     <section class="block">
       <div class="block-head">
         <h2 class="block-title">Total foreign exchange reserves, US$ billions</h2>
-        <p class="block-note">Hover the line for any month's reading.</p>
+        <p class="block-note">Solid line: MoSPI connector (monthly). Dashed line + dots: RBI press releases (weekly, irregular).</p>
       </div>
       <div class="chart-card">
         <svg id="rbiChart" viewBox="0 0 1000 340" preserveAspectRatio="none">
@@ -151,8 +159,12 @@
         </svg>
         <div class="tooltip" id="rbiTooltip"></div>
       </div>
+      <div class="legend-row">
+        <span class="legend-item"><span class="legend-swatch"></span> MoSPI connector (Jan 2015 – Jun 2025)</span>
+        <span class="legend-item"><span class="legend-swatch dashed"></span> RBI press releases (Sep 2025 – Jul 2026)</span>
+      </div>
       <details class="table-view">
-        <summary>View full monthly table (126 months, Jan 2015 – Jun 2025)</summary>
+        <summary>View full data table (126 connector months + 8 web-sourced weekly readings)</summary>
         <div class="data-table-wrap"><table class="data-table" id="rbiTable"></table></div>
       </details>
     </section>
@@ -160,51 +172,73 @@
     <div class="errata">
       <div class="errata-title">Errata &amp; data caveats</div>
       <ul>
-        <li><b>No data since June 2025</b> — this connector is 13 months stale as of this bulletin (18 July 2026). Don't assume the RBI series here is current.</li>
-        <li><b>2022 drawdown:</b> reserves fell from a then-peak of <b>$640.7bn (Aug 2021)</b> to <b>$532.7bn (Sep 2022)</b>, a ~17% decline, as the RBI defended the rupee through Fed tightening and dollar strength.</li>
-        <li><b>2024–25 drawdown:</b> after a fresh all-time high of <b>$705.8bn (Sep 2024)</b>, reserves fell to <b>$630.6bn (Jan 2025)</b> before recovering to <b>$698.1bn</b> by the last available reading in June 2025.</li>
-        <li>Figures are RBI's own reported total reserves (foreign currency assets + gold + SDRs + reserve tranche position), converted to US$ by RBI at the time of reporting — not independently re-priced here.</li>
+        <li><b>The MoSPI connector itself is still frozen at June 2025</b> — re-checked 18 July 2026, no new data. Everything after that point in this chart comes from RBI's own published Weekly Statistical Supplement (via press releases reporting it), not from the connector.</li>
+        <li><b>New all-time high: $728.5bn on 27 Feb 2026</b> — surpassing the $705.8bn (Sep 2024) peak this bulletin previously called the record.</li>
+        <li><b>Feb–Mar 2026 shock:</b> reserves fell roughly <b>$53bn (-7.3%)</b> from that Feb 27 peak to $675.2bn by 10 Jul 2026. RBI intervened to defend the rupee (down &gt;4% in March) amid what press reports describe as a "West Asia conflict" shock; the forward book's short dollar position reportedly swelled toward $100bn in March, meaning true import cover is lower than the headline reserve figure alone suggests.</li>
+        <li><b>2022 drawdown (for context):</b> reserves fell from $640.7bn (Aug 2021) to $532.7bn (Sep 2022), ~17%, during Fed tightening and dollar strength.</li>
+        <li>Weekly web-sourced readings are irregular, not evenly spaced — treat the dashed segment as a set of spot checks, not a smooth series. Figures are RBI's own reported totals (foreign currency assets + gold + SDRs + reserve tranche position).</li>
       </ul>
     </div>
 
-    <footer class="colophon">herrrickshaw/mospi-dataset-analysis — generated from a live MoSPI connector session, not an official RBI publication</footer>
+    <footer class="colophon">herrrickshaw/mospi-dataset-analysis — MoSPI connector data + RBI public press releases, not an official RBI publication</footer>
   </div>
 </div>
 
 <script>
 (function () {
-  var months = ["2015-01","2015-02","2015-03","2015-04","2015-05","2015-06","2015-07","2015-08","2015-09","2015-10","2015-11","2015-12","2016-01","2016-02","2016-03","2016-04","2016-05","2016-06","2016-07","2016-08","2016-09","2016-10","2016-11","2016-12","2017-01","2017-02","2017-03","2017-04","2017-05","2017-06","2017-07","2017-08","2017-09","2017-10","2017-11","2017-12","2018-01","2018-02","2018-03","2018-04","2018-05","2018-06","2018-07","2018-08","2018-09","2018-10","2018-11","2018-12","2019-01","2019-02","2019-03","2019-04","2019-05","2019-06","2019-07","2019-08","2019-09","2019-10","2019-11","2019-12","2020-01","2020-02","2020-03","2020-04","2020-05","2020-06","2020-07","2020-08","2020-09","2020-10","2020-11","2020-12","2021-01","2021-02","2021-03","2021-04","2021-05","2021-06","2021-07","2021-08","2021-09","2021-10","2021-11","2021-12","2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09","2022-10","2022-11","2022-12","2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09","2023-10","2023-11","2023-12","2024-01","2024-02","2024-03","2024-04","2024-05","2024-06","2024-07","2024-08","2024-09","2024-10","2024-11","2024-12","2025-01","2025-02","2025-03","2025-04","2025-05","2025-06"];
-  var values = [328.7,337.7,341.6,351.9,352.5,356.0,353.5,351.4,350.3,354.2,350.2,350.4,349.6,348.4,360.2,363.0,361.6,363.5,366.5,366.8,372.0,366.2,361.1,358.9,363.0,364.3,370.0,373.3,380.1,386.5,393.7,397.8,400.2,399.2,401.9,409.1,422.4,421.0,424.5,420.5,412.4,405.7,403.7,400.1,400.5,392.1,393.7,395.6,400.2,402.4,412.9,418.8,421.9,429.8,428.8,428.3,433.7,445.1,451.3,459.9,471.3,481.3,477.8,481.1,493.6,505.7,534.6,542.9,544.7,560.2,574.8,585.8,590.3,584.6,577.0,588.0,598.9,611.1,620.1,640.7,635.4,640.4,638.0,633.6,629.9,631.9,607.3,596.7,603.2,589.2,574.3,560.4,532.7,534.0,553.2,562.7,574.4,562.7,578.4,590.1,590.7,595.1,605.8,598.2,587.7,588.5,604.2,622.5,620.0,625.2,646.4,640.2,651.5,652.0,670.6,682.2,705.8,682.1,659.4,635.7,630.6,638.7,668.3,688.4,691.3,698.1];
+  var connectorMonths = ["2015-01","2015-02","2015-03","2015-04","2015-05","2015-06","2015-07","2015-08","2015-09","2015-10","2015-11","2015-12","2016-01","2016-02","2016-03","2016-04","2016-05","2016-06","2016-07","2016-08","2016-09","2016-10","2016-11","2016-12","2017-01","2017-02","2017-03","2017-04","2017-05","2017-06","2017-07","2017-08","2017-09","2017-10","2017-11","2017-12","2018-01","2018-02","2018-03","2018-04","2018-05","2018-06","2018-07","2018-08","2018-09","2018-10","2018-11","2018-12","2019-01","2019-02","2019-03","2019-04","2019-05","2019-06","2019-07","2019-08","2019-09","2019-10","2019-11","2019-12","2020-01","2020-02","2020-03","2020-04","2020-05","2020-06","2020-07","2020-08","2020-09","2020-10","2020-11","2020-12","2021-01","2021-02","2021-03","2021-04","2021-05","2021-06","2021-07","2021-08","2021-09","2021-10","2021-11","2021-12","2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09","2022-10","2022-11","2022-12","2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09","2023-10","2023-11","2023-12","2024-01","2024-02","2024-03","2024-04","2024-05","2024-06","2024-07","2024-08","2024-09","2024-10","2024-11","2024-12","2025-01","2025-02","2025-03","2025-04","2025-05","2025-06"].map(function (m) { return m + "-01"; });
+  var connectorValues = [328.7,337.7,341.6,351.9,352.5,356.0,353.5,351.4,350.3,354.2,350.2,350.4,349.6,348.4,360.2,363.0,361.6,363.5,366.5,366.8,372.0,366.2,361.1,358.9,363.0,364.3,370.0,373.3,380.1,386.5,393.7,397.8,400.2,399.2,401.9,409.1,422.4,421.0,424.5,420.5,412.4,405.7,403.7,400.1,400.5,392.1,393.7,395.6,400.2,402.4,412.9,418.8,421.9,429.8,428.8,428.3,433.7,445.1,451.3,459.9,471.3,481.3,477.8,481.1,493.6,505.7,534.6,542.9,544.7,560.2,574.8,585.8,590.3,584.6,577.0,588.0,598.9,611.1,620.1,640.7,635.4,640.4,638.0,633.6,629.9,631.9,607.3,596.7,603.2,589.2,574.3,560.4,532.7,534.0,553.2,562.7,574.4,562.7,578.4,590.1,590.7,595.1,605.8,598.2,587.7,588.5,604.2,622.5,620.0,625.2,646.4,640.2,651.5,652.0,670.6,682.2,705.8,682.1,659.4,635.7,630.6,638.7,668.3,688.4,691.3,698.1];
+
+  var webPoints = [
+    { date: "2025-09-12", value: 702.966, note: "crossed $700bn, 3rd straight weekly rise" },
+    { date: "2025-12-12", value: 688.940, note: "" },
+    { date: "2025-12-19", value: 693.318, note: "" },
+    { date: "2026-01-16", value: 701.360, note: "" },
+    { date: "2026-02-27", value: 728.500, note: "all-time high" },
+    { date: "2026-03-13", value: 716.810, note: "West Asia conflict shock begins" },
+    { date: "2026-03-27", value: 688.050, note: "rupee down >4% in March; RBI intervention" },
+    { date: "2026-07-10", value: 675.157, note: "latest available (RBI WSS, released 18 Jul 2026)" }
+  ];
 
   function fmt(n, d) { return n.toFixed(d === undefined ? 1 : d); }
-  function monthLabel(ym) {
-    var parts = ym.split("-");
+  function dateLabel(iso) {
+    var d = new Date(iso + "T00:00:00Z");
     var names = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-    return names[parseInt(parts[1], 10) - 1] + " " + parts[0];
+    return d.getUTCDate() + " " + names[d.getUTCMonth()] + " " + d.getUTCFullYear();
   }
+  function monthOnlyLabel(iso) {
+    var d = new Date(iso + "T00:00:00Z");
+    var names = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    return names[d.getUTCMonth()] + " " + d.getUTCFullYear();
+  }
+  function toTime(iso) { return new Date(iso + "T00:00:00Z").getTime(); }
+
+  var allDates = connectorMonths.concat(webPoints.map(function (p) { return p.date; }));
+  var minT = toTime(allDates[0]), maxT = toTime(allDates[allDates.length - 1]);
 
   // ---- Stat strip ----
   var statStrip = document.getElementById("statStrip");
   var stats = [
-    { label: "Latest reading — Jun 2025", value: "$698.1bn", sub: "up from <b>$630.6bn</b> in Jan 2025" },
-    { label: "All-time peak — Sep 2024", value: "$705.8bn", sub: "6.5 months of decline followed" },
-    { label: "10-year change", value: "+112%", sub: "from <b>$328.7bn</b> in Jan 2015" },
-    { label: "Data freshness", value: "13 mo. stale", sub: "no reading past <b>Jun 2025</b> in this connector" }
+    { label: "Latest reading — 10 Jul 2026", value: "$675.2bn", sub: "down from the all-time high of <b>$728.5bn</b> (27 Feb 2026)" },
+    { label: "All-time peak — 27 Feb 2026", value: "$728.5bn", sub: "surpassed the prior Sep 2024 high of <b>$705.8bn</b>" },
+    { label: "Change since peak", value: "−$53.3bn", sub: "−7.3% in 4.5 months, RBI rupee defense" },
+    { label: "Connector freshness", value: "13 mo. stale", sub: "MoSPI connector: no reading past <b>Jun 2025</b>" }
   ];
   stats.forEach(function (s) {
-    var el = document.createElement("div");
-    el.className = "stat-tile";
-    el.innerHTML = '<div class="stat-label">' + s.label + '</div><div class="stat-value">' + s.value + '</div><div class="stat-sub">' + s.sub + '</div>';
-    statStrip.appendChild(el);
+    var elx = document.createElement("div");
+    elx.className = "stat-tile";
+    elx.innerHTML = '<div class="stat-label">' + s.label + '</div><div class="stat-value">' + s.value + '</div><div class="stat-sub">' + s.sub + '</div>';
+    statStrip.appendChild(elx);
   });
 
   // ---- Chart ----
   var svg = document.getElementById("rbiChart");
   var W = 1000, H = 340, padL = 52, padR = 16, padT = 24, padB = 30;
   var plotW = W - padL - padR, plotH = H - padT - padB;
-  var vMin = 300, vMax = 740;
+  var vMin = 300, vMax = 760;
 
-  function xFor(i) { return padL + (i / (values.length - 1)) * plotW; }
+  function xForT(t) { return padL + ((t - minT) / (maxT - minT)) * plotW; }
+  function xForDate(iso) { return xForT(toTime(iso)); }
   function yFor(v) { return padT + plotH - ((v - vMin) / (vMax - vMin)) * plotH; }
 
   var svgns = "http://www.w3.org/2000/svg";
@@ -225,45 +259,63 @@
   svg.appendChild(el("line", { x1: padL, x2: padL, y1: padT, y2: H - padB, class: "axis-line" }));
   svg.appendChild(el("line", { x1: padL, x2: W - padR, y1: H - padB, y2: H - padB, class: "axis-line" }));
 
-  months.forEach(function (m, i) {
-    if (m.slice(5) !== "01") return;
-    var lbl = el("text", { x: xFor(i), y: H - padB + 16, class: "axis-label", "text-anchor": "middle" });
-    lbl.textContent = m.slice(0, 4);
+  for (var yr = 2015; yr <= 2026; yr++) {
+    var x = xForDate(yr + "-01-01");
+    var lbl = el("text", { x: x, y: H - padB + 16, class: "axis-label", "text-anchor": "middle" });
+    lbl.textContent = yr;
     svg.appendChild(lbl);
-  });
+  }
 
-  // drawdown callouts
-  function idxOf(ym) { return months.indexOf(ym); }
-  function callout(fromYm, toYm, label) {
-    var x0 = xFor(idxOf(fromYm)), x1 = xFor(idxOf(toYm));
+  // callouts (staggered lanes so nearby narrow spans don't collide)
+  function callout(fromIso, toIso, label, lane) {
+    var x0 = xForDate(fromIso), x1 = xForDate(toIso);
     svg.appendChild(el("rect", { x: x0, y: padT, width: x1 - x0, height: plotH, class: "callout-box" }));
-    var t = el("text", { x: (x0 + x1) / 2, y: padT - 8, class: "callout-text", "text-anchor": "middle" });
+    var y = lane === 1 ? padT + 12 : padT - 8;
+    var t = el("text", { x: (x0 + x1) / 2, y: y, class: "callout-text", "text-anchor": "middle" });
     t.textContent = label;
     svg.appendChild(t);
   }
-  callout("2021-08", "2022-09", "2022 drawdown, -17%");
-  callout("2024-09", "2025-01", "2024–25 drawdown, -11%");
+  callout("2021-08-01", "2022-09-01", "2022 drawdown, -17%", 0);
+  callout("2024-09-01", "2025-01-01", "2024–25 drawdown, -11%", 1);
+  callout("2026-02-27", "2026-03-27", "War shock, -$53bn", 0);
 
-  // area + line
-  var areaPts = values.map(function (v, i) { return xFor(i).toFixed(1) + "," + yFor(v).toFixed(1); });
-  var areaD = "M" + xFor(0).toFixed(1) + "," + yFor(values[0]).toFixed(1) + " L" + areaPts.join(" L") +
-    " L" + xFor(values.length - 1).toFixed(1) + "," + (H - padB) + " L" + xFor(0).toFixed(1) + "," + (H - padB) + " Z";
+  // area under the connector (confident) segment only
+  var areaPts = connectorValues.map(function (v, i) { return xForDate(connectorMonths[i]).toFixed(1) + "," + yFor(v).toFixed(1); });
+  var areaD = "M" + xForDate(connectorMonths[0]).toFixed(1) + "," + yFor(connectorValues[0]).toFixed(1) + " L" + areaPts.join(" L") +
+    " L" + xForDate(connectorMonths[connectorMonths.length - 1]).toFixed(1) + "," + (H - padB) +
+    " L" + xForDate(connectorMonths[0]).toFixed(1) + "," + (H - padB) + " Z";
   svg.appendChild(el("path", { d: areaD, class: "rbi-area" }));
 
-  var lineD = values.map(function (v, i) { return (i === 0 ? "M" : "L") + xFor(i).toFixed(1) + "," + yFor(v).toFixed(1); }).join(" ");
+  // solid connector line
+  var lineD = connectorValues.map(function (v, i) { return (i === 0 ? "M" : "L") + xForDate(connectorMonths[i]).toFixed(1) + "," + yFor(v).toFixed(1); }).join(" ");
   svg.appendChild(el("path", { d: lineD, class: "rbi-line" }));
 
-  // peak + low markers
-  [["2024-09", "peak"], ["2022-09", "trough"]].forEach(function (pair) {
-    var i = idxOf(pair[0]);
-    var x = xFor(i), y = yFor(values[i]);
+  // dashed web-extension line, starting from the last connector point
+  var webChain = [{ date: connectorMonths[connectorMonths.length - 1], value: connectorValues[connectorValues.length - 1] }].concat(webPoints);
+  var webD = webChain.map(function (p, i) { return (i === 0 ? "M" : "L") + xForDate(p.date).toFixed(1) + "," + yFor(p.value).toFixed(1); }).join(" ");
+  svg.appendChild(el("path", { d: webD, class: "rbi-line-web" }));
+
+  webPoints.forEach(function (p) {
+    svg.appendChild(el("circle", { cx: xForDate(p.date), cy: yFor(p.value), r: 3.2, class: "web-dot" }));
+  });
+
+  // peak + trough markers
+  [
+    { date: "2026-02-27", value: 728.5, kind: "peak" },
+    { date: "2022-09-01", value: 532.7, kind: "trough" },
+    { date: "2026-03-27", value: 688.05, kind: "trough" }
+  ].forEach(function (m) {
+    var x = xForDate(m.date), y = yFor(m.value);
     svg.appendChild(el("circle", { cx: x, cy: y, r: 4, class: "marker-dot" }));
-    var lbl = el("text", { x: x, y: pair[1] === "peak" ? y - 12 : y + 20, class: pair[1] === "peak" ? "peak-label" : "low-label", "text-anchor": "middle" });
-    lbl.textContent = "$" + fmt(values[i]) + "bn";
+    var lbl = el("text", { x: x, y: m.kind === "peak" ? y - 12 : y + 20, class: m.kind === "peak" ? "peak-label" : "low-label", "text-anchor": "middle" });
+    lbl.textContent = "$" + fmt(m.value) + "bn";
     svg.appendChild(lbl);
   });
 
-  // crosshair + hover
+  // crosshair + hover across the combined series
+  var combined = connectorMonths.map(function (m, i) { return { date: m, value: connectorValues[i], source: "MoSPI connector" }; })
+    .concat(webPoints.map(function (p) { return { date: p.date, value: p.value, source: "RBI press release" + (p.note ? " — " + p.note : "") }; }));
+
   var crosshair = el("line", { x1: 0, x2: 0, y1: padT, y2: H - padB, class: "crosshair" });
   svg.appendChild(crosshair);
   var hoverDot = el("circle", { r: 4, fill: "var(--data-line)", stroke: "var(--chart-surface)", "stroke-width": 2, opacity: 0 });
@@ -274,23 +326,28 @@
   var tooltip = document.getElementById("rbiTooltip");
   var chartCard = svg.parentElement;
 
-  function nearestIndex(mx) {
-    var i = Math.round(((mx - padL) / plotW) * (values.length - 1));
-    return Math.max(0, Math.min(values.length - 1, i));
+  function nearestPoint(mx) {
+    var targetT = minT + ((mx - padL) / plotW) * (maxT - minT);
+    var best = 0, bestDiff = Infinity;
+    combined.forEach(function (p, i) {
+      var diff = Math.abs(toTime(p.date) - targetT);
+      if (diff < bestDiff) { bestDiff = diff; best = i; }
+    });
+    return combined[best];
   }
 
   hitArea.addEventListener("mousemove", function (evt) {
     var rect = svg.getBoundingClientRect();
     var mx = ((evt.clientX - rect.left) / rect.width) * W;
-    var i = nearestIndex(mx);
-    var x = xFor(i), y = yFor(values[i]);
+    var p = nearestPoint(mx);
+    var x = xForDate(p.date), y = yFor(p.value);
     crosshair.setAttribute("x1", x); crosshair.setAttribute("x2", x); crosshair.style.opacity = 1;
     hoverDot.setAttribute("cx", x); hoverDot.setAttribute("cy", y); hoverDot.style.opacity = 1;
     var cardRect = chartCard.getBoundingClientRect();
     tooltip.style.left = ((x / W) * cardRect.width) + "px";
     tooltip.style.top = ((y / H) * cardRect.height) + "px";
     tooltip.style.opacity = 1;
-    tooltip.innerHTML = monthLabel(months[i]) + " &nbsp; <b>$" + fmt(values[i]) + "bn</b>";
+    tooltip.innerHTML = dateLabel(p.date) + " &nbsp; <b>$" + fmt(p.value) + "bn</b><br>" + p.source;
   });
   hitArea.addEventListener("mouseleave", function () {
     crosshair.style.opacity = 0; hoverDot.style.opacity = 0; tooltip.style.opacity = 0;
@@ -298,10 +355,10 @@
 
   // ---- table ----
   var table = document.getElementById("rbiTable");
-  var thead = "<thead><tr><th>Month</th><th>US$ bn</th></tr></thead>";
-  var tbody = "<tbody>" + months.map(function (m, i) {
-    return "<tr><td>" + monthLabel(m) + "</td><td>" + fmt(values[i]) + "</td></tr>";
-  }).reverse().join("") + "</tbody>";
-  table.innerHTML = thead + tbody;
+  var thead = "<thead><tr><th>Date</th><th>US$ bn</th><th>Source</th></tr></thead>";
+  var rows = combined.map(function (p) {
+    return "<tr><td>" + dateLabel(p.date) + "</td><td>" + fmt(p.value) + "</td><td>" + p.source + "</td></tr>";
+  }).reverse().join("");
+  table.innerHTML = thead + "<tbody>" + rows + "</tbody>";
 })();
 </script>

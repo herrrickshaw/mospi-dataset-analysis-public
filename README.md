@@ -63,9 +63,11 @@ Underlying data: [`data/cpi_statewise_trend_2025-01_to_2026-06.json`](data/cpi_s
 
 ## RBI foreign exchange reserves trend
 
-[`charts/rbi_forex_reserves_trend.html`](charts/rbi_forex_reserves_trend.html) — open in a browser — a decade of India's total forex reserves (Jan 2015 – Jun 2025, the last month this connector has data for), with the two notable drawdown cycles called out directly on the chart: the **2022 drawdown** (-17%, Aug 2021 to Sep 2022, rupee defense amid Fed tightening) and the **2024–25 drawdown** (-11%, Sep 2024's all-time high of $705.8bn to $630.6bn by Jan 2025). Reserves are up **+112%** over the decade, from $328.7bn to $698.1bn.
+[`charts/rbi_forex_reserves_trend.html`](charts/rbi_forex_reserves_trend.html) — open in a browser — India's total forex reserves from Jan 2015 to the latest available reading. The MoSPI connector itself is confirmed still frozen at June 2025 (re-checked 2026-07-18, no change) — everything from September 2025 onward is bridged in from RBI's own public Weekly Statistical Supplement press releases and shown as a visually distinct dashed extension, never silently merged with the connector data.
 
-Underlying data: [`data/rbi_forex_reserves_2015-01_to_2025-06.json`](data/rbi_forex_reserves_2015-01_to_2025-06.json).
+That extension changes the story: reserves hit a **new all-time high of $728.5bn on 27 Feb 2026** (surpassing the $705.8bn Sep 2024 peak this bulletin previously called the record), then fell **~$53bn (-7.3%)** through a "West Asia conflict" shock and RBI rupee-defense intervention, down to **$675.2bn by 10 Jul 2026** — the most recent figure available anywhere, including on RBI's own site as of this bulletin.
+
+Underlying data: [`data/rbi_forex_reserves_2015-01_to_2025-06.json`](data/rbi_forex_reserves_2015-01_to_2025-06.json) (connector series + `web_extension` block for the bridged readings).
 
 ## Known quirks / caveats
 
