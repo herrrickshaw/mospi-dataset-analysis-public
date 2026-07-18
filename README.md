@@ -109,6 +109,14 @@ Read against the trade-balance bulletin: the chapters driving the *deficit* (min
 
 Underlying data: [`data/hsn_historical_trends_2018-19_to_2025-26.json`](data/hsn_historical_trends_2018-19_to_2025-26.json).
 
+## Imported fertiliser & fuel prices → diesel → CPI/WPI
+
+[`charts/fertiliser_fuel_price_transmission.html`](charts/fertiliser_fuel_price_transmission.html) — open in a browser — correlates the MoSPI connector's own WPI item-level series for diesel (HSD) and fertilisers (Urea, DAP) against WPI and CPI headline/food inflation, 2012–2026, to test the import-price pass-through described in five published studies (cited in full inside the bulletin: James Hamilton's IJCB framing paper, Bhattacharya & Gupta's NIPFP food-inflation SVAR, Mishra & Roy's India Policy Forum paper, a JETIR 2025 survey, and an MBA thesis on India's import composition).
+
+**Headline: diesel passes through to WPI almost mechanically (r=0.92); fertiliser mostly doesn't, because subsidy absorbs it.** Diesel (WPI HSD) is up **+79.0%** since April 2012, moving in near lockstep with WPI headline. **Urea is up only +13.8%** over the same window despite the 2021–23 global fertiliser shock — the subsidy regime holds it down almost regardless of the border price — while **DAP (smaller, less consistent subsidy) is up +38.4%**, roughly midway between the two. Against CPI, the picture is more textured: same-year correlations between these input costs and CPI headline/food/oils-and-fats are weak or inconsistent (r between -0.52 and +0.29) at annual resolution — not because the transmission described in the literature isn't real, but because (per Bhattacharya & Gupta's SVAR) it operates on a 1–4 month lag and fades within the year, which annual year-on-year correlation washes out. The one series that *does* show a dramatic, real swing is **CPI oils & fats**, whose monthly print went from **-18.17% (Jun 2023) to +21.24% (Aug 2025)** — matching Mishra & Roy's finding that edible oils are the one food category with near-1:1 global pass-through, and this repo's own trade data showing edible-oil imports (HS15) up 97.9% over the same window.
+
+Underlying data: [`data/fertiliser_fuel_price_transmission_2012_to_2026.json`](data/fertiliser_fuel_price_transmission_2012_to_2026.json).
+
 ## GDP growth trend, with revision history
 
 [`charts/gdp_growth_trend.html`](charts/gdp_growth_trend.html) — open in a browser — real (constant-price) GDP growth by fiscal year, FY2012-13 through FY2025-26, from the MoSPI connector's NAS dataset. Bars show the latest revised estimate for each year; a tick marks where the original First Advance Estimate landed, so the gap between tick and bar visualizes how much each year's number moved as later data came in.
