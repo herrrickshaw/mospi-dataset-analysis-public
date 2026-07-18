@@ -143,6 +143,14 @@ Underlying data: [`data/country_trade_deficit_and_policy_history_2026-07-18.json
 
 Underlying data: [`data/sector_country_priority_and_pli_coverage_2026-07-18.json`](data/sector_country_priority_and_pli_coverage_2026-07-18.json).
 
+## Priority export destinations by growth sector, and the export side of PLI
+
+[`charts/export_destination_priority_and_pli_coverage.html`](charts/export_destination_priority_and_pli_coverage.html) — open in a browser — the export-side mirror: maps the 12 fastest-growing/highest-value HSN **export** chapters to their top destination countries, ranks countries by cross-sector exposure, and checks PLI Auto, PLI Bulk Drugs, and PLI Textiles coverage.
+
+**Headline: the USA is the top-8 destination in 11 of 12 growth export chapters — a bigger concentration than China's grip on imports.** The USA takes **$63.9bn combined, #1/#2 rank in 9 of those 11 chapters** — more concentrated by both breadth and depth than China's import-side dominance (8 of 12 chapters, but more evenly spread across rank positions). UAE is a clear #2 destination (10 sectors, $26.9bn). On the PLI side, **Auto & Auto Components (₹25,938cr)** and **Bulk Drugs (₹6,940cr, explicitly targeting the ~70% China API dependency that also shows up in the companion import bulletin)** are both real, substantial, and correctly targeted. The one genuine mismatch: **PLI Textiles (₹10,683cr)** exists, but was deliberately built to cover man-made-fibre apparel and technical textiles rather than the **traditional cotton-based apparel (HS61/HS62)** that actually accounts for the export volume in this data — the scheme isn't absent, it's aimed at a different, smaller part of the textile export base.
+
+Underlying data: [`data/export_destination_priority_and_pli_coverage_2026-07-18.json`](data/export_destination_priority_and_pli_coverage_2026-07-18.json).
+
 ## GDP growth trend, with revision history
 
 [`charts/gdp_growth_trend.html`](charts/gdp_growth_trend.html) — open in a browser — real (constant-price) GDP growth by fiscal year, FY2012-13 through FY2025-26, from the MoSPI connector's NAS dataset. Bars show the latest revised estimate for each year; a tick marks where the original First Advance Estimate landed, so the gap between tick and bar visualizes how much each year's number moved as later data came in.
