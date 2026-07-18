@@ -61,15 +61,17 @@ Underlying data: [`data/cpi_statewise_trend_2025-01_to_2026-06.json`](data/cpi_s
 
 [`charts/cpi_india_heatmap.html`](charts/cpi_india_heatmap.html) — open in a browser — a choropleth of India shaded by June 2026 CPI year-on-year inflation for the 13 states in this dataset (all other states/UTs shown in gray as "not tracked", not as low inflation). State boundaries come from amCharts' `amcharts4-geodata` (`india2023Low`, MIT-licensed), reprojected to SVG locally — no external map tiles or API calls at render time.
 
-## RBI foreign exchange reserves trend
+## RBI foreign exchange reserves + currency trend
 
-[`charts/rbi_forex_reserves_trend.html`](charts/rbi_forex_reserves_trend.html) — open in a browser — India's total forex reserves from Jan 2015 to the latest available reading. The MoSPI connector itself is confirmed still frozen at June 2025 (re-checked 2026-07-18, no change) — everything from June 2025 onward is a **real weekly series scraped directly from RBI's own site**, shown as a visually distinct dashed extension, never silently merged with the connector data.
+[`charts/rbi_forex_reserves_trend.html`](charts/rbi_forex_reserves_trend.html) — open in a browser — two segments on India's external sector. India's total forex reserves from Jan 2015 to the latest available reading. The MoSPI connector itself is confirmed still frozen at June 2025 (re-checked 2026-07-18, no change) — everything from June 2025 onward is a **real weekly series scraped directly from RBI's own site**, shown as a visually distinct dashed extension, never silently merged with the connector data.
 
 **How the scrape works**: RBI's Weekly Statistical Supplement archive is fully enumerable — every release from 19 Sep 1998 to today sits at a sequential `rbi.org.in/scripts/WSSView.aspx?Id=N` URL, no API key or login needed (unlike `datagovindia`, which wraps data.gov.in and requires a free API key from that portal before anything — including search — will work). One quirk worth knowing: each release's *"as on"* reserve date is 7 days before its publish date, so taking the listed release date at face value mislabels every reading by a week.
 
 That scrape changes the story from the previous version of this chart: reserves hit a **new all-time high of $728.5bn on 27 Feb 2026** (surpassing the $705.8bn Sep 2024 peak this bulletin previously called the record), then kept sliding — through a "West Asia conflict" shock and RBI rupee-defense intervention — to a **true trough of $666.9bn on 26 Jun 2026** (-8.5% peak-to-trough), before a partial recovery to **$675.2bn by 10 Jul 2026**, the latest reading anywhere, including RBI's own site as of this bulletin.
 
-Underlying data: [`data/rbi_forex_reserves_2015-01_to_2025-06.json`](data/rbi_forex_reserves_2015-01_to_2025-06.json) (connector series + `web_extension` block for the bridged readings).
+**New currency segment**: the rupee against the US dollar, same Jan 2015–Jul 2026 window, bridged past the connector's July 2025 endpoint with a scrape of RBI's separate **Reference Rate Archive** (`rbi.org.in/scripts/referenceratearchive.aspx`) — a date-range search form, not an enumerable ID archive like the reserves pages. (A dead end along the way: the WSS's own historical exchange-rate table, `PARAM1=6`, was discontinued in December 2012.) The rupee depreciated **~38% over the decade** (₹62.23 → ₹86.11, ~3.3%/year), then accelerated to **+11.9% in the last 12 months alone**, reaching ₹96.37 on 17 Jul 2026 — the same window as the reserves chart's "war shock" slide above.
+
+Underlying data: [`data/rbi_forex_reserves_2015-01_to_2025-06.json`](data/rbi_forex_reserves_2015-01_to_2025-06.json) (reserves) and [`data/rbi_usd_inr_exchange_rate_2015-01_to_2026-07.json`](data/rbi_usd_inr_exchange_rate_2015-01_to_2026-07.json) (currency).
 
 ## GDP growth trend, with revision history
 

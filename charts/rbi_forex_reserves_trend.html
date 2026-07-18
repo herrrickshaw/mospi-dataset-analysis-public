@@ -91,6 +91,7 @@
   .axis-line { stroke: var(--chart-axis); stroke-width: 1; }
   .axis-label { font-family: var(--font-mono); font-size: 10.5px; fill: var(--ink-muted); }
   .rbi-area { fill: url(#areaFade); }
+  .usd-area { fill: url(#usdAreaFade); }
   .rbi-line { fill: none; stroke: var(--data-line); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   .rbi-line-web { fill: none; stroke: var(--data-line); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1 5; }
   .web-dot { fill: var(--chart-surface); stroke: var(--data-line); stroke-width: 2; }
@@ -137,8 +138,8 @@
     <div class="masthead">
       <div class="eyebrow">MoSPI Dataset Analysis — Statistical Bulletin</div>
       <h1>Record reserves, then a $61.6bn slide</h1>
-      <p class="dek">India's foreign exchange reserves, January 2015 through the latest available reading. The MoSPI connector's own data stops in June 2025 — everything after that is a real weekly series scraped directly from RBI's own enumerable Weekly Statistical Supplement archive (1,452 releases back to 1998), shown as a dashed, separately-sourced extension.</p>
-      <div class="source-line">SOURCE: Jan 2015–Jun 2025 via api.mospi.gov.in (MoSPI MCP connector) · Jun 2025–Jul 2026: 56 weekly readings scraped directly from rbi.org.in/scripts/WSSView.aspx (RBI's own site), retrieved 18 Jul 2026</div>
+      <p class="dek">India's foreign exchange reserves, January 2015 through the latest available reading, plus a new currency segment on the rupee's own trend against the US dollar. The MoSPI connector's own data stops mid-2025 in both series — everything after that is scraped directly from RBI's own public archives, shown as a dashed, separately-sourced extension.</p>
+      <div class="source-line">SOURCE: Reserves — Jan 2015–Jun 2025 via api.mospi.gov.in (MoSPI MCP connector), then rbi.org.in/scripts/WSSView.aspx (RBI's own site) · Currency — Jan 2015–Jul 2025 via the MoSPI connector's RBI dataset, then rbi.org.in/scripts/referenceratearchive.aspx (RBI Reference Rate Archive) · retrieved 18 Jul 2026</div>
     </div>
 
     <div class="stat-strip" id="statStrip"></div>
@@ -169,19 +170,49 @@
       </details>
     </section>
 
+    <section class="block">
+      <div class="block-head">
+        <h2 class="block-title">Currency: the rupee against the US dollar</h2>
+        <p class="block-note">RBI Reference Rate, ₹ per US$1 — higher means a weaker rupee, not a stronger one.</p>
+      </div>
+      <div class="stat-strip" id="usdStatStrip"></div>
+      <div class="chart-card">
+        <svg id="usdChart" viewBox="0 0 1000 340" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="usdAreaFade" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="var(--data-fill-a)" />
+              <stop offset="100%" stop-color="var(--data-fill-b)" />
+            </linearGradient>
+          </defs>
+        </svg>
+        <div class="tooltip" id="usdTooltip"></div>
+      </div>
+      <div class="legend-row">
+        <span class="legend-item"><span class="legend-swatch"></span> MoSPI connector (Jan 2015 – Jul 2025, monthly average)</span>
+        <span class="legend-item"><span class="legend-swatch dashed"></span> RBI Reference Rate Archive, scraped weekly (Aug 2025 – Jul 2026)</span>
+      </div>
+      <p class="legend-note">The <b>RBI Reference Rate</b> is the daily benchmark INR/USD rate RBI publishes (computed by FBIL, the industry benchmark administrator, since 2018) — not a rate anyone actually traded at. It's quoted as <b>₹ needed to buy US$1</b>, so this line rising is the rupee weakening, the same direction as the "-8.5% slide" in the reserves chart above, over the same stretch of 2026.</p>
+      <details class="table-view">
+        <summary>View full data table (126 connector months + 51 weekly readings scraped from rbi.org.in)</summary>
+        <div class="data-table-wrap"><table class="data-table" id="usdTable"></table></div>
+      </details>
+    </section>
+
     <div class="errata">
       <div class="errata-title">Errata &amp; data caveats</div>
       <ul>
-        <li><b>The MoSPI connector itself is still frozen at June 2025</b> — re-checked 18 July 2026, no new data. Everything after that point is scraped directly from RBI's own site, not from the connector.</li>
-        <li><b>How it was scraped:</b> RBI's Weekly Statistical Supplement archive is fully enumerable — every release from 19 Sep 1998 to today sits at a sequential <code>WSSView.aspx?Id=N</code> URL, no login or API key needed. Each release's "as on" reserve date is <b>7 days before</b> its publish date — an easy mislabel if you take the release date at face value (a couple of the earlier press-sourced figures in this bulletin's prior version had exactly that off-by-one-week error).</li>
+        <li><b>The MoSPI connector itself is still frozen at June 2025</b> for reserves — re-checked 18 July 2026, no new data. Everything after that point is scraped directly from RBI's own site, not from the connector.</li>
+        <li><b>How the reserves bridge was scraped:</b> RBI's Weekly Statistical Supplement archive is fully enumerable — every release from 19 Sep 1998 to today sits at a sequential <code>WSSView.aspx?Id=N</code> URL, no login or API key needed. Each release's "as on" reserve date is <b>7 days before</b> its publish date — an easy mislabel if you take the release date at face value (a couple of the earlier press-sourced figures in this bulletin's prior version had exactly that off-by-one-week error).</li>
         <li><b>New all-time high: $728.5bn on 27 Feb 2026</b> — surpassing the $705.8bn (Sep 2024) peak this bulletin previously called the record.</li>
         <li><b>The slide didn't stop in March.</b> After the Feb 27 peak, reserves fell through a "West Asia conflict" shock and rupee defense to $688.1bn by 27 Mar, briefly steadied, then fell further to a true trough of <b>$666.9bn on 26 Jun 2026</b> — a full <b>-$61.6bn (-8.5%)</b> peak-to-trough. The $675.2bn reading on 10 Jul is a partial recovery off that trough, not off the February peak.</li>
         <li><b>2022 drawdown (for context):</b> reserves fell from $640.7bn (Aug 2021) to $532.7bn (Sep 2022), ~17%, during Fed tightening and dollar strength.</li>
-        <li>Figures are RBI's own reported totals (foreign currency assets + gold + SDRs + reserve tranche position in the IMF), US$-converted by RBI at the time of reporting.</li>
+        <li>Reserves figures are RBI's own reported totals (foreign currency assets + gold + SDRs + reserve tranche position in the IMF), US$-converted by RBI at the time of reporting.</li>
+        <li><b>Currency data comes from two different RBI series</b>, not one continuous feed: the connector's "Monthly Average Exchange Rates" indicator (through July 2025), then a direct scrape of RBI's <b>Reference Rate Archive</b> (<code>rbi.org.in/scripts/referenceratearchive.aspx</code>) for daily rates since, downsampled to one reading per week to match the reserves chart's density. A dead end along the way: the WSS's own historical "Foreign Exchange Rates - Spot and Forward Premia" table (PARAM1=6) — the same archive style used for reserves — turns out to have been discontinued in <b>December 2012</b>, so it couldn't be used to bridge anything current.</li>
+        <li><b>The rupee's depreciation accelerated sharply</b>: roughly 38% over the decade from Jan 2015 (₹62.23) to Jul 2025 (₹86.11, a MoSPI-connector monthly average) — call it ~3.3%/year — then another <b>+11.9% in the twelve months since</b>, to ₹96.37 on 17 Jul 2026. The weakest single session in this window was ₹96.84 on 20 May 2026.</li>
       </ul>
     </div>
 
-    <footer class="colophon">herrrickshaw/mospi-dataset-analysis — MoSPI connector data + a direct scrape of RBI's own public Weekly Statistical Supplement archive, not an official RBI publication</footer>
+    <footer class="colophon">herrrickshaw/mospi-dataset-analysis — MoSPI connector data + direct scrapes of RBI's own public Weekly Statistical Supplement and Reference Rate archives, not an official RBI publication</footer>
   </div>
 </div>
 
@@ -389,5 +420,142 @@
     return "<tr><td>" + dateLabel(p.date) + "</td><td>" + fmt(p.value) + "</td><td>" + p.source + "</td></tr>";
   }).reverse().join("");
   table.innerHTML = thead + "<tbody>" + rows + "</tbody>";
+
+  // ======================================================================
+  // Currency segment: INR vs US Dollar
+  // ======================================================================
+  var usdMonths = ["2015-01-01","2015-02-01","2015-03-01","2015-04-01","2015-05-01","2015-06-01","2015-07-01","2015-08-01","2015-09-01","2015-10-01","2015-11-01","2015-12-01","2016-01-01","2016-02-01","2016-03-01","2016-04-01","2016-05-01","2016-06-01","2016-07-01","2016-08-01","2016-09-01","2016-10-01","2016-11-01","2016-12-01","2017-01-01","2017-02-01","2017-03-01","2017-04-01","2017-05-01","2017-06-01","2017-07-01","2017-08-01","2017-09-01","2017-10-01","2017-11-01","2017-12-01","2018-01-01","2018-02-01","2018-03-01","2018-04-01","2018-05-01","2018-06-01","2018-07-01","2018-08-01","2018-09-01","2018-10-01","2018-11-01","2018-12-01","2019-01-01","2019-02-01","2019-03-01","2019-04-01","2019-05-01","2019-06-01","2019-07-01","2019-08-01","2019-09-01","2019-10-01","2019-11-01","2019-12-01","2020-01-01","2020-02-01","2020-03-01","2020-04-01","2020-05-01","2020-06-01","2020-07-01","2020-08-01","2020-09-01","2020-10-01","2020-11-01","2020-12-01","2021-01-01","2021-02-01","2021-03-01","2021-04-01","2021-05-01","2021-06-01","2021-07-01","2021-08-01","2021-09-01","2021-10-01","2021-11-01","2021-12-01","2022-01-01","2022-02-01","2022-03-01","2022-04-01","2022-05-01","2022-06-01","2022-07-01","2022-08-01","2022-09-01","2022-10-01","2022-11-01","2022-12-01","2023-01-01","2023-02-01","2023-03-01","2023-04-01","2023-05-01","2023-06-01","2023-07-01","2023-08-01","2023-09-01","2023-10-01","2023-11-01","2023-12-01","2024-01-01","2024-02-01","2024-03-01","2024-04-01","2024-06-01","2024-07-01","2024-08-01","2024-09-01","2024-10-01","2024-11-01","2024-12-01","2025-01-01","2025-02-01","2025-03-01","2025-04-01","2025-05-01","2025-06-01","2025-07-01"];
+  var usdConnectorValues = [62.23,62.04,62.45,62.75,63.8,63.86,63.64,65.07,66.22,65.06,66.12,66.6,67.25,68.24,67.02,66.47,66.91,67.3,67.21,66.94,66.74,66.75,67.63,67.9,68.08,67.08,65.88,64.51,64.42,64.44,64.46,63.97,64.44,65.08,64.86,64.24,63.64,64.37,65.02,65.64,67.54,67.79,68.69,69.55,72.22,73.63,71.85,70.73,70.73,71.22,69.48,69.43,69.77,69.44,68.81,71.15,71.33,71.04,71.45,71.19,71.31,71.49,74.35,76.24,75.66,75.73,74.99,74.67,73.48,73.46,74.22,73.59,73.11,72.76,72.79,74.47,73.27,73.56,74.53,74.18,73.56,74.92,74.5,75.37,74.44,75.0,76.24,76.17,77.32,78.07,79.6,79.56,80.23,82.34,81.81,82.46,81.9,82.61,82.29,82.02,82.34,82.23,82.15,82.79,83.05,83.24,83.3,83.28,83.12,82.96,83.0,83.41,83.47,83.59,83.9,83.81,84.03,84.36,84.99,86.27,87.05,86.64,85.56,85.19,85.9,86.11];
+
+  var usdWebDates = ["2025-08-01","2025-08-08","2025-08-14","2025-08-22","2025-08-29","2025-09-05","2025-09-12","2025-09-19","2025-09-26","2025-10-03","2025-10-10","2025-10-17","2025-10-24","2025-10-31","2025-11-07","2025-11-14","2025-11-21","2025-11-28","2025-12-05","2025-12-12","2025-12-19","2025-12-26","2026-01-02","2026-01-09","2026-01-16","2026-01-23","2026-01-30","2026-02-06","2026-02-13","2026-02-20","2026-02-27","2026-03-06","2026-03-13","2026-03-20","2026-03-27","2026-04-02","2026-04-10","2026-04-17","2026-04-24","2026-04-30","2026-05-08","2026-05-15","2026-05-22","2026-05-29","2026-06-05","2026-06-12","2026-06-19","2026-06-25","2026-07-03","2026-07-10","2026-07-17"];
+  var usdWebValues = [87.3519,87.6196,87.4852,87.4375,87.8514,88.3242,88.2806,88.3055,88.7234,88.7775,88.692,87.9097,87.7058,88.7241,88.705,88.742,88.6402,89.4557,89.9238,90.3883,90.1975,89.8296,90.1242,90.1395,90.6497,91.6195,91.8983,90.4163,90.7415,90.9518,90.9542,91.6829,92.4405,93.3483,94.5988,93.2088,92.6492,92.7235,94.2958,95.2417,94.4365,95.9255,95.9588,95.3845,95.3996,95.3825,94.4735,94.4804,95.2408,95.3129,96.3665];
+  var usdWebPoints = usdWebDates.map(function (d, i) { return { date: d, value: usdWebValues[i] }; });
+  usdWebPoints[usdWebPoints.length - 1].note = "latest available, Reference Rate Archive";
+
+  function fmtRs(n) { return "₹" + n.toFixed(2); }
+
+  // ---- Currency stat strip ----
+  var usdStatStrip = document.getElementById("usdStatStrip");
+  var usdStats = [
+    { label: "Latest — 17 Jul 2026", value: "₹96.37", sub: "up from <b>₹86.11</b>, the connector's Jul 2025 monthly average" },
+    { label: "10-year change", value: "+54.9%", sub: "from ₹62.23 in Jan 2015 — a weaker rupee needs more ₹ per US$1" },
+    { label: "Past 12 months", value: "+11.9%", sub: "accelerated sharply versus ~3.3%/year over the prior decade" },
+    { label: "Weakest session in window", value: "₹96.84", sub: "20 May 2026, per RBI's daily Reference Rate" }
+  ];
+  usdStats.forEach(function (s) {
+    var elx = document.createElement("div");
+    elx.className = "stat-tile";
+    elx.innerHTML = '<div class="stat-label">' + s.label + '</div><div class="stat-value">' + s.value + '</div><div class="stat-sub">' + s.sub + '</div>';
+    usdStatStrip.appendChild(elx);
+  });
+
+  // ---- Currency chart ----
+  var usdSvg = document.getElementById("usdChart");
+  var usdW = 1000, usdH = 340, usdPadL = 46, usdPadR = 16, usdPadT = 24, usdPadB = 30;
+  var usdPlotW = usdW - usdPadL - usdPadR, usdPlotH = usdH - usdPadT - usdPadB;
+  var usdVMin = 58, usdVMax = 100;
+
+  var usdAllDates = usdMonths.concat(usdWebDates);
+  var usdMinT = toTime(usdAllDates[0]), usdMaxT = toTime(usdAllDates[usdAllDates.length - 1]);
+
+  function usdXForT(t) { return usdPadL + ((t - usdMinT) / (usdMaxT - usdMinT)) * usdPlotW; }
+  function usdXForDate(iso) { return usdXForT(toTime(iso)); }
+  function usdYFor(v) { return usdPadT + usdPlotH - ((v - usdVMin) / (usdVMax - usdVMin)) * usdPlotH; }
+
+  var usdTicks = [60, 70, 80, 90, 100];
+  usdTicks.forEach(function (t) {
+    var y = usdYFor(t);
+    usdSvg.appendChild(el("line", { x1: usdPadL, x2: usdW - usdPadR, y1: y, y2: y, class: "grid-line" }));
+    var lbl = el("text", { x: usdPadL - 8, y: y + 3, class: "axis-label", "text-anchor": "end" });
+    lbl.textContent = "₹" + t;
+    usdSvg.appendChild(lbl);
+  });
+  usdSvg.appendChild(el("line", { x1: usdPadL, x2: usdPadL, y1: usdPadT, y2: usdH - usdPadB, class: "axis-line" }));
+  usdSvg.appendChild(el("line", { x1: usdPadL, x2: usdW - usdPadR, y1: usdH - usdPadB, y2: usdH - usdPadB, class: "axis-line" }));
+
+  for (var usdYr = 2015; usdYr <= 2026; usdYr++) {
+    var usdX = usdXForDate(usdYr + "-01-01");
+    var usdLbl = el("text", { x: usdX, y: usdH - usdPadB + 16, class: "axis-label", "text-anchor": "middle" });
+    usdLbl.textContent = usdYr;
+    usdSvg.appendChild(usdLbl);
+  }
+
+  function usdCallout(fromIso, toIso, label, lane) {
+    var x0 = usdXForDate(fromIso), x1 = usdXForDate(toIso);
+    usdSvg.appendChild(el("rect", { x: x0, y: usdPadT, width: x1 - x0, height: usdPlotH, class: "callout-box" }));
+    var y = lane === 1 ? usdPadT + 12 : usdPadT - 8;
+    var t = el("text", { x: (x0 + x1) / 2, y: y, class: "callout-text", "text-anchor": "middle" });
+    t.textContent = label;
+    usdSvg.appendChild(t);
+  }
+  usdCallout("2022-01-01", "2022-10-01", "2022 slide, +10.6%", 0);
+  usdCallout("2025-08-01", "2026-07-17", "2025–26 acceleration, +11.9%", 1);
+
+  var usdConnectorPts = usdConnectorValues.map(function (v, i) { return { x: usdXForDate(usdMonths[i]), y: usdYFor(v) }; });
+  usdSvg.appendChild(el("path", { d: monotonePath(usdConnectorPts, true), class: "usd-area" }));
+  usdSvg.appendChild(el("path", { d: monotonePath(usdConnectorPts, false), class: "rbi-line" }));
+
+  var usdWebChain = [{ date: usdMonths[usdMonths.length - 1], value: usdConnectorValues[usdConnectorValues.length - 1] }].concat(usdWebPoints);
+  var usdWebPts = usdWebChain.map(function (p) { return { x: usdXForDate(p.date), y: usdYFor(p.value) }; });
+  usdSvg.appendChild(el("path", { d: monotonePath(usdWebPts, false), class: "rbi-line-web" }));
+
+  usdWebPoints.forEach(function (p) {
+    usdSvg.appendChild(el("circle", { cx: usdXForDate(p.date), cy: usdYFor(p.value), r: 3.2, class: "web-dot" }));
+  });
+
+  var usdLatest = usdWebPoints[usdWebPoints.length - 1];
+  var usdLatestX = usdXForDate(usdLatest.date), usdLatestY = usdYFor(usdLatest.value);
+  usdSvg.appendChild(el("circle", { cx: usdLatestX, cy: usdLatestY, r: 4, class: "marker-dot" }));
+  var usdLatestLbl = el("text", { x: usdLatestX - 10, y: usdLatestY + 24, class: "low-label", "text-anchor": "end" });
+  usdLatestLbl.textContent = fmtRs(usdLatest.value);
+  usdSvg.appendChild(usdLatestLbl);
+
+  var usdCombined = usdMonths.map(function (m, i) { return { date: m, value: usdConnectorValues[i], source: "MoSPI connector" }; })
+    .concat(usdWebPoints.map(function (p) { return { date: p.date, value: p.value, source: "RBI Reference Rate Archive (scraped)" + (p.note ? " — " + p.note : "") }; }));
+
+  var usdCrosshair = el("line", { x1: 0, x2: 0, y1: usdPadT, y2: usdH - usdPadB, class: "crosshair" });
+  usdSvg.appendChild(usdCrosshair);
+  var usdHoverDot = el("circle", { r: 4, fill: "var(--data-line)", stroke: "var(--chart-surface)", "stroke-width": 2, opacity: 0 });
+  usdSvg.appendChild(usdHoverDot);
+  var usdHitArea = el("rect", { x: usdPadL, y: usdPadT, width: usdPlotW, height: usdPlotH, class: "hover-target" });
+  usdSvg.appendChild(usdHitArea);
+
+  var usdTooltip = document.getElementById("usdTooltip");
+  var usdChartCard = usdSvg.parentElement;
+
+  function usdNearestPoint(mx) {
+    var targetT = usdMinT + ((mx - usdPadL) / usdPlotW) * (usdMaxT - usdMinT);
+    var best = 0, bestDiff = Infinity;
+    usdCombined.forEach(function (p, i) {
+      var diff = Math.abs(toTime(p.date) - targetT);
+      if (diff < bestDiff) { bestDiff = diff; best = i; }
+    });
+    return usdCombined[best];
+  }
+
+  usdHitArea.addEventListener("mousemove", function (evt) {
+    var rect = usdSvg.getBoundingClientRect();
+    var mx = ((evt.clientX - rect.left) / rect.width) * usdW;
+    var p = usdNearestPoint(mx);
+    var x = usdXForDate(p.date), y = usdYFor(p.value);
+    usdCrosshair.setAttribute("x1", x); usdCrosshair.setAttribute("x2", x); usdCrosshair.style.opacity = 1;
+    usdHoverDot.setAttribute("cx", x); usdHoverDot.setAttribute("cy", y); usdHoverDot.style.opacity = 1;
+    var cardRect = usdChartCard.getBoundingClientRect();
+    usdTooltip.style.left = ((x / usdW) * cardRect.width) + "px";
+    usdTooltip.style.top = ((y / usdH) * cardRect.height) + "px";
+    usdTooltip.style.opacity = 1;
+    usdTooltip.innerHTML = dateLabel(p.date) + " &nbsp; <b>" + fmtRs(p.value) + "</b><br>" + p.source;
+  });
+  usdHitArea.addEventListener("mouseleave", function () {
+    usdCrosshair.style.opacity = 0; usdHoverDot.style.opacity = 0; usdTooltip.style.opacity = 0;
+  });
+
+  // ---- currency table ----
+  var usdTable = document.getElementById("usdTable");
+  var usdThead = "<thead><tr><th>Date</th><th>₹ per US$1</th><th>Source</th></tr></thead>";
+  var usdRows = usdCombined.map(function (p) {
+    return "<tr><td>" + dateLabel(p.date) + "</td><td>" + fmtRs(p.value) + "</td><td>" + p.source + "</td></tr>";
+  }).reverse().join("");
+  usdTable.innerHTML = usdThead + "<tbody>" + usdRows + "</tbody>";
 })();
 </script>
