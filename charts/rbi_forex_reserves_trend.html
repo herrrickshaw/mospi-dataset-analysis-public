@@ -136,9 +136,9 @@
   <div class="sheet">
     <div class="masthead">
       <div class="eyebrow">MoSPI Dataset Analysis — Statistical Bulletin</div>
-      <h1>Record reserves, then a $53bn shock</h1>
-      <p class="dek">India's foreign exchange reserves, January 2015 through the latest available reading. The MoSPI connector's own data stops in June 2025 — everything from September 2025 onward is bridged in from RBI's public Weekly Statistical Supplement releases, shown as a dashed, separately-sourced extension.</p>
-      <div class="source-line">SOURCE: Jan 2015–Jun 2025 via api.mospi.gov.in (MoSPI MCP connector) · Sep 2025–Jul 2026 via RBI Weekly Statistical Supplement press releases (rbi.org.in), retrieved 18 Jul 2026</div>
+      <h1>Record reserves, then a $61.6bn slide</h1>
+      <p class="dek">India's foreign exchange reserves, January 2015 through the latest available reading. The MoSPI connector's own data stops in June 2025 — everything after that is a real weekly series scraped directly from RBI's own enumerable Weekly Statistical Supplement archive (1,452 releases back to 1998), shown as a dashed, separately-sourced extension.</p>
+      <div class="source-line">SOURCE: Jan 2015–Jun 2025 via api.mospi.gov.in (MoSPI MCP connector) · Jun 2025–Jul 2026: 56 weekly readings scraped directly from rbi.org.in/scripts/WSSView.aspx (RBI's own site), retrieved 18 Jul 2026</div>
     </div>
 
     <div class="stat-strip" id="statStrip"></div>
@@ -146,7 +146,7 @@
     <section class="block">
       <div class="block-head">
         <h2 class="block-title">Total foreign exchange reserves, US$ billions</h2>
-        <p class="block-note">Solid line: MoSPI connector (monthly). Dashed line + dots: RBI press releases (weekly, irregular).</p>
+        <p class="block-note">Solid line: MoSPI connector (monthly). Dashed line + dots: real weekly readings scraped from RBI's own site.</p>
       </div>
       <div class="chart-card">
         <svg id="rbiChart" viewBox="0 0 1000 340" preserveAspectRatio="none">
@@ -161,10 +161,10 @@
       </div>
       <div class="legend-row">
         <span class="legend-item"><span class="legend-swatch"></span> MoSPI connector (Jan 2015 – Jun 2025)</span>
-        <span class="legend-item"><span class="legend-swatch dashed"></span> RBI press releases (Sep 2025 – Jul 2026)</span>
+        <span class="legend-item"><span class="legend-swatch dashed"></span> RBI's own site, scraped weekly (Jun 2025 – Jul 2026)</span>
       </div>
       <details class="table-view">
-        <summary>View full data table (126 connector months + 8 web-sourced weekly readings)</summary>
+        <summary>View full data table (126 connector months + 56 weekly readings scraped from rbi.org.in)</summary>
         <div class="data-table-wrap"><table class="data-table" id="rbiTable"></table></div>
       </details>
     </section>
@@ -172,15 +172,16 @@
     <div class="errata">
       <div class="errata-title">Errata &amp; data caveats</div>
       <ul>
-        <li><b>The MoSPI connector itself is still frozen at June 2025</b> — re-checked 18 July 2026, no new data. Everything after that point in this chart comes from RBI's own published Weekly Statistical Supplement (via press releases reporting it), not from the connector.</li>
+        <li><b>The MoSPI connector itself is still frozen at June 2025</b> — re-checked 18 July 2026, no new data. Everything after that point is scraped directly from RBI's own site, not from the connector.</li>
+        <li><b>How it was scraped:</b> RBI's Weekly Statistical Supplement archive is fully enumerable — every release from 19 Sep 1998 to today sits at a sequential <code>WSSView.aspx?Id=N</code> URL, no login or API key needed. Each release's "as on" reserve date is <b>7 days before</b> its publish date — an easy mislabel if you take the release date at face value (a couple of the earlier press-sourced figures in this bulletin's prior version had exactly that off-by-one-week error).</li>
         <li><b>New all-time high: $728.5bn on 27 Feb 2026</b> — surpassing the $705.8bn (Sep 2024) peak this bulletin previously called the record.</li>
-        <li><b>Feb–Mar 2026 shock:</b> reserves fell roughly <b>$53bn (-7.3%)</b> from that Feb 27 peak to $675.2bn by 10 Jul 2026. RBI intervened to defend the rupee (down &gt;4% in March) amid what press reports describe as a "West Asia conflict" shock; the forward book's short dollar position reportedly swelled toward $100bn in March, meaning true import cover is lower than the headline reserve figure alone suggests.</li>
+        <li><b>The slide didn't stop in March.</b> After the Feb 27 peak, reserves fell through a "West Asia conflict" shock and rupee defense to $688.1bn by 27 Mar, briefly steadied, then fell further to a true trough of <b>$666.9bn on 26 Jun 2026</b> — a full <b>-$61.6bn (-8.5%)</b> peak-to-trough. The $675.2bn reading on 10 Jul is a partial recovery off that trough, not off the February peak.</li>
         <li><b>2022 drawdown (for context):</b> reserves fell from $640.7bn (Aug 2021) to $532.7bn (Sep 2022), ~17%, during Fed tightening and dollar strength.</li>
-        <li>Weekly web-sourced readings are irregular, not evenly spaced — treat the dashed segment as a set of spot checks, not a smooth series. Figures are RBI's own reported totals (foreign currency assets + gold + SDRs + reserve tranche position).</li>
+        <li>Figures are RBI's own reported totals (foreign currency assets + gold + SDRs + reserve tranche position in the IMF), US$-converted by RBI at the time of reporting.</li>
       </ul>
     </div>
 
-    <footer class="colophon">herrrickshaw/mospi-dataset-analysis — MoSPI connector data + RBI public press releases, not an official RBI publication</footer>
+    <footer class="colophon">herrrickshaw/mospi-dataset-analysis — MoSPI connector data + a direct scrape of RBI's own public Weekly Statistical Supplement archive, not an official RBI publication</footer>
   </div>
 </div>
 
@@ -189,16 +190,12 @@
   var connectorMonths = ["2015-01","2015-02","2015-03","2015-04","2015-05","2015-06","2015-07","2015-08","2015-09","2015-10","2015-11","2015-12","2016-01","2016-02","2016-03","2016-04","2016-05","2016-06","2016-07","2016-08","2016-09","2016-10","2016-11","2016-12","2017-01","2017-02","2017-03","2017-04","2017-05","2017-06","2017-07","2017-08","2017-09","2017-10","2017-11","2017-12","2018-01","2018-02","2018-03","2018-04","2018-05","2018-06","2018-07","2018-08","2018-09","2018-10","2018-11","2018-12","2019-01","2019-02","2019-03","2019-04","2019-05","2019-06","2019-07","2019-08","2019-09","2019-10","2019-11","2019-12","2020-01","2020-02","2020-03","2020-04","2020-05","2020-06","2020-07","2020-08","2020-09","2020-10","2020-11","2020-12","2021-01","2021-02","2021-03","2021-04","2021-05","2021-06","2021-07","2021-08","2021-09","2021-10","2021-11","2021-12","2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09","2022-10","2022-11","2022-12","2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09","2023-10","2023-11","2023-12","2024-01","2024-02","2024-03","2024-04","2024-05","2024-06","2024-07","2024-08","2024-09","2024-10","2024-11","2024-12","2025-01","2025-02","2025-03","2025-04","2025-05","2025-06"].map(function (m) { return m + "-01"; });
   var connectorValues = [328.7,337.7,341.6,351.9,352.5,356.0,353.5,351.4,350.3,354.2,350.2,350.4,349.6,348.4,360.2,363.0,361.6,363.5,366.5,366.8,372.0,366.2,361.1,358.9,363.0,364.3,370.0,373.3,380.1,386.5,393.7,397.8,400.2,399.2,401.9,409.1,422.4,421.0,424.5,420.5,412.4,405.7,403.7,400.1,400.5,392.1,393.7,395.6,400.2,402.4,412.9,418.8,421.9,429.8,428.8,428.3,433.7,445.1,451.3,459.9,471.3,481.3,477.8,481.1,493.6,505.7,534.6,542.9,544.7,560.2,574.8,585.8,590.3,584.6,577.0,588.0,598.9,611.1,620.1,640.7,635.4,640.4,638.0,633.6,629.9,631.9,607.3,596.7,603.2,589.2,574.3,560.4,532.7,534.0,553.2,562.7,574.4,562.7,578.4,590.1,590.7,595.1,605.8,598.2,587.7,588.5,604.2,622.5,620.0,625.2,646.4,640.2,651.5,652.0,670.6,682.2,705.8,682.1,659.4,635.7,630.6,638.7,668.3,688.4,691.3,698.1];
 
-  var webPoints = [
-    { date: "2025-09-12", value: 702.966, note: "crossed $700bn, 3rd straight weekly rise" },
-    { date: "2025-12-12", value: 688.940, note: "" },
-    { date: "2025-12-19", value: 693.318, note: "" },
-    { date: "2026-01-16", value: 701.360, note: "" },
-    { date: "2026-02-27", value: 728.500, note: "all-time high" },
-    { date: "2026-03-13", value: 716.810, note: "West Asia conflict shock begins" },
-    { date: "2026-03-27", value: 688.050, note: "rupee down >4% in March; RBI intervention" },
-    { date: "2026-07-10", value: 675.157, note: "latest available (RBI WSS, released 18 Jul 2026)" }
-  ];
+  var webDates = ["2025-06-20","2025-06-27","2025-07-04","2025-07-11","2025-07-18","2025-07-25","2025-08-01","2025-08-08","2025-08-15","2025-08-22","2025-08-29","2025-09-05","2025-09-12","2025-09-19","2025-09-26","2025-10-03","2025-10-10","2025-10-17","2025-10-24","2025-10-31","2025-11-07","2025-11-14","2025-11-21","2025-11-28","2025-12-05","2025-12-12","2025-12-19","2025-12-26","2026-01-02","2026-01-09","2026-01-16","2026-01-23","2026-01-30","2026-02-06","2026-02-13","2026-02-20","2026-02-27","2026-03-06","2026-03-13","2026-03-20","2026-03-27","2026-04-03","2026-04-10","2026-04-17","2026-04-24","2026-05-01","2026-05-08","2026-05-15","2026-05-22","2026-05-29","2026-06-05","2026-06-12","2026-06-19","2026-06-26","2026-07-03","2026-07-10"];
+  var webValues = [697.935,702.784,699.736,696.672,695.489,698.192,688.871,693.618,695.106,690.72,694.23,698.268,702.966,702.57,700.236,699.96,697.784,702.28,695.355,689.733,687.034,692.576,688.104,686.227,687.26,688.949,693.318,696.61,686.801,687.193,701.36,709.413,723.774,717.064,725.727,723.608,728.494,716.81,709.759,698.346,688.058,697.121,700.946,703.308,698.487,690.693,696.988,688.894,681.384,682.321,681.61,671.625,672.587,666.933,674.193,675.157];
+  var webPoints = webDates.map(function (d, i) { return { date: d, value: webValues[i] }; });
+  webPoints[36].note = "all-time high";
+  webPoints[53].note = "trough after the slide";
+  webPoints[webPoints.length - 1].note = "latest available";
 
   function fmt(n, d) { return n.toFixed(d === undefined ? 1 : d); }
   function dateLabel(iso) {
@@ -219,9 +216,9 @@
   // ---- Stat strip ----
   var statStrip = document.getElementById("statStrip");
   var stats = [
-    { label: "Latest reading — 10 Jul 2026", value: "$675.2bn", sub: "down from the all-time high of <b>$728.5bn</b> (27 Feb 2026)" },
+    { label: "Latest reading — 10 Jul 2026", value: "$675.2bn", sub: "up from the trough of <b>$666.9bn</b> (26 Jun 2026)" },
     { label: "All-time peak — 27 Feb 2026", value: "$728.5bn", sub: "surpassed the prior Sep 2024 high of <b>$705.8bn</b>" },
-    { label: "Change since peak", value: "−$53.3bn", sub: "−7.3% in 4.5 months, RBI rupee defense" },
+    { label: "Peak-to-trough slide", value: "−$61.6bn", sub: "−8.5% over 4 months, to 26 Jun 2026" },
     { label: "Connector freshness", value: "13 mo. stale", sub: "MoSPI connector: no reading past <b>Jun 2025</b>" }
   ];
   stats.forEach(function (s) {
@@ -277,7 +274,7 @@
   }
   callout("2021-08-01", "2022-09-01", "2022 drawdown, -17%", 0);
   callout("2024-09-01", "2025-01-01", "2024–25 drawdown, -11%", 1);
-  callout("2026-02-27", "2026-03-27", "War shock, -$53bn", 0);
+  callout("2026-02-27", "2026-06-26", "War shock & slide, -8.5%", 0);
 
   // area under the connector (confident) segment only
   var areaPts = connectorValues.map(function (v, i) { return xForDate(connectorMonths[i]).toFixed(1) + "," + yFor(v).toFixed(1); });
@@ -301,9 +298,9 @@
 
   // peak + trough markers
   [
-    { date: "2026-02-27", value: 728.5, kind: "peak" },
+    { date: "2026-02-27", value: 728.494, kind: "peak" },
     { date: "2022-09-01", value: 532.7, kind: "trough" },
-    { date: "2026-03-27", value: 688.05, kind: "trough" }
+    { date: "2026-06-26", value: 666.933, kind: "trough" }
   ].forEach(function (m) {
     var x = xForDate(m.date), y = yFor(m.value);
     svg.appendChild(el("circle", { cx: x, cy: y, r: 4, class: "marker-dot" }));
@@ -314,7 +311,7 @@
 
   // crosshair + hover across the combined series
   var combined = connectorMonths.map(function (m, i) { return { date: m, value: connectorValues[i], source: "MoSPI connector" }; })
-    .concat(webPoints.map(function (p) { return { date: p.date, value: p.value, source: "RBI press release" + (p.note ? " — " + p.note : "") }; }));
+    .concat(webPoints.map(function (p) { return { date: p.date, value: p.value, source: "RBI WSS (scraped)" + (p.note ? " — " + p.note : "") }; }));
 
   var crosshair = el("line", { x1: 0, x2: 0, y1: padT, y2: H - padB, class: "crosshair" });
   svg.appendChild(crosshair);

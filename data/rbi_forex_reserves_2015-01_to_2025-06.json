@@ -14,19 +14,14 @@
     "data_freshness": "Re-checked 2026-07-18: still no data past June 2025 in the MoSPI connector — 13 months stale. See web_extension for what RBI's own site shows since."
   },
   "web_extension": {
-    "source": "RBI Weekly Statistical Supplement, via press releases (rbi.org.in), retrieved 2026-07-18",
-    "note": "Irregular weekly spot readings, NOT from the MoSPI connector — bridges the gap from the connector's June 2025 endpoint to the present.",
-    "readings": [
-      {"date": "2025-09-12", "value_bn": 702.966, "note": "crossed $700bn, 3rd straight weekly rise"},
-      {"date": "2025-12-12", "value_bn": 688.940},
-      {"date": "2025-12-19", "value_bn": 693.318},
-      {"date": "2026-01-16", "value_bn": 701.360},
-      {"date": "2026-02-27", "value_bn": 728.500, "note": "all-time high"},
-      {"date": "2026-03-13", "value_bn": 716.810, "note": "West Asia conflict shock begins"},
-      {"date": "2026-03-27", "value_bn": 688.050, "note": "rupee down >4% in March; RBI intervention"},
-      {"date": "2026-07-10", "value_bn": 675.157, "note": "latest available reading"}
-    ],
-    "all_time_peak": {"date": "2026-02-27", "value_bn": 728.5, "supersedes": "2024-09 connector peak of 705.8bn"},
-    "war_shock_drawdown": {"from": "2026-02-27", "from_value_bn": 728.5, "to": "2026-07-10", "to_value_bn": 675.157, "pct_decline": -7.3}
+    "source": "Direct scrape of RBI's own Weekly Statistical Supplement archive (rbi.org.in/scripts/WSSView.aspx?Id=N), retrieved 2026-07-18",
+    "method": "The WSS archive is fully enumerable: every release from 19 Sep 1998 (Id=2) to 17 Jul 2026 (Id=28579) sits at a sequential integer ID, no API key or login required. Each release's 'as on' reserve date is 7 days before its publish date (release date - 7 days) — verified against RBI's own table for Id=28579: published 17 Jul 2026, 'As on Jul. 10, 2026', Total Reserves US$ 675,157 Mn.",
+    "note": "Real weekly readings (not spot news citations) — bridges the gap from the connector's June 2025 endpoint to the present with full weekly granularity.",
+    "dates": ["2025-06-20","2025-06-27","2025-07-04","2025-07-11","2025-07-18","2025-07-25","2025-08-01","2025-08-08","2025-08-15","2025-08-22","2025-08-29","2025-09-05","2025-09-12","2025-09-19","2025-09-26","2025-10-03","2025-10-10","2025-10-17","2025-10-24","2025-10-31","2025-11-07","2025-11-14","2025-11-21","2025-11-28","2025-12-05","2025-12-12","2025-12-19","2025-12-26","2026-01-02","2026-01-09","2026-01-16","2026-01-23","2026-01-30","2026-02-06","2026-02-13","2026-02-20","2026-02-27","2026-03-06","2026-03-13","2026-03-20","2026-03-27","2026-04-03","2026-04-10","2026-04-17","2026-04-24","2026-05-01","2026-05-08","2026-05-15","2026-05-22","2026-05-29","2026-06-05","2026-06-12","2026-06-19","2026-06-26","2026-07-03","2026-07-10"],
+    "value_usd_billions": [697.935,702.784,699.736,696.672,695.489,698.192,688.871,693.618,695.106,690.72,694.23,698.268,702.966,702.57,700.236,699.96,697.784,702.28,695.355,689.733,687.034,692.576,688.104,686.227,687.26,688.949,693.318,696.61,686.801,687.193,701.36,709.413,723.774,717.064,725.727,723.608,728.494,716.81,709.759,698.346,688.058,697.121,700.946,703.308,698.487,690.693,696.988,688.894,681.384,682.321,681.61,671.625,672.587,666.933,674.193,675.157],
+    "all_time_peak": {"date": "2026-02-27", "value_bn": 728.494, "supersedes": "2024-09 connector peak of 705.8bn"},
+    "true_trough_after_peak": {"date": "2026-06-26", "value_bn": 666.933},
+    "peak_to_trough_slide": {"from": "2026-02-27", "from_value_bn": 728.494, "to": "2026-06-26", "to_value_bn": 666.933, "pct_decline": -8.5},
+    "latest": {"date": "2026-07-10", "value_bn": 675.157}
   }
 }
