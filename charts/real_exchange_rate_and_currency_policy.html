@@ -1,0 +1,306 @@
+<title>Effective Buying Power &amp; the China Comparison — Rupee Real Exchange Rate</title>
+<meta name="hz:canvas-width" content="1080">
+<style>
+  :root {
+    color-scheme: light;
+    --page-bg:      #eef1ea;
+    --surface:      #fcfcfa;
+    --ink:          #14180f;
+    --ink-2:        #4f5348;
+    --ink-muted:    #82867a;
+    --rule:         #d7dace;
+    --rule-strong:  #c3c7b8;
+    --accent:       #1f5f5b;
+    --accent-soft:  #dbe9e6;
+    --alert:        #a5402c;
+    --alert-soft:   #f3ded7;
+    --data-line:    #2a78d6;
+    --data-line-2:  #eb6834;
+    --chart-surface:#fcfcfb;
+    --chart-grid:   #e1e0d9;
+    --chart-axis:   #c3c2b7;
+    --font-display: "Iowan Old Style","Palatino Linotype","Book Antiqua",Georgia,serif;
+    --font-body: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    --font-mono: "IBM Plex Mono","SF Mono",Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      color-scheme: dark;
+      --page-bg:      #12151a;
+      --surface:      #1a1e21;
+      --ink:          #f2f1ea;
+      --ink-2:        #c1c4b7;
+      --ink-muted:    #8b8f83;
+      --rule:         #2a2e28;
+      --rule-strong:  #383c33;
+      --accent:       #58bdb5;
+      --accent-soft:  #1d3634;
+      --alert:        #e0785f;
+      --alert-soft:   #3a241d;
+      --data-line:    #3987e5;
+      --data-line-2:  #d95926;
+      --chart-surface:#1a1a19;
+      --chart-grid:   #2c2c2a;
+      --chart-axis:   #383835;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --page-bg:#12151a; --surface:#1a1e21; --ink:#f2f1ea; --ink-2:#c1c4b7; --ink-muted:#8b8f83;
+    --rule:#2a2e28; --rule-strong:#383c33; --accent:#58bdb5; --accent-soft:#1d3634; --alert:#e0785f; --alert-soft:#3a241d;
+    --data-line:#3987e5; --data-line-2:#d95926; --chart-surface:#1a1a19; --chart-grid:#2c2c2a; --chart-axis:#383835;
+  }
+  :root[data-theme="light"] {
+    color-scheme: light;
+    --page-bg:#eef1ea; --surface:#fcfcfa; --ink:#14180f; --ink-2:#4f5348; --ink-muted:#82867a;
+    --rule:#d7dace; --rule-strong:#c3c7b8; --accent:#1f5f5b; --accent-soft:#dbe9e6; --alert:#a5402c; --alert-soft:#f3ded7;
+    --data-line:#2a78d6; --data-line-2:#eb6834; --chart-surface:#fcfcfb; --chart-grid:#e1e0d9; --chart-axis:#c3c2b7;
+  }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  .bulletin { background: var(--page-bg); color: var(--ink); font-family: var(--font-body); padding: 40px 20px 56px; display: flex; justify-content: center; }
+  .sheet { width: 100%; max-width: 1040px; display: flex; flex-direction: column; gap: 32px; }
+
+  .masthead { border-bottom: 2px solid var(--ink); padding-bottom: 16px; display: flex; flex-direction: column; gap: 6px; }
+  .eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); display: flex; gap: 10px; align-items: center; }
+  .eyebrow::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); display: inline-block; }
+  h1 { font-family: var(--font-display); font-weight: 500; font-size: clamp(26px, 3.6vw, 36px); margin: 2px 0 0; text-wrap: balance; letter-spacing: -0.01em; }
+  .dek { font-size: 14px; color: var(--ink-2); max-width: 74ch; line-height: 1.55; margin: 4px 0 0; }
+  .source-line { font-family: var(--font-mono); font-size: 11px; color: var(--ink-muted); margin-top: 6px; }
+
+  .stat-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
+  .stat-tile { background: var(--surface); padding: 16px 18px; display: flex; flex-direction: column; gap: 6px; }
+  .stat-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-muted); }
+  .stat-value { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 26px; font-weight: 600; letter-spacing: -0.02em; }
+  .stat-sub { font-size: 12.5px; color: var(--ink-2); }
+  .stat-sub b { color: var(--ink); }
+
+  section.block { display: flex; flex-direction: column; gap: 14px; }
+  .block-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; border-bottom: 1px solid var(--rule-strong); padding-bottom: 8px; }
+  .block-title { font-family: var(--font-display); font-size: 21px; margin: 0; }
+  .block-note { font-size: 12.5px; color: var(--ink-muted); max-width: 50ch; text-align: right; }
+
+  .chart-card { background: var(--chart-surface); border: 1px solid var(--rule-strong); padding: 20px 22px 14px; position: relative; }
+  .chart-card svg { width: 100%; height: 340px; display: block; overflow: visible; }
+  .grid-line { stroke: var(--chart-grid); stroke-width: 1; }
+  .axis-line { stroke: var(--chart-axis); stroke-width: 1; }
+  .axis-label { font-family: var(--font-mono); font-size: 10.5px; fill: var(--ink-muted); }
+  .nominal-line { fill: none; stroke: var(--data-line); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .real-line { fill: none; stroke: var(--data-line-2); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .dot { r: 3; }
+  .end-label { font-family: var(--font-mono); font-size: 11px; font-weight: 600; }
+  .band { fill: var(--accent-soft); }
+  .tooltip {
+    position: absolute; pointer-events: none; background: var(--ink); color: var(--page-bg);
+    font-family: var(--font-mono); font-size: 11px; padding: 7px 10px; border-radius: 2px; line-height: 1.6;
+    opacity: 0; transition: opacity 0.08s ease; white-space: nowrap; z-index: 5;
+  }
+  .legend-row { display: flex; gap: 22px; flex-wrap: wrap; font-size: 12px; color: var(--ink-2); align-items: center; }
+  .legend-item { display: flex; align-items: center; gap: 8px; }
+  .legend-swatch { width: 16px; height: 3px; border-radius: 2px; display: inline-block; }
+  .legend-note { font-size: 12px; color: var(--ink-muted); line-height: 1.55; max-width: 76ch; }
+  .legend-note b { color: var(--ink-2); }
+
+  .prose { display: flex; flex-direction: column; gap: 12px; font-size: 14.5px; line-height: 1.65; color: var(--ink-2); max-width: 78ch; }
+  .prose p { margin: 0; }
+  .prose b { color: var(--ink); }
+  .prose h3 { font-family: var(--font-display); font-size: 16.5px; color: var(--ink); margin: 4px 0 0; font-weight: 600; }
+  .prose .pull { font-family: var(--font-display); font-size: 19px; color: var(--ink); border-left: 3px solid var(--accent); padding: 2px 0 2px 16px; margin: 4px 0; }
+  .cite { font-size: 11.5px; color: var(--ink-muted); }
+  .cite a { color: var(--accent); }
+
+  details.table-view { border-top: 1px solid var(--rule-strong); padding-top: 10px; }
+  details.table-view summary { cursor: pointer; font-size: 12.5px; color: var(--ink-2); font-family: var(--font-mono); }
+  .data-table-wrap { overflow-x: auto; margin-top: 12px; }
+  table.data-table { border-collapse: collapse; width: 100%; font-family: var(--font-mono); font-size: 11.5px; }
+  table.data-table th, table.data-table td { padding: 6px 12px; text-align: right; border-bottom: 1px solid var(--rule); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  table.data-table th:first-child, table.data-table td:first-child { text-align: left; }
+  table.data-table thead th { color: var(--ink-muted); font-weight: 500; text-transform: uppercase; font-size: 10px; letter-spacing: 0.04em; }
+
+  .errata {
+    border: 1px solid var(--rule-strong); border-left: 3px solid var(--alert); background: var(--surface);
+    padding: 16px 20px; display: flex; flex-direction: column; gap: 10px;
+  }
+  .errata-title { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--alert); }
+  .errata ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; }
+  .errata li { font-size: 13px; line-height: 1.5; color: var(--ink-2); }
+  .errata li b { color: var(--ink); }
+
+  footer.colophon { text-align: center; font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-muted); padding-top: 8px; }
+</style>
+
+<div class="bulletin">
+  <div class="sheet">
+    <div class="masthead">
+      <div class="eyebrow">MoSPI Dataset Analysis — Statistical Bulletin</div>
+      <h1>How much of the rupee's fall is real, and is this what China was accused of?</h1>
+      <p class="dek">A follow-on to the currency segment: separating how much of the rupee's slide against the dollar is just India's higher inflation catching up, versus a genuine loss of real buying power — then asking whether India's currency defense looks anything like the "manipulation" China was scrutinized for.</p>
+      <div class="source-line">SOURCE: Nominal rate — same MoSPI connector + RBI Reference Rate Archive series as the currency segment. India inflation — implied GDP deflator from the MoSPI connector's NAS growth-rate data (nominal minus real GDP growth). US inflation — BLS CPI-U annual averages via usinflationcalculator.com. Currency-manipulator framework — U.S. Treasury FX reports, via Wikipedia/CSIS summaries. China policy context — Brookings, "China's Currency Policy, Explained."</div>
+    </div>
+
+    <div class="stat-strip" id="statStrip"></div>
+
+    <section class="block">
+      <div class="block-head">
+        <h2 class="block-title">Nominal rate vs. real (purchasing-power-adjusted) rate</h2>
+        <p class="block-note">Same units, one axis. The gap between the lines is the part of the move that isn't just inflation catching up.</p>
+      </div>
+      <div class="chart-card">
+        <svg id="rerChart" viewBox="0 0 1000 340" preserveAspectRatio="none"></svg>
+        <div class="tooltip" id="rerTooltip"></div>
+      </div>
+      <div class="legend-row">
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--data-line)"></span> Nominal ₹ per US$1</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--data-line-2)"></span> Real (PPP-adjusted) ₹ per US$1, base Jan 2015</span>
+      </div>
+      <p class="legend-note">The <b>real rate</b> answers "what would the nominal rate be if India and the US had had identical inflation since Jan 2015?" It's built from India's implied GDP deflator (nominal GDP growth minus real growth, from the NAS chart's own data) and US CPI-U, chained annually and applied to the Jan-2015 nominal rate. Where the two lines track together, depreciation is just offsetting India's higher inflation — purchasing power parity holding. Where they diverge, that's a <b>real</b> shift in the rupee's value.</p>
+      <details class="table-view">
+        <summary>View year-by-year nominal vs. real table</summary>
+        <div class="data-table-wrap"><table class="data-table" id="rerTable"></table></div>
+      </details>
+    </section>
+
+    <section class="block prose">
+      <h2 class="block-title" style="border:none; padding:0;">What "effective buying power" means here</h2>
+      <p>Nominally, the rupee needs <b>54.9% more</b> of itself to buy one US dollar than it did in January 2015 (₹62.23 → ₹96.37). But India's prices also rose faster than America's over that period — a cumulative <b>~57%</b> in India's implied GDP deflator versus <b>~40%</b> in US CPI. Pure purchasing-power-parity theory says a chunk of that 54.9% nominal move should just be offsetting that inflation gap, leaving the currency's <i>real</i> value unchanged.</p>
+      <p class="pull">It doesn't work out that way. The real, inflation-adjusted rate still moved <b>+37.6%</b> — from an effective ₹62.23 to an effective ₹85.64 per dollar.</p>
+      <p>Turn that around: a rupee's <b>effective buying power for dollar-priced goods and services has fallen by roughly 27%</b> since January 2015 (1 − 1/1.376), even after fully crediting India's own inflation as a separate, already-priced-in effect. That's the honest way to answer "did the rupee actually get weaker, or did prices just rise?" — the answer is both, and the "actually weaker" part is the bigger piece.</p>
+      <p><b>The last twelve months make the point sharply.</b> Nominally the rupee fell 11.9% (₹86.11 → ₹96.37). But India's implied inflation this year (~0.9%, from the FY2025-26 First Advance Estimate) was actually <i>lower</i> than the US's (~2.6–2.8%) — so PPP alone would have predicted the rupee <i>strengthening</i> slightly. Instead it weakened sharply. On this measure, essentially <b>all</b> of the past year's depreciation is real, not inflationary — consistent with the reserves chart's "war shock" story, not a story about India's own prices.</p>
+    </section>
+
+    <section class="block prose">
+      <h2 class="block-title" style="border:none; padding:0;">Is this what China was accused of?</h2>
+      <p>The U.S. Treasury's framework for labeling a trading partner a "currency manipulator" (from the 2015 Trade Facilitation and Trade Enforcement Act) rests on three tests, evaluated together: a <b>bilateral goods trade surplus with the US</b> above a set threshold (originally $20bn), a <b>current account surplus</b> above roughly 2–3% of GDP, and — the test that actually matters here — <b>persistent, one-sided FX intervention</b>: net <i>purchases</i> of foreign currency exceeding about 2% of GDP over 12 months, repeated in at least 6 of those months. Meeting all three gets the formal label; meeting two lands a country on a "Monitoring List." China was formally designated a manipulator in August 2019 and had the label removed in January 2020, after agreeing to currency provisions in the Phase One trade deal.</p>
+      <p>China's own long-run pattern, as the Brookings piece lays out, was letting the renminbi appreciate only slowly and grudgingly — about 25% against the dollar since 2005 by the article's account — despite years of U.S. pressure for faster movement, while Beijing treated exchange-rate management as a legitimate development tool rather than a trade weapon. The mechanism behind the "manipulator" concern was China <b>buying foreign currency and selling its own</b> — accumulating reserves — specifically to keep the renminbi cheaper than it would otherwise be, subsidizing Chinese exports.</p>
+      <p class="pull">India's own reserves chart above shows the RBI doing the opposite: selling foreign currency, not buying it — reserves fell from a $728.5bn peak to a $666.9bn trough, an 8.5% drawdown, precisely while the rupee was depreciating.</p>
+      <p>That's intervention in the <b>defensive</b> direction — propping the rupee up, not holding it down. It runs directly against the mechanism Treasury's third test is built to catch, which requires <i>net purchases</i> of foreign currency to weaken a country's own currency for competitive advantage. A central bank spending down its reserves to slow a depreciation is, if anything, giving up some of the export-competitiveness gain a weaker currency would otherwise hand it — the opposite motive from the one "manipulation" describes. (India has landed on Treasury's Monitoring List in some past reports for partially meeting the trade-surplus and current-account tests; it has never been formally designated a manipulator, and the intervention direction here is the specific reason why it wouldn't fit even if the other two tests were met.)</p>
+      <p>So: the rupee's real depreciation is genuine and sizable by the numbers above, but it reads as a currency <b>under pressure that the RBI is leaning against</b>, not a currency being deliberately held down to chase a trade advantage. Those are opposite stories that happen to produce the same headline ("the rupee is weaker") — worth keeping straight before reaching for the word "manipulation."</p>
+      <p class="cite">Source: Brookings Institution, <a href="https://www.brookings.edu/articles/chinas-currency-policy-explained/" target="_blank" rel="noopener">"China's Currency Policy, Explained"</a>; U.S. Treasury semiannual FX reports (criteria and 2019–2020 China designation, via Wikipedia/CSIS summaries).</p>
+    </section>
+
+    <div class="errata">
+      <div class="errata-title">Errata &amp; methodology caveats</div>
+      <ul>
+        <li><b>India's "inflation" here is an implied GDP deflator</b>, not CPI — computed as (1 + nominal GDP growth) / (1 + real GDP growth) − 1 for each fiscal year, using the same NAS data as the GDP growth chart. It's a reasonable broad price-level proxy but isn't the same basket as CPI, and FY2025-26 uses only a First Advance Estimate (7% real, 8% nominal) that will itself be revised.</li>
+        <li><b>Fiscal years (India) are aligned to calendar years (US) by position, not exact overlap</b> — FY2014-15 (Apr 2014–Mar 2015) is treated as "year 1" alongside US calendar 2015. This is a reasonable decade-scale approximation, not a precise month-matched calculation.</li>
+        <li><b>This is a bilateral real exchange rate against the US dollar only</b>, not a trade-weighted multilateral REER (which the RBI itself does publish separately, against a basket of currencies) — a true REER could tell a different story if the rupee moved differently against, say, the euro or yen.</li>
+        <li><b>The 2026 US inflation figure is an estimate</b> (~2.6–2.8%, extrapolated from partial-year 2026 CPI readings), since a full calendar-year 2026 average doesn't exist yet.</li>
+        <li>The Treasury manipulator thresholds themselves have been revised more than once since 2015; the numbers cited here are the commonly reported original thresholds, not necessarily the exact figures in the most recent FX report.</li>
+      </ul>
+    </div>
+
+    <footer class="colophon">herrrickshaw/mospi-dataset-analysis — derived analysis from MoSPI/RBI data + public US CPI and Treasury-framework sources, not an official publication of any of them</footer>
+  </div>
+</div>
+
+<script>
+(function () {
+  var labels = ["2015","2016","2017","2018","2019","2020","2021","2022","2023","2024","2025","Jul 2025","Jul 2026"];
+  var nominal = [62.23,67.25,68.08,63.64,70.73,71.31,73.11,74.44,81.9,83.12,86.27,86.11,96.37];
+  var real =    [62.23,64.89,65.34,60.13,65.97,64.66,65.82,66.62,73.18,73.24,76.13,75.13,85.64];
+
+  function fmtRs(n) { return "₹" + n.toFixed(2); }
+
+  // ---- Stat strip ----
+  var statStrip = document.getElementById("statStrip");
+  var stats = [
+    { label: "Nominal depreciation, Jan'15–Jul'26", value: "+54.9%", sub: "₹62.23 → ₹96.37 per US$1" },
+    { label: "Real (PPP-adjusted) depreciation", value: "+37.6%", sub: "₹62.23 → an effective ₹85.64" },
+    { label: "Effective buying power lost", value: "−27%", sub: "a rupee buys 27% less, in real terms, of dollar-priced goods than in 2015" },
+    { label: "Past 12 months: real vs nominal", value: "+14.0% real", sub: "vs. +11.9% nominal — India's inflation was <b>lower</b> than the US's this year" }
+  ];
+  stats.forEach(function (s) {
+    var el = document.createElement("div");
+    el.className = "stat-tile";
+    el.innerHTML = '<div class="stat-label">' + s.label + '</div><div class="stat-value">' + s.value + '</div><div class="stat-sub">' + s.sub + '</div>';
+    statStrip.appendChild(el);
+  });
+
+  // ---- Chart (categorical x-axis: 13 evenly spaced points) ----
+  var svg = document.getElementById("rerChart");
+  var W = 1000, H = 340, padL = 46, padR = 16, padT = 24, padB = 30;
+  var plotW = W - padL - padR, plotH = H - padT - padB;
+  var vMin = 55, vMax = 100;
+  var n = labels.length;
+
+  function xFor(i) { return padL + (i / (n - 1)) * plotW; }
+  function yFor(v) { return padT + plotH - ((v - vMin) / (vMax - vMin)) * plotH; }
+
+  var svgns = "http://www.w3.org/2000/svg";
+  function el(tag, attrs) {
+    var e = document.createElementNS(svgns, tag);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    return e;
+  }
+
+  var ticks = [55, 65, 75, 85, 95];
+  ticks.forEach(function (t) {
+    var y = yFor(t);
+    svg.appendChild(el("line", { x1: padL, x2: W - padR, y1: y, y2: y, class: "grid-line" }));
+    var lbl = el("text", { x: padL - 8, y: y + 3, class: "axis-label", "text-anchor": "end" });
+    lbl.textContent = "₹" + t;
+    svg.appendChild(lbl);
+  });
+  svg.appendChild(el("line", { x1: padL, x2: padL, y1: padT, y2: H - padB, class: "axis-line" }));
+  svg.appendChild(el("line", { x1: padL, x2: W - padR, y1: H - padB, y2: H - padB, class: "axis-line" }));
+
+  labels.forEach(function (lbl, i) {
+    var t = el("text", { x: xFor(i), y: H - padB + 16, class: "axis-label", "text-anchor": "middle" });
+    t.textContent = lbl.length > 4 ? lbl.replace(" 20", " '") : lbl;
+    svg.appendChild(t);
+  });
+
+  // shaded band between the two lines to make the gap (the "real" component) visible
+  var bandTop = nominal.map(function (v, i) { return xFor(i).toFixed(1) + "," + yFor(v).toFixed(1); });
+  var bandBottom = real.map(function (v, i) { return xFor(i).toFixed(1) + "," + yFor(v).toFixed(1); }).reverse();
+  svg.appendChild(el("path", { d: "M" + bandTop.join(" L") + " L" + bandBottom.join(" L") + " Z", class: "band", opacity: 0.5 }));
+
+  function linePath(values) {
+    return values.map(function (v, i) { return (i === 0 ? "M" : "L") + xFor(i).toFixed(1) + "," + yFor(v).toFixed(1); }).join(" ");
+  }
+  svg.appendChild(el("path", { d: linePath(nominal), class: "nominal-line" }));
+  svg.appendChild(el("path", { d: linePath(real), class: "real-line" }));
+
+  nominal.forEach(function (v, i) { svg.appendChild(el("circle", { cx: xFor(i), cy: yFor(v), class: "dot", fill: "var(--data-line)" })); });
+  real.forEach(function (v, i) { svg.appendChild(el("circle", { cx: xFor(i), cy: yFor(v), class: "dot", fill: "var(--data-line-2)" })); });
+
+  var endNomLbl = el("text", { x: xFor(n - 1) - 6, y: yFor(nominal[n - 1]) - 10, class: "end-label", "text-anchor": "end", fill: "var(--data-line)" });
+  endNomLbl.textContent = fmtRs(nominal[n - 1]);
+  svg.appendChild(endNomLbl);
+  var endRealLbl = el("text", { x: xFor(n - 1) - 6, y: yFor(real[n - 1]) + 16, class: "end-label", "text-anchor": "end", fill: "var(--data-line-2)" });
+  endRealLbl.textContent = fmtRs(real[n - 1]);
+  svg.appendChild(endRealLbl);
+
+  var crosshair = el("line", { x1: 0, x2: 0, y1: padT, y2: H - padB, stroke: "var(--ink-muted)", "stroke-width": 1, opacity: 0 });
+  svg.appendChild(crosshair);
+  var hitArea = el("rect", { x: padL, y: padT, width: plotW, height: plotH, fill: "transparent" });
+  svg.appendChild(hitArea);
+  var tooltip = document.getElementById("rerTooltip");
+  var chartCard = svg.parentElement;
+
+  hitArea.addEventListener("mousemove", function (evt) {
+    var rect = svg.getBoundingClientRect();
+    var mx = ((evt.clientX - rect.left) / rect.width) * W;
+    var i = Math.max(0, Math.min(n - 1, Math.round((mx - padL) / plotW * (n - 1))));
+    var x = xFor(i);
+    crosshair.setAttribute("x1", x); crosshair.setAttribute("x2", x); crosshair.style.opacity = 1;
+    var cardRect = chartCard.getBoundingClientRect();
+    tooltip.style.left = ((x / W) * cardRect.width) + "px";
+    tooltip.style.top = ((yFor(nominal[i]) / H) * cardRect.height - 14) + "px";
+    tooltip.style.transform = "translate(-50%, -100%)";
+    tooltip.style.opacity = 1;
+    tooltip.innerHTML = labels[i] + " &nbsp; nominal <b>" + fmtRs(nominal[i]) + "</b> &nbsp; real <b>" + fmtRs(real[i]) + "</b>";
+  });
+  hitArea.addEventListener("mouseleave", function () { crosshair.style.opacity = 0; tooltip.style.opacity = 0; });
+
+  // ---- table ----
+  var table = document.getElementById("rerTable");
+  var thead = "<thead><tr><th>Period</th><th>Nominal ₹/US$1</th><th>Real ₹/US$1</th><th>Gap (pp)</th></tr></thead>";
+  var rows = labels.map(function (lbl, i) {
+    var gap = ((nominal[i] - real[i]) / real[i] * 100).toFixed(1);
+    return "<tr><td>" + lbl + "</td><td>" + fmtRs(nominal[i]) + "</td><td>" + fmtRs(real[i]) + "</td><td>" + gap + "%</td></tr>";
+  }).reverse().join("");
+  table.innerHTML = thead + "<tbody>" + rows + "</tbody>";
+})();
+</script>

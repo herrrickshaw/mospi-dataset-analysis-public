@@ -73,6 +73,16 @@ That scrape changes the story from the previous version of this chart: reserves 
 
 Underlying data: [`data/rbi_forex_reserves_2015-01_to_2025-06.json`](data/rbi_forex_reserves_2015-01_to_2025-06.json) (reserves) and [`data/rbi_usd_inr_exchange_rate_2015-01_to_2026-07.json`](data/rbi_usd_inr_exchange_rate_2015-01_to_2026-07.json) (currency).
 
+## Effective buying power & the China currency-manipulation comparison
+
+[`charts/real_exchange_rate_and_currency_policy.html`](charts/real_exchange_rate_and_currency_policy.html) — open in a browser — a follow-on to the currency segment, separating the rupee's nominal fall into "just India's higher inflation catching up" versus a genuine real (purchasing-power-adjusted) depreciation, using India's implied GDP deflator (from the GDP chart's own NAS data) against US CPI-U.
+
+**Headline**: nominal depreciation since Jan 2015 is **+54.9%**, but the real (PPP-adjusted) rate still moved **+37.6%** — meaning a rupee's **effective buying power for dollar-priced goods has fallen ~27%** even after fully crediting India's own inflation. The last 12 months are almost entirely real, not inflationary: India's implied inflation this year (~0.9%) was *lower* than the US's, so PPP alone would have predicted the rupee strengthening — instead it fell 11.9% nominally (14.0% in real terms).
+
+That's then read against the framework China was scrutinized under: the US Treasury's three-test "currency manipulator" criteria (trade surplus, current account surplus, and — the one that matters here — persistent net *purchases* of foreign currency to keep a currency artificially weak). China was formally designated a manipulator in Aug 2019, un-designated in Jan 2020. India's reserves data (from the segment above) shows the RBI doing the mechanical opposite of what tripped that third test — *selling* reserves to defend the rupee, not buying foreign currency to suppress it — the opposite motive from the one "manipulation" describes, even though the real depreciation is genuine. Cites Brookings' ["China's Currency Policy, Explained"](https://www.brookings.edu/articles/chinas-currency-policy-explained/) for the China policy context.
+
+Underlying data: [`data/rupee_real_exchange_rate_2015_to_2026.json`](data/rupee_real_exchange_rate_2015_to_2026.json).
+
 ## GDP growth trend, with revision history
 
 [`charts/gdp_growth_trend.html`](charts/gdp_growth_trend.html) — open in a browser — real (constant-price) GDP growth by fiscal year, FY2012-13 through FY2025-26, from the MoSPI connector's NAS dataset. Bars show the latest revised estimate for each year; a tick marks where the original First Advance Estimate landed, so the gap between tick and bar visualizes how much each year's number moved as later data came in.

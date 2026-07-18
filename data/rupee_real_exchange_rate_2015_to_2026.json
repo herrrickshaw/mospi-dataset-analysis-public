@@ -1,0 +1,50 @@
+{
+  "purpose": "Bilateral real (PPP-adjusted) INR/USD exchange rate, derived from the currency segment's nominal rate plus India's implied GDP deflator and US CPI-U, to isolate how much of the rupee's nominal depreciation is genuine real depreciation vs. just offsetting India's higher inflation.",
+  "method": "RER_t = Nominal_t * (US_price_index_t / India_price_index_t), both indices chained from 100 at Jan 2015 using annual inflation rates. India inflation = implied GDP deflator (1+nominal GDP growth)/(1+real GDP growth) - 1 per fiscal year, from the MoSPI connector's NAS data (same as gdp_growth_rate_2012-13_to_2025-26.json). US inflation = BLS CPI-U annual averages.",
+  "india_implied_deflator_pct_by_fy": {
+    "2014-15": 3.74, "2015-16": 1.85, "2016-17": 3.70, "2017-18": 3.74, "2018-19": 4.72,
+    "2019-20": 1.92, "2020-21": 5.32, "2021-22": 8.18, "2022-23": 5.56, "2023-24": 2.75,
+    "2024-25": 3.77, "2025-26": 0.93
+  },
+  "us_cpi_annual_avg_pct": {
+    "2015": 0.1, "2016": 1.3, "2017": 2.1, "2018": 2.4, "2019": 1.8, "2020": 1.2,
+    "2021": 4.7, "2022": 8.0, "2023": 4.1, "2024": 2.9, "2025": 2.6, "2026_estimate": 2.8
+  },
+  "series": {
+    "labels": ["2015","2016","2017","2018","2019","2020","2021","2022","2023","2024","2025","Jul 2025","Jul 2026"],
+    "nominal_inr_per_usd": [62.23,67.25,68.08,63.64,70.73,71.31,73.11,74.44,81.9,83.12,86.27,86.11,96.37],
+    "real_ppp_adjusted_inr_per_usd": [62.23,64.89,65.34,60.13,65.97,64.66,65.82,66.62,73.18,73.24,76.13,75.13,85.64]
+  },
+  "headline_results": {
+    "nominal_depreciation_pct": 54.9,
+    "real_depreciation_pct": 37.6,
+    "effective_buying_power_change_pct": -27.3,
+    "past_12mo_nominal_depreciation_pct": 11.9,
+    "past_12mo_real_depreciation_pct": 14.0,
+    "note_past_12mo": "India's implied inflation (0.93%, FY2025-26 First Advance) was lower than the US's (~2.6-2.8%) this year, so PPP alone would predict rupee strengthening -- the realized depreciation is essentially all real, not inflation-driven."
+  },
+  "china_manipulation_comparison": {
+    "treasury_criteria": {
+      "bilateral_trade_surplus_threshold_usd_bn": 20,
+      "current_account_surplus_pct_gdp_threshold": "2-3 (revised over time)",
+      "fx_intervention_threshold_pct_gdp": 2,
+      "fx_intervention_persistence": "net purchases of foreign currency in at least 6 of 12 months",
+      "designation_rule": "all 3 criteria = formal manipulator label; 2 of 3 = Monitoring List"
+    },
+    "china_history": {
+      "formally_designated": "August 2019",
+      "designation_removed": "January 2020, after Phase One trade deal currency provisions",
+      "mechanism": "Net purchases of foreign currency (accumulating reserves) to keep the renminbi undervalued and subsidize exports"
+    },
+    "india_current_posture": {
+      "reserves_direction": "net seller -- drawdown from $728.5bn peak (27 Feb 2026) to $666.9bn trough (26 Jun 2026), -8.5%",
+      "interpretation": "Intervention in the defensive direction (propping up the currency), the opposite mechanism from the one Treasury's FX-intervention criterion targets. India has appeared on the Monitoring List in some past Treasury reports but has never been formally designated a manipulator."
+    }
+  },
+  "sources": [
+    "MoSPI MCP connector (RBI dataset, NAS dataset) + RBI Reference Rate Archive (rbi.org.in/scripts/referenceratearchive.aspx) -- nominal exchange rate",
+    "usinflationcalculator.com (BLS CPI-U) -- US annual inflation",
+    "Brookings Institution, 'China's Currency Policy, Explained' (https://www.brookings.edu/articles/chinas-currency-policy-explained/) -- China policy context",
+    "U.S. Treasury semiannual FX reports, criteria and China 2019-2020 designation via Wikipedia 'Currency manipulator' and CSIS summaries"
+  ]
+}
