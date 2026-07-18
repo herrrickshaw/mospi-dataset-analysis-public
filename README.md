@@ -1,4 +1,4 @@
-# MoSPI Dataset Analysis
+# IMPORT EXPORT Dataset Analysis - Inspired by NITI Aayog Trade watch
 
 A record of accessing India's official statistics via the **MoSPI (Ministry of Statistics and Programme Implementation)** data API/connector, plus a snapshot of the latest published figures pulled on 2026-07-18.
 
