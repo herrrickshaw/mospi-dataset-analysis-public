@@ -135,6 +135,14 @@ Underlying data: [`data/import_dependency_policy_gap_analysis_2026-07-18.json`](
 
 Underlying data: [`data/country_trade_deficit_and_policy_history_2026-07-18.json`](data/country_trade_deficit_and_policy_history_2026-07-18.json) (country balances, policy timeline) and [`data/country_commodity_breakdown_2026-07-18.json`](data/country_commodity_breakdown_2026-07-18.json) (TRADESTAT country×commodity validation).
 
+## Priority trade partners by import-growth sector, and real PLI coverage
+
+[`charts/sector_country_priority_and_pli_coverage.html`](charts/sector_country_priority_and_pli_coverage.html) — open in a browser — maps all 12 of this repo's fastest-growing/highest-value import chapters to their actual top supplier countries (TRADESTAT "commodity-wise, all countries" report), builds a cross-sector country-priority ranking, and checks exactly which Production Linked Incentive sub-schemes — including White Goods and Specialty Steel — reach these chapters in practice.
+
+**Headline: China supplies 8 of the 12 growth chapters ($102.4bn combined, #1/#2 rank in 5 of them) — more than double any other country — while PLI schemes cover the money-value of only 2 of the 12 outright.** UAE ($56.6bn, 7 sectors) and Russia ($52.6bn, only 3 sectors but #1 in both mineral fuels and fertilisers) round out the top tier; the USA is the most diversified major partner (9 of 12 sectors, never dominant in any one) and the one country in overall bilateral surplus. On the policy side: **PLI White Goods** (₹11,198 crore committed across all 85 selected companies, targeting AC compressors, copper tubes and aluminium foils) turns out to touch HS84 (machinery) rather than HS85, since compressors are classified there — a precise, easy-to-miss detail. **PLI Specialty Steel** is the most substantial single lever found (₹44,106 crore in rounds 1.0/1.1, plus a further ₹11,887 crore in round 1.2, MoUs signed 9 February 2026, targeting 42 million tonnes of production by FY2026-27 explicitly to cut imports) and directly targets HS72. Seven of the twelve growth chapters — mineral fuels, gems &amp; jewellery, plastics, edible oils, fertilisers, inorganic chemicals, and aircraft — have no PLI sub-scheme at all.
+
+Underlying data: [`data/sector_country_priority_and_pli_coverage_2026-07-18.json`](data/sector_country_priority_and_pli_coverage_2026-07-18.json).
+
 ## GDP growth trend, with revision history
 
 [`charts/gdp_growth_trend.html`](charts/gdp_growth_trend.html) — open in a browser — real (constant-price) GDP growth by fiscal year, FY2012-13 through FY2025-26, from the MoSPI connector's NAS dataset. Bars show the latest revised estimate for each year; a tick marks where the original First Advance Estimate landed, so the gap between tick and bar visualizes how much each year's number moved as later data came in.
