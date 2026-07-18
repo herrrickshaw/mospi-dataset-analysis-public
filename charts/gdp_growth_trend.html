@@ -1,0 +1,323 @@
+<title>Real GDP Growth — India, FY2012-13 to FY2025-26</title>
+<meta name="hz:canvas-width" content="1080">
+<style>
+  :root {
+    color-scheme: light;
+    --page-bg:      #eef1ea;
+    --surface:      #fcfcfa;
+    --ink:          #14180f;
+    --ink-2:        #4f5348;
+    --ink-muted:    #82867a;
+    --rule:         #d7dace;
+    --rule-strong:  #c3c7b8;
+    --accent:       #1f5f5b;
+    --accent-soft:  #dbe9e6;
+    --alert:        #a5402c;
+    --alert-soft:   #f3ded7;
+    --data-line:    #2a78d6;
+    --data-line-soft: #86b6ef;
+    --neg:          #a5402c;
+    --neg-soft:     #e3a48f;
+    --tick:         #82867a;
+    --chart-surface:#fcfcfb;
+    --chart-grid:   #e1e0d9;
+    --chart-axis:   #c3c2b7;
+    --font-display: "Iowan Old Style","Palatino Linotype","Book Antiqua",Georgia,serif;
+    --font-body: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    --font-mono: "IBM Plex Mono","SF Mono",Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      color-scheme: dark;
+      --page-bg:      #12151a;
+      --surface:      #1a1e21;
+      --ink:          #f2f1ea;
+      --ink-2:        #c1c4b7;
+      --ink-muted:    #8b8f83;
+      --rule:         #2a2e28;
+      --rule-strong:  #383c33;
+      --accent:       #58bdb5;
+      --accent-soft:  #1d3634;
+      --alert:        #e0785f;
+      --alert-soft:   #3a241d;
+      --data-line:    #3987e5;
+      --data-line-soft: #1c5cab;
+      --neg:          #e0785f;
+      --neg-soft:     #5a2e22;
+      --tick:         #c1c4b7;
+      --chart-surface:#1a1a19;
+      --chart-grid:   #2c2c2a;
+      --chart-axis:   #383835;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --page-bg:#12151a; --surface:#1a1e21; --ink:#f2f1ea; --ink-2:#c1c4b7; --ink-muted:#8b8f83;
+    --rule:#2a2e28; --rule-strong:#383c33; --accent:#58bdb5; --accent-soft:#1d3634; --alert:#e0785f; --alert-soft:#3a241d;
+    --data-line:#3987e5; --data-line-soft:#1c5cab; --neg:#e0785f; --neg-soft:#5a2e22; --tick:#c1c4b7;
+    --chart-surface:#1a1a19; --chart-grid:#2c2c2a; --chart-axis:#383835;
+  }
+  :root[data-theme="light"] {
+    color-scheme: light;
+    --page-bg:#eef1ea; --surface:#fcfcfa; --ink:#14180f; --ink-2:#4f5348; --ink-muted:#82867a;
+    --rule:#d7dace; --rule-strong:#c3c7b8; --accent:#1f5f5b; --accent-soft:#dbe9e6; --alert:#a5402c; --alert-soft:#f3ded7;
+    --data-line:#2a78d6; --data-line-soft:#86b6ef; --neg:#a5402c; --neg-soft:#e3a48f; --tick:#82867a;
+    --chart-surface:#fcfcfb; --chart-grid:#e1e0d9; --chart-axis:#c3c2b7;
+  }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  .bulletin { background: var(--page-bg); color: var(--ink); font-family: var(--font-body); padding: 40px 20px 56px; display: flex; justify-content: center; }
+  .sheet { width: 100%; max-width: 1080px; display: flex; flex-direction: column; gap: 30px; }
+
+  .masthead { border-bottom: 2px solid var(--ink); padding-bottom: 16px; display: flex; flex-direction: column; gap: 6px; }
+  .eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); display: flex; gap: 10px; align-items: center; }
+  .eyebrow::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); display: inline-block; }
+  h1 { font-family: var(--font-display); font-weight: 500; font-size: clamp(26px, 3.6vw, 36px); margin: 2px 0 0; text-wrap: balance; letter-spacing: -0.01em; }
+  .dek { font-size: 14px; color: var(--ink-2); max-width: 70ch; line-height: 1.55; margin: 4px 0 0; }
+  .source-line { font-family: var(--font-mono); font-size: 11px; color: var(--ink-muted); margin-top: 6px; }
+
+  .stat-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
+  .stat-tile { background: var(--surface); padding: 16px 18px; display: flex; flex-direction: column; gap: 6px; }
+  .stat-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-muted); }
+  .stat-value { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 26px; font-weight: 600; letter-spacing: -0.02em; }
+  .stat-sub { font-size: 12.5px; color: var(--ink-2); }
+  .stat-sub b { color: var(--ink); }
+
+  section.block { display: flex; flex-direction: column; gap: 14px; }
+  .block-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; border-bottom: 1px solid var(--rule-strong); padding-bottom: 8px; }
+  .block-title { font-family: var(--font-display); font-size: 20px; margin: 0; }
+  .block-note { font-size: 12.5px; color: var(--ink-muted); max-width: 48ch; text-align: right; }
+
+  .chart-card { background: var(--chart-surface); border: 1px solid var(--rule-strong); padding: 20px 22px 14px; position: relative; }
+  .chart-card svg { width: 100%; height: 380px; display: block; overflow: visible; }
+  .grid-line { stroke: var(--chart-grid); stroke-width: 1; }
+  .zero-line { stroke: var(--chart-axis); stroke-width: 1.25; }
+  .axis-line { stroke: var(--chart-axis); stroke-width: 1; }
+  .axis-label { font-family: var(--font-mono); font-size: 10.5px; fill: var(--ink-muted); }
+  .bar { }
+  .bar.pos { fill: var(--data-line); }
+  .bar.neg { fill: var(--neg); }
+  .bar.hover { filter: brightness(1.15); }
+  .revision-stem { stroke: var(--tick); stroke-width: 1.25; stroke-dasharray: 2 2; }
+  .revision-tick { stroke: var(--tick); stroke-width: 2.5; stroke-linecap: round; }
+  .bar-label { font-family: var(--font-mono); font-size: 11px; font-weight: 600; fill: var(--ink); }
+  .covid-label { font-family: var(--font-mono); font-size: 10px; fill: var(--alert); }
+  .callout-box { fill: var(--alert-soft); }
+  .tooltip {
+    position: absolute; pointer-events: none; background: var(--ink); color: var(--page-bg);
+    font-family: var(--font-mono); font-size: 11px; padding: 7px 10px; border-radius: 2px; line-height: 1.6;
+    opacity: 0; transition: opacity 0.08s ease; white-space: nowrap; z-index: 5;
+  }
+  .legend-row { display: flex; gap: 22px; flex-wrap: wrap; font-size: 12px; color: var(--ink-2); align-items: center; }
+  .legend-item { display: flex; align-items: center; gap: 8px; }
+  .legend-swatch { width: 14px; height: 14px; border-radius: 2px; }
+  .legend-tick { width: 16px; height: 2px; background: var(--tick); display: inline-block; }
+
+  .errata {
+    border: 1px solid var(--rule-strong); border-left: 3px solid var(--alert); background: var(--surface);
+    padding: 16px 20px; display: flex; flex-direction: column; gap: 10px;
+  }
+  .errata-title { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--alert); }
+  .errata ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; }
+  .errata li { font-size: 13px; line-height: 1.5; color: var(--ink-2); }
+  .errata li b { color: var(--ink); }
+
+  details.table-view { border-top: 1px solid var(--rule-strong); padding-top: 10px; }
+  details.table-view summary { cursor: pointer; font-size: 12.5px; color: var(--ink-2); font-family: var(--font-mono); }
+  .data-table-wrap { overflow-x: auto; margin-top: 12px; }
+  table.data-table { border-collapse: collapse; width: 100%; font-family: var(--font-mono); font-size: 11.5px; }
+  table.data-table th, table.data-table td { padding: 6px 12px; text-align: right; border-bottom: 1px solid var(--rule); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  table.data-table th:first-child, table.data-table td:first-child { text-align: left; }
+  table.data-table thead th { color: var(--ink-muted); font-weight: 500; text-transform: uppercase; font-size: 10px; letter-spacing: 0.04em; }
+
+  footer.colophon { text-align: center; font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-muted); padding-top: 8px; }
+</style>
+
+<div class="bulletin">
+  <div class="sheet">
+    <div class="masthead">
+      <div class="eyebrow">MoSPI Dataset Analysis — Statistical Bulletin</div>
+      <h1>The COVID crash, the snapback, and how much the first estimate moves</h1>
+      <p class="dek">Real (constant-price) GDP growth, FY2012-13 through FY2025-26, using the most-revised figure available for each year. The tick on each bar marks where MoSPI's original First Advance Estimate landed — the gap between tick and bar is how much the number moved as better data came in.</p>
+      <div class="source-line">SOURCE: api.mospi.gov.in via MoSPI MCP connector · NAS dataset, indicator "GDP Growth Rate," base year 2011-12, series "Current" · retrieved 18 Jul 2026</div>
+    </div>
+
+    <div class="stat-strip" id="statStrip"></div>
+
+    <section class="block">
+      <div class="block-head">
+        <h2 class="block-title">Real GDP growth by fiscal year</h2>
+        <p class="block-note">Bars: latest revised estimate. Tick: First Advance Estimate, where available.</p>
+      </div>
+      <div class="chart-card">
+        <svg id="gdpChart" viewBox="0 0 1000 380" preserveAspectRatio="none"></svg>
+        <div class="tooltip" id="gdpTooltip"></div>
+      </div>
+      <div class="legend-row">
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--data-line)"></span> Growth (latest estimate)</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--neg)"></span> Contraction (latest estimate)</span>
+        <span class="legend-item"><span class="legend-tick"></span> First Advance Estimate</span>
+      </div>
+      <details class="table-view">
+        <summary>View full revision table (First Advance → latest, all 14 years)</summary>
+        <div class="data-table-wrap"><table class="data-table" id="gdpTable"></table></div>
+      </details>
+    </section>
+
+    <div class="errata">
+      <div class="errata-title">Errata &amp; data caveats</div>
+      <ul>
+        <li><b>FY2025-26 is a First Advance Estimate only</b> — the sole data point MoSPI has released for it so far. Like every other year on this chart, expect it to move; historically the first guess has shifted by as much as <b>2 percentage points</b> by the time later revisions land.</li>
+        <li><b>The COVID-19 contraction was revised away from its worst reading:</b> FY2020-21's First Advance Estimate was <b>-8%</b>; by the Third Revised Estimate it stood at <b>-6%</b> — still the sharpest contraction on record here, just not quite as deep as first reported.</li>
+        <li><b>FY2023-24 saw the largest upward revision</b>: from a 7% First Advance Estimate to 9% by the First Revised Estimate — a bigger jump than the COVID year's revision, in the opposite direction.</li>
+        <li><b>FY2012-13 and FY2013-14 have no First Advance Estimate in this connector</b> — the earliest revision stage returned for those two years starts at "Second Revised." No tick is drawn for them; that's a data gap, not a zero revision.</li>
+        <li>This chart shows <b>real (constant-price) growth</b>, the conventional headline "GDP growth rate." Nominal (current-price) growth — which includes inflation — is materially higher in most years and is available in the table view.</li>
+        <li>The connector's NAS <i>indicator list</i> endpoint (<code>getNasIndicatorList</code>) still throws an upstream 500 as of this bulletin, same as noted before — but the <i>data</i> endpoint used here works fine, through FY2025-26.</li>
+      </ul>
+    </div>
+
+    <footer class="colophon">herrrickshaw/mospi-dataset-analysis — generated from a live MoSPI connector session, not an official MoSPI/NSO publication</footer>
+  </div>
+</div>
+
+<script>
+(function () {
+  var years = ["2012-13","2013-14","2014-15","2015-16","2016-17","2017-18","2018-19","2019-20","2020-21","2021-22","2022-23","2023-24","2024-25","2025-26"];
+  var rows = {
+    "2012-13": { first: null, latest: 5,  stage: "Additional Revision",       curLatest: 14, curFirst: null },
+    "2013-14": { first: null, latest: 6,  stage: "Additional Revision",       curLatest: 13, curFirst: null },
+    "2014-15": { first: 7,    latest: 7,  stage: "Third Revised Estimates",   curLatest: 11, curFirst: 12 },
+    "2015-16": { first: 8,    latest: 8,  stage: "Third Revised Estimates",   curLatest: 10, curFirst: 9 },
+    "2016-17": { first: 7,    latest: 8,  stage: "Third Revised Estimates",   curLatest: 12, curFirst: 12 },
+    "2017-18": { first: 7,    latest: 7,  stage: "Third Revised Estimates",   curLatest: 11, curFirst: 10 },
+    "2018-19": { first: 7,    latest: 6,  stage: "Third Revised Estimates",   curLatest: 11, curFirst: 12 },
+    "2019-20": { first: 5,    latest: 4,  stage: "Third Revised Estimates",   curLatest: 6,  curFirst: 8 },
+    "2020-21": { first: -8,   latest: -6, stage: "Third Revised Estimates",   curLatest: -1, curFirst: -4 },
+    "2021-22": { first: 9,    latest: 10, stage: "Second Revised Estimates",  curLatest: 19, curFirst: 18 },
+    "2022-23": { first: 7,    latest: 8,  stage: "Final Estimates",           curLatest: 14, curFirst: 15 },
+    "2023-24": { first: 7,    latest: 9,  stage: "First Revised Estimates",   curLatest: 12, curFirst: 9 },
+    "2024-25": { first: 6,    latest: 6,  stage: "Provisional Estimates",     curLatest: 10, curFirst: 10 },
+    "2025-26": { first: 7,    latest: 7,  stage: "First Advance Estimates",   curLatest: 8,  curFirst: 8 }
+  };
+
+  function fmtPct(n) { return (n > 0 ? "+" : "") + n + "%"; }
+
+  // ---- Stat strip ----
+  var statStrip = document.getElementById("statStrip");
+  var stats = [
+    { label: "FY2025-26 (First Advance)", value: "+7%", sub: "the only estimate released so far — expect revision" },
+    { label: "FY2024-25 (Provisional)", value: "+6%", sub: "most recent estimate with more than one reading" },
+    { label: "COVID trough — FY2020-21", value: "-6%", sub: "revised up from an initial <b>-8%</b> First Advance Estimate" },
+    { label: "Sharpest rebound — FY2021-22", value: "+10%", sub: "revised up from <b>+9%</b> first reported" }
+  ];
+  stats.forEach(function (s) {
+    var el = document.createElement("div");
+    el.className = "stat-tile";
+    el.innerHTML = '<div class="stat-label">' + s.label + '</div><div class="stat-value">' + s.value + '</div><div class="stat-sub">' + s.sub + '</div>';
+    statStrip.appendChild(el);
+  });
+
+  // ---- Chart ----
+  var svg = document.getElementById("gdpChart");
+  var W = 1000, H = 380, padL = 46, padR = 16, padT = 24, padB = 34;
+  var plotW = W - padL - padR, plotH = H - padT - padB;
+  var vMin = -10, vMax = 12;
+
+  var n = years.length;
+  var slot = plotW / n;
+  var barW = slot * 0.52;
+
+  function xCenter(i) { return padL + slot * i + slot / 2; }
+  function yFor(v) { return padT + plotH - ((v - vMin) / (vMax - vMin)) * plotH; }
+
+  var svgns = "http://www.w3.org/2000/svg";
+  function el(tag, attrs) {
+    var e = document.createElementNS(svgns, tag);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    return e;
+  }
+
+  var ticks = [-10, -5, 0, 5, 10];
+  ticks.forEach(function (t) {
+    var y = yFor(t);
+    svg.appendChild(el("line", { x1: padL, x2: W - padR, y1: y, y2: y, class: t === 0 ? "zero-line" : "grid-line" }));
+    var lbl = el("text", { x: padL - 8, y: y + 3, class: "axis-label", "text-anchor": "end" });
+    lbl.textContent = t + "%";
+    svg.appendChild(lbl);
+  });
+  svg.appendChild(el("line", { x1: padL, x2: padL, y1: padT, y2: H - padB, class: "axis-line" }));
+
+  // COVID callout
+  var covidX0 = padL + slot * 8, covidX1 = padL + slot * 9;
+  svg.appendChild(el("rect", { x: covidX0, y: padT, width: covidX1 - covidX0, height: plotH, class: "callout-box" }));
+  var covidLbl = el("text", { x: (covidX0 + covidX1) / 2, y: padT - 8, class: "covid-label", "text-anchor": "middle" });
+  covidLbl.textContent = "COVID-19";
+  svg.appendChild(covidLbl);
+
+  var tooltip = document.getElementById("gdpTooltip");
+  var chartCard = svg.parentElement;
+
+  years.forEach(function (yr, i) {
+    var r = rows[yr];
+    var cx = xCenter(i);
+    var y0 = yFor(0), y1 = yFor(r.latest);
+    var top = Math.min(y0, y1), h = Math.abs(y1 - y0);
+    var bar = el("rect", {
+      x: cx - barW / 2, y: top, width: barW, height: Math.max(h, 1),
+      class: "bar " + (r.latest >= 0 ? "pos" : "neg")
+    });
+    svg.appendChild(bar);
+
+    if (r.first !== null) {
+      var yFirst = yFor(r.first);
+      svg.appendChild(el("line", { x1: cx, x2: cx, y1: yFirst, y2: y1, class: "revision-stem" }));
+      svg.appendChild(el("line", { x1: cx - barW / 2 - 3, x2: cx + barW / 2 + 3, y1: yFirst, y2: yFirst, class: "revision-tick" }));
+    }
+
+    // direct labels on notable years
+    if (yr === "2020-21" || yr === "2021-22" || yr === "2025-26") {
+      var lbl = el("text", {
+        x: cx, y: r.latest >= 0 ? y1 - 8 : y1 + 16,
+        class: "bar-label", "text-anchor": "middle"
+      });
+      lbl.textContent = fmtPct(r.latest);
+      svg.appendChild(lbl);
+    }
+
+    // x labels
+    var xlbl = el("text", { x: cx, y: H - padB + 16, class: "axis-label", "text-anchor": "middle" });
+    xlbl.textContent = "'" + yr.slice(2, 4);
+    svg.appendChild(xlbl);
+
+    // hover hit area spans the full slot
+    var hit = el("rect", { x: padL + slot * i, y: padT, width: slot, height: plotH, fill: "transparent" });
+    hit.addEventListener("mouseenter", function () { bar.classList.add("hover"); });
+    hit.addEventListener("mouseleave", function () { bar.classList.remove("hover"); tooltip.style.opacity = 0; });
+    hit.addEventListener("mousemove", function (evt) {
+      var cardRect = chartCard.getBoundingClientRect();
+      var svgRect = svg.getBoundingClientRect();
+      var scaleX = svgRect.width / W, scaleY = svgRect.height / H;
+      var px = (svgRect.left - cardRect.left) + cx * scaleX;
+      var py = (svgRect.top - cardRect.top) + Math.min(y0, y1) * scaleY;
+      tooltip.style.left = px + "px";
+      tooltip.style.top = (py - 12) + "px";
+      tooltip.style.transform = "translate(-50%, -100%)";
+      tooltip.style.opacity = 1;
+      var firstLine = r.first !== null ? ("First Advance: " + fmtPct(r.first) + " &nbsp; (Δ " + fmtPct(r.latest - r.first) + ")<br>") : "";
+      tooltip.innerHTML = "<b>FY" + yr + "</b><br>" + firstLine + "Latest (" + r.stage + "): <b>" + fmtPct(r.latest) + "</b> real, " + fmtPct(r.curLatest) + " nominal";
+    });
+    svg.appendChild(hit);
+  });
+
+  // ---- table ----
+  var table = document.getElementById("gdpTable");
+  var thead = "<thead><tr><th>Fiscal Year</th><th>First Advance (real)</th><th>Latest (real)</th><th>Δ (pp)</th><th>Latest revision stage</th><th>First Advance (nominal)</th><th>Latest (nominal)</th></tr></thead>";
+  var tbody = "<tbody>" + years.map(function (yr) {
+    var r = rows[yr];
+    var delta = r.first !== null ? (r.latest - r.first) : null;
+    return "<tr><td>FY" + yr + "</td><td>" + (r.first !== null ? fmtPct(r.first) : "—") + "</td><td>" + fmtPct(r.latest) + "</td><td>" + (delta !== null ? fmtPct(delta) : "—") + "</td><td>" + r.stage + "</td><td>" + (r.curFirst !== null ? fmtPct(r.curFirst) : "—") + "</td><td>" + fmtPct(r.curLatest) + "</td></tr>";
+  }).join("") + "</tbody>";
+  table.innerHTML = thead + tbody;
+})();
+</script>

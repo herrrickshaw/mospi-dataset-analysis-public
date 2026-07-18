@@ -71,6 +71,16 @@ That scrape changes the story from the previous version of this chart: reserves 
 
 Underlying data: [`data/rbi_forex_reserves_2015-01_to_2025-06.json`](data/rbi_forex_reserves_2015-01_to_2025-06.json) (connector series + `web_extension` block for the bridged readings).
 
+## GDP growth trend, with revision history
+
+[`charts/gdp_growth_trend.html`](charts/gdp_growth_trend.html) — open in a browser — real (constant-price) GDP growth by fiscal year, FY2012-13 through FY2025-26, from the MoSPI connector's NAS dataset. Bars show the latest revised estimate for each year; a tick marks where the original First Advance Estimate landed, so the gap between tick and bar visualizes how much each year's number moved as later data came in.
+
+Checked after last bulletin flagged the NAS `getNasIndicatorList` metadata endpoint as broken (upstream 500) — that endpoint is **still** down, but the actual `get_data` call works fine and returns real figures through FY2025-26's First Advance Estimate. Went looking at data.gov.in/apis first for a GDP source, per request; every economic dataset found there (forex reserves, GDP, Index of Eight Core Industries) turned out to be a static one-off Rajya Sabha Q&A release or a Ministry file frozen years ago despite a recent "Updated On" timestamp — none usable. The connector's own NAS data turned out to be the better, more current source already sitting unused.
+
+Headline: **FY2025-26 opens at +7% real growth** (First Advance Estimate only — expect revision). The COVID-19 year (FY2020-21) was revised from an initial **-8%** up to **-6%**; FY2023-24 saw the largest upward revision of any year, from **+7%** to **+9%**. Across years with more than one estimate, the typical revision is about **±0.75 percentage points**, as much as **2pp** in either direction.
+
+Underlying data: [`data/gdp_growth_rate_2012-13_to_2025-26.json`](data/gdp_growth_rate_2012-13_to_2025-26.json).
+
 ## Known quirks / caveats
 
 - **RBI forex reserves lag hard** — requesting 2025/2026 explicitly still only returned data through June 2025. Don't assume this series is current to the same month.

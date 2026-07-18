@@ -1,0 +1,33 @@
+{
+  "dataset": "NAS",
+  "indicator": "GDP Growth Rate",
+  "indicator_code": 22,
+  "base_year": "2011-12",
+  "series": "Current",
+  "frequency": "Annually",
+  "note": "The NAS 'getNasIndicatorList' metadata endpoint throws an upstream 500 as of 2026-07-18, but the get_data endpoint used to fetch this works fine through FY2025-26.",
+  "revision_stage_order": ["First Advance Estimates", "Second Advance Estimates", "Provisional Estimates", "First Revised Estimates", "Second Revised Estimates", "Third Revised Estimates", "Additional Revision", "Final Estimates"],
+  "years": {
+    "2012-13": { "first_advance_real_pct": null, "latest_real_pct": 5,  "latest_stage": "Additional Revision",      "latest_nominal_pct": 14, "first_advance_nominal_pct": null },
+    "2013-14": { "first_advance_real_pct": null, "latest_real_pct": 6,  "latest_stage": "Additional Revision",      "latest_nominal_pct": 13, "first_advance_nominal_pct": null },
+    "2014-15": { "first_advance_real_pct": 7,    "latest_real_pct": 7,  "latest_stage": "Third Revised Estimates",  "latest_nominal_pct": 11, "first_advance_nominal_pct": 12 },
+    "2015-16": { "first_advance_real_pct": 8,    "latest_real_pct": 8,  "latest_stage": "Third Revised Estimates",  "latest_nominal_pct": 10, "first_advance_nominal_pct": 9 },
+    "2016-17": { "first_advance_real_pct": 7,    "latest_real_pct": 8,  "latest_stage": "Third Revised Estimates",  "latest_nominal_pct": 12, "first_advance_nominal_pct": 12 },
+    "2017-18": { "first_advance_real_pct": 7,    "latest_real_pct": 7,  "latest_stage": "Third Revised Estimates",  "latest_nominal_pct": 11, "first_advance_nominal_pct": 10 },
+    "2018-19": { "first_advance_real_pct": 7,    "latest_real_pct": 6,  "latest_stage": "Third Revised Estimates",  "latest_nominal_pct": 11, "first_advance_nominal_pct": 12 },
+    "2019-20": { "first_advance_real_pct": 5,    "latest_real_pct": 4,  "latest_stage": "Third Revised Estimates",  "latest_nominal_pct": 6,  "first_advance_nominal_pct": 8 },
+    "2020-21": { "first_advance_real_pct": -8,   "latest_real_pct": -6, "latest_stage": "Third Revised Estimates",  "latest_nominal_pct": -1, "first_advance_nominal_pct": -4 },
+    "2021-22": { "first_advance_real_pct": 9,    "latest_real_pct": 10, "latest_stage": "Second Revised Estimates", "latest_nominal_pct": 19, "first_advance_nominal_pct": 18 },
+    "2022-23": { "first_advance_real_pct": 7,    "latest_real_pct": 8,  "latest_stage": "Final Estimates",          "latest_nominal_pct": 14, "first_advance_nominal_pct": 15 },
+    "2023-24": { "first_advance_real_pct": 7,    "latest_real_pct": 9,  "latest_stage": "First Revised Estimates",  "latest_nominal_pct": 12, "first_advance_nominal_pct": 9 },
+    "2024-25": { "first_advance_real_pct": 6,    "latest_real_pct": 6,  "latest_stage": "Provisional Estimates",    "latest_nominal_pct": 10, "first_advance_nominal_pct": 10 },
+    "2025-26": { "first_advance_real_pct": 7,    "latest_real_pct": 7,  "latest_stage": "First Advance Estimates",  "latest_nominal_pct": 8,  "first_advance_nominal_pct": 8 }
+  },
+  "highlights": {
+    "covid_trough": { "year": "2020-21", "first_advance": -8, "latest": -6, "delta_pp": 2 },
+    "sharpest_rebound": { "year": "2021-22", "first_advance": 9, "latest": 10, "delta_pp": 1 },
+    "largest_upward_revision": { "year": "2023-24", "first_advance": 7, "latest": 9, "delta_pp": 2 },
+    "mean_absolute_revision_pp": 0.75,
+    "max_absolute_revision_pp": 2
+  }
+}
