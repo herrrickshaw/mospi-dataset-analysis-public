@@ -1,0 +1,68 @@
+{
+  "purpose": "Capstone synthesis re-cutting this repo's existing datasets to one consistent five-year window (FY2021-22 to FY2025-26) tying together trade totals, goods/services balance, the rupee, GDP growth, forex reserves and the PLI policy timeline. No new data collection -- every figure is re-derived from datasets already retrieved for other charts in this repo.",
+  "window": "FY2021-22 to FY2025-26 (goods trade, currency, GDP, forex); FY2021-22 to FY2024-25 (services trade, which is published one year behind goods)",
+  "retrieved": "2026-07-18",
+  "trade_totals_usd_million": {
+    "source": "data/tradestat_hsn_export_import_2018-19_to_2025-26.json",
+    "years": ["2021 - 2022", "2022 - 2023", "2023 - 2024", "2024 - 2025", "2025 - 2026"],
+    "export": [422004.4, 451070.0, 437072.1, 437704.5, 441745.9],
+    "import": [613052.1, 715968.9, 678214.8, 721200.3, 776013.7],
+    "export_growth_5yr_pct": 4.68,
+    "import_growth_5yr_pct": 26.58,
+    "import_to_export_growth_ratio": 5.68
+  },
+  "rupee_usd_inr": {
+    "source": "data/services_trade_and_overall_balance_2015-16_to_2024-25.json (fy_avg_usd_inr_rates) and data/rbi_usd_inr_exchange_rate_2015-01_to_2026-07.json (highlights, spot)",
+    "fy_avg": {
+      "2021-22": 74.50,
+      "2022-23": 80.36,
+      "2023-24": 82.79,
+      "2024-25": 84.68
+    },
+    "fy_avg_change_4yr_pct": 13.66,
+    "spot_latest": { "date": "2026-07-17", "value": 96.3665 },
+    "spot_change_since_2025-07_pct": 11.9,
+    "note": "FY2025-26 has no completed FY average yet -- shown as a spot marker, not extended into the indexed line, to avoid mixing an annual average with a single-day spot rate."
+  },
+  "goods_services_balance_usd_billion": {
+    "source": "data/services_trade_and_overall_balance_2015-16_to_2024-25.json",
+    "years": ["2021-22", "2022-23", "2023-24", "2024-25"],
+    "goods_balance": [-191.0, -264.9, -241.1, -283.5],
+    "services_net": [107.6, 143.6, 162.8, 188.9],
+    "overall": [-83.5, -121.3, -78.3, -94.6],
+    "goods_deficit_widened_usd_bn": 92.5,
+    "services_surplus_growth_usd_bn": 81.3,
+    "services_cushion_pct_of_extra_goods_gap": 87.9,
+    "overall_gap_widened_usd_bn": 11.1
+  },
+  "gdp_growth_real_pct": {
+    "source": "data/gdp_growth_rate_2012-13_to_2025-26.json",
+    "years": ["2021-22", "2022-23", "2023-24", "2024-25", "2025-26"],
+    "latest_real_pct": [10, 8, 9, 6, 7],
+    "latest_stage": ["Second Revised Estimates", "Final Estimates", "First Revised Estimates", "Provisional Estimates", "First Advance Estimates"]
+  },
+  "forex_reserves_usd_billion_fy_start_april": {
+    "source": "data/rbi_forex_reserves_2015-01_to_2025-06.json",
+    "years": ["2021-22", "2022-23", "2023-24", "2024-25", "2025-26"],
+    "value_at_fy_start": [588.0, 596.7, 590.1, 640.2, 688.4],
+    "latest_available": { "month": "2025-06", "value": 698.1 },
+    "growth_fy_start_to_latest_pct": 18.72
+  },
+  "pli_policy_timeline_compressed": [
+    { "date": "2021-09", "event": "PLI Auto & Auto Components approved", "detail": "Rs 25,938 crore, FY2022-23 to FY2026-27, targets Advanced Automotive Technology (BEV/hydrogen fuel-cell), supports HS87." },
+    { "date": "2021-09", "event": "PLI Textiles (MMF) notified", "detail": "Rs 10,683 crore -- targets MMF apparel/technical textiles, a deliberate shift away from the traditional cotton apparel (HS61/62) actually driving export growth." },
+    { "date": "2022 to 2024", "event": "PLI White Goods completes all 4 selection rounds", "detail": "Rs 11,198 crore committed, all 85 companies selected, Rs 1,90,050 crore cumulative production target." },
+    { "date": "2023-08", "event": "PLI expanded to 14 sectors", "detail": "Cumulative outlay reaches Rs 1.97 lakh crore (as of Dec 2025) across mobile manufacturing, electronics, pharma, textiles, steel, auto, ACC batteries, solar, drones." },
+    { "date": "2024", "event": "NMEO-Oilseeds mission launched", "detail": "Rs 10,103 crore through FY2030-31, layered on the Aug-2021 NMEO-Oil Palm mission -- India still imports an estimated 57% of edible oil." },
+    { "date": "2025-11", "event": "PLI Specialty Steel round 1.2 launched", "detail": "Follows Rs 44,106 crore committed in rounds 1.0/1.1; targets 42 million tonnes production by FY2026-27." },
+    { "date": "2026-02", "event": "Specialty Steel 1.2 MoUs signed", "detail": "85 projects, 55 companies, Rs 11,887 crore, 8.7 million tonnes new capacity -- matched coverage on both import- and export-growth sides of HS72/73." },
+    { "date": "FY2026-27", "event": "PLI Auto budget allocation nearly triples", "detail": "Rs 5,939.87 crore approved, up from the FY2025-26 revised estimate of Rs 2,091.26 crore." }
+  ],
+  "cross_references": {
+    "china_import_concentration": "sector_country_priority_and_pli_coverage.html -- China still ~62% of electronic component imports despite PLI dating to March 2020",
+    "usa_export_concentration": "export_destination_priority_and_pli_coverage.html -- USA is top-8 destination in 11 of 12 growth export chapters, $63.9bn",
+    "pli_textiles_mismatch": "export_destination_priority_and_pli_coverage.html -- HS61/62 mismatch finding",
+    "currency_and_forex": "rbi_forex_reserves_trend.html, real_exchange_rate_and_currency_policy.html",
+    "country_deficit_history": "country_trade_deficit_and_policy_history.html"
+  }
+}

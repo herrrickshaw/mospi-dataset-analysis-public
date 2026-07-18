@@ -2,6 +2,10 @@
 
 A record of accessing India's official statistics via the **MoSPI (Ministry of Statistics and Programme Implementation)** data API/connector, plus a snapshot of the latest published figures pulled on 2026-07-18.
 
+This repo reads chronologically — each section was added as a new question came up, often building on the one before it. The **[five-year synthesis](#five-year-synthesis-trade-currency--policy-fy2021-22-to-fy2025-26)** near the end re-cuts every thread below to one consistent window if you want the short version first.
+
+**Contents:** [MoSPI dataset catalogue](#what-mospi-provides) · [Access workflow](#access-workflow) · [Session findings](#session-findings-as-of-2026-07-18) · [State CPI vs. WPI](#state-wise-cpi-vs-national-wpi-trends) · [CPI heatmap](#cpi-inflation-heatmap-choropleth) · [Forex &amp; currency](#rbi-foreign-exchange-reserves--currency-trend) · [Real exchange rate &amp; China comparison](#effective-buying-power--the-china-currency-manipulation-comparison) · [Trade balance](#trade-balance--is-india-an-export-surplus-country) · [HSN growth trends](#hsn-wise-historical-trends--which-imports-are-growing-fastest) · [Fertiliser/fuel → inflation](#imported-fertiliser--fuel-prices--diesel--cpiwpi) · [Import policy gaps](#are-import-dependent-sectors-getting-government-attention) · [Country-by-country forex](#where-indias-forex-actually-goes--country-by-country-with-a-decade-of-policy-history) · [Import partners &amp; PLI](#priority-trade-partners-by-import-growth-sector-and-real-pli-coverage) · [Export destinations &amp; PLI](#priority-export-destinations-by-growth-sector-and-the-export-side-of-pli) · [GDP growth](#gdp-growth-trend-with-revision-history) · [Five-year synthesis](#five-year-synthesis-trade-currency--policy-fy2021-22-to-fy2025-26) · [Known quirks](#known-quirks--caveats)
+
 ## What MoSPI provides
 
 The connector fronts `api.mospi.gov.in` and exposes **25 datasets** covering 500+ indicators:
@@ -160,6 +164,16 @@ Checked after last bulletin flagged the NAS `getNasIndicatorList` metadata endpo
 Headline: **FY2025-26 opens at +7% real growth** (First Advance Estimate only — expect revision). The COVID-19 year (FY2020-21) was revised from an initial **-8%** up to **-6%**; FY2023-24 saw the largest upward revision of any year, from **+7%** to **+9%**. Across years with more than one estimate, the typical revision is about **±0.75 percentage points**, as much as **2pp** in either direction.
 
 Underlying data: [`data/gdp_growth_rate_2012-13_to_2025-26.json`](data/gdp_growth_rate_2012-13_to_2025-26.json).
+
+## Five-year synthesis: trade, currency &amp; policy, FY2021-22 to FY2025-26
+
+[`charts/five_year_trade_currency_synthesis.html`](charts/five_year_trade_currency_synthesis.html) — open in a browser — a capstone that re-cuts every dataset already collected above to one consistent five-year window, rather than the mix of 8-year (HSN), 14-year (WPI/CPI), and decade-plus (currency/reserves) windows used elsewhere in this repo. No new data collection — every figure is re-derived from the JSON files already cited above.
+
+**Headline: imports grew nearly six times faster than exports, and a services surplus — not five years of PLI policy — absorbed most of the difference.** Imports rose **+26.6%** ($613.1bn → $776.0bn, FY2021-22 → FY2025-26) against export growth of just **+4.7%** ($422.0bn → $441.7bn) — a growth ratio of roughly **5.7:1**. Over the same span the rupee's FY-average rate slid **+13.7%** (74.50 → 84.68 through FY2024-25) and has since accelerated to a **96.37** spot rate by mid-July 2026. The goods deficit widened by **$92.5bn** (-$191.0bn → -$283.5bn, FY2021-22 → FY2024-25), but the services surplus very nearly doubled (**+75.6%**, $107.6bn → $188.9bn) — covering an estimated **88% of that extra goods shortfall** and holding the overall gap's five-year growth to just $11.1bn. GDP growth ran 10%→8%→9%→6%→7% across the window (softest in FY2024-25); forex reserves grew 18.7% start-of-FY-to-latest, slower than the import bill.
+
+Laid alongside the PLI policy timeline compressed to the same five years — Auto (₹25,938cr, Sep 2021), Textiles (₹10,683cr, Sep 2021), White Goods (all 85 companies selected by 2024), the 2023 expansion to 14 sectors (₹1.97 lakh crore), and Specialty Steel round 1.2 (₹11,887cr, MoUs Feb 2026) — the picture is consistent with this report's country-concentration findings above: **China's grip on India's electronic-component imports (~62%) and the USA's grip on India's fastest-growing exports (11 of 12 chapters) haven't meaningfully shifted** in the same window that PLI outlays scaled up. The policy response is real; it hasn't yet bent the two growth curves that matter most.
+
+Underlying data: [`data/five_year_trade_currency_synthesis_2026-07-18.json`](data/five_year_trade_currency_synthesis_2026-07-18.json).
 
 ## Known quirks / caveats
 
