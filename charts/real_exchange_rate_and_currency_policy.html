@@ -23,27 +23,8 @@
     --font-body: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
     --font-mono: "IBM Plex Mono","SF Mono",Menlo,Consolas,monospace;
   }
-  @media (prefers-color-scheme: dark) {
-    :root:where(:not([data-theme="light"])) {
-      color-scheme: dark;
-      --page-bg:      #12151a;
-      --surface:      #1a1e21;
-      --ink:          #f2f1ea;
-      --ink-2:        #c1c4b7;
-      --ink-muted:    #8b8f83;
-      --rule:         #2a2e28;
-      --rule-strong:  #383c33;
-      --accent:       #58bdb5;
-      --accent-soft:  #1d3634;
-      --alert:        #e0785f;
-      --alert-soft:   #3a241d;
-      --data-line:    #3987e5;
-      --data-line-2:  #d95926;
-      --chart-surface:#1a1a19;
-      --chart-grid:   #2c2c2a;
-      --chart-axis:   #383835;
-    }
-  }
+    /* Automatic prefers-color-scheme:dark token override intentionally removed: this blog standardizes on always-white-background/always-black-text regardless of OS theme. It previously flipped surface/ink tokens to dark values while text stayed forced black, producing invisible black-on-dark text in published posts. */
+
   :root[data-theme="dark"] {
     color-scheme: dark;
     --page-bg:#12151a; --surface:#1a1e21; --ink:#f2f1ea; --ink-2:#c1c4b7; --ink-muted:#8b8f83;
@@ -65,7 +46,7 @@
   .masthead { border-bottom: 2px solid var(--ink); padding-bottom: 16px; display: flex; flex-direction: column; gap: 6px; }
   .eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); display: flex; gap: 10px; align-items: center; }
   .eyebrow::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); display: inline-block; }
-  h1 { font-family: var(--font-display); font-weight: 500; font-size: clamp(26px, 3.6vw, 36px); margin: 2px 0 0; text-wrap: balance; letter-spacing: -0.01em; }
+  h1 { font-family: var(--font-display); font-weight: 500; line-height: 1.25; font-size: clamp(26px, 3.6vw, 36px); margin: 2px 0 0; text-wrap: balance; letter-spacing: -0.01em; }
   .dek { font-size: 14px; color: var(--ink-2); max-width: 74ch; line-height: 1.55; margin: 4px 0 0; }
   .source-line { font-family: var(--font-mono); font-size: 11px; color: var(--ink-muted); margin-top: 6px; }
 
@@ -211,13 +192,13 @@
   var nominal = [62.23,67.25,68.08,63.64,70.73,71.31,73.11,74.44,81.9,83.12,86.27,86.11,96.37];
   var real =    [62.23,64.89,65.34,60.13,65.97,64.66,65.82,66.62,73.18,73.24,76.13,75.13,85.64];
 
-  function fmtRs(n) { return "₹" + n.toFixed(2); }
+  function fmtRs(n) { return "\u20B9" + n.toFixed(2); }
 
   // ---- Stat strip ----
   var statStrip = document.getElementById("statStrip");
   var stats = [
-    { label: "Nominal depreciation, Jan'15–Jul'26", value: "+54.9%", sub: "₹62.23 → ₹96.37 per US$1" },
-    { label: "Real (PPP-adjusted) depreciation", value: "+37.6%", sub: "₹62.23 → an effective ₹85.64" },
+    { label: "Nominal depreciation, Jan'15–Jul'26", value: "+54.9%", sub: "\u20B962.23 → \u20B996.37 per US$1" },
+    { label: "Real (PPP-adjusted) depreciation", value: "+37.6%", sub: "\u20B962.23 → an effective \u20B985.64" },
     { label: "Effective buying power lost", value: "−27%", sub: "a rupee buys 27% less, in real terms, of dollar-priced goods than in 2015" },
     { label: "Past 12 months: real vs nominal", value: "+14.0% real", sub: "vs. +11.9% nominal — India's inflation was <b>lower</b> than the US's this year" }
   ];
@@ -250,7 +231,7 @@
     var y = yFor(t);
     svg.appendChild(el("line", { x1: padL, x2: W - padR, y1: y, y2: y, class: "grid-line" }));
     var lbl = el("text", { x: padL - 8, y: y + 3, class: "axis-label", "text-anchor": "end" });
-    lbl.textContent = "₹" + t;
+    lbl.textContent = "\u20B9" + t;
     svg.appendChild(lbl);
   });
   svg.appendChild(el("line", { x1: padL, x2: padL, y1: padT, y2: H - padB, class: "axis-line" }));
@@ -307,7 +288,7 @@
 
   // ---- table ----
   var table = document.getElementById("rerTable");
-  var thead = "<thead><tr><th>Period</th><th>Nominal ₹/US$1</th><th>Real ₹/US$1</th><th>Gap (pp)</th></tr></thead>";
+  var thead = "<thead><tr><th>Period</th><th>Nominal \u20B9/US$1</th><th>Real \u20B9/US$1</th><th>Gap (pp)</th></tr></thead>";
   var rows = labels.map(function (lbl, i) {
     var gap = ((nominal[i] - real[i]) / real[i] * 100).toFixed(1);
     return "<tr><td>" + lbl + "</td><td>" + fmtRs(nominal[i]) + "</td><td>" + fmtRs(real[i]) + "</td><td>" + gap + "%</td></tr>";

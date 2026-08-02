@@ -24,28 +24,8 @@
     --font-body: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
     --font-mono: "IBM Plex Mono","SF Mono",Menlo,Consolas,monospace;
   }
-  @media (prefers-color-scheme: dark) {
-    :root:where(:not([data-theme="light"])) {
-      color-scheme: dark;
-      --page-bg:      #12151a;
-      --surface:      #1a1e21;
-      --ink:          #f2f1ea;
-      --ink-2:        #c1c4b7;
-      --ink-muted:    #8b8f83;
-      --rule:         #2a2e28;
-      --rule-strong:  #383c33;
-      --accent:       #58bdb5;
-      --accent-soft:  #1d3634;
-      --alert:        #e0785f;
-      --alert-soft:   #3a241d;
-      --data-line:    #3987e5;
-      --data-fill-a:  rgba(57,135,229,0.28);
-      --data-fill-b:  rgba(57,135,229,0.0);
-      --chart-surface:#1a1a19;
-      --chart-grid:   #2c2c2a;
-      --chart-axis:   #383835;
-    }
-  }
+    /* Automatic prefers-color-scheme:dark token override intentionally removed: this blog standardizes on always-white-background/always-black-text regardless of OS theme. It previously flipped surface/ink tokens to dark values while text stayed forced black, producing invisible black-on-dark text in published posts. */
+
   :root[data-theme="dark"] {
     color-scheme: dark;
     --page-bg:#12151a; --surface:#1a1e21; --ink:#f2f1ea; --ink-2:#c1c4b7; --ink-muted:#8b8f83;
@@ -69,7 +49,7 @@
   .masthead { border-bottom: 2px solid var(--ink); padding-bottom: 16px; display: flex; flex-direction: column; gap: 6px; }
   .eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); display: flex; gap: 10px; align-items: center; }
   .eyebrow::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); display: inline-block; }
-  h1 { font-family: var(--font-display); font-weight: 500; font-size: clamp(26px, 3.6vw, 36px); margin: 2px 0 0; text-wrap: balance; letter-spacing: -0.01em; }
+  h1 { font-family: var(--font-display); font-weight: 500; line-height: 1.25; font-size: clamp(26px, 3.6vw, 36px); margin: 2px 0 0; text-wrap: balance; letter-spacing: -0.01em; }
   .dek { font-size: 14px; color: var(--ink-2); max-width: 68ch; line-height: 1.55; margin: 4px 0 0; }
   .source-line { font-family: var(--font-mono); font-size: 11px; color: var(--ink-muted); margin-top: 6px; }
 
@@ -432,15 +412,15 @@
   var usdWebPoints = usdWebDates.map(function (d, i) { return { date: d, value: usdWebValues[i] }; });
   usdWebPoints[usdWebPoints.length - 1].note = "latest available, Reference Rate Archive";
 
-  function fmtRs(n) { return "₹" + n.toFixed(2); }
+  function fmtRs(n) { return "\u20B9" + n.toFixed(2); }
 
   // ---- Currency stat strip ----
   var usdStatStrip = document.getElementById("usdStatStrip");
   var usdStats = [
-    { label: "Latest — 17 Jul 2026", value: "₹96.37", sub: "up from <b>₹86.11</b>, the connector's Jul 2025 monthly average" },
-    { label: "10-year change", value: "+54.9%", sub: "from ₹62.23 in Jan 2015 — a weaker rupee needs more ₹ per US$1" },
+    { label: "Latest — 17 Jul 2026", value: "\u20B996.37", sub: "up from <b>\u20B986.11</b>, the connector's Jul 2025 monthly average" },
+    { label: "10-year change", value: "+54.9%", sub: "from \u20B962.23 in Jan 2015 — a weaker rupee needs more \u20B9 per US$1" },
     { label: "Past 12 months", value: "+11.9%", sub: "accelerated sharply versus ~3.3%/year over the prior decade" },
-    { label: "Weakest session in window", value: "₹96.84", sub: "20 May 2026, per RBI's daily Reference Rate" }
+    { label: "Weakest session in window", value: "\u20B996.84", sub: "20 May 2026, per RBI's daily Reference Rate" }
   ];
   usdStats.forEach(function (s) {
     var elx = document.createElement("div");
@@ -467,7 +447,7 @@
     var y = usdYFor(t);
     usdSvg.appendChild(el("line", { x1: usdPadL, x2: usdW - usdPadR, y1: y, y2: y, class: "grid-line" }));
     var lbl = el("text", { x: usdPadL - 8, y: y + 3, class: "axis-label", "text-anchor": "end" });
-    lbl.textContent = "₹" + t;
+    lbl.textContent = "\u20B9" + t;
     usdSvg.appendChild(lbl);
   });
   usdSvg.appendChild(el("line", { x1: usdPadL, x2: usdPadL, y1: usdPadT, y2: usdH - usdPadB, class: "axis-line" }));
@@ -552,7 +532,7 @@
 
   // ---- currency table ----
   var usdTable = document.getElementById("usdTable");
-  var usdThead = "<thead><tr><th>Date</th><th>₹ per US$1</th><th>Source</th></tr></thead>";
+  var usdThead = "<thead><tr><th>Date</th><th>\u20B9 per US$1</th><th>Source</th></tr></thead>";
   var usdRows = usdCombined.map(function (p) {
     return "<tr><td>" + dateLabel(p.date) + "</td><td>" + fmtRs(p.value) + "</td><td>" + p.source + "</td></tr>";
   }).reverse().join("");
