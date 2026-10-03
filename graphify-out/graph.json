@@ -1,0 +1,361 @@
+{
+  "hyperedges": [],
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "nodes": [
+    {
+      "id": "readme",
+      "label": "README.md",
+      "file_type": "document",
+      "node_kind": "page",
+      "source_file": "README.md",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "readme_import_export_dataset_analysis_inspired_by_niti_aayog_trade_watch",
+      "label": "IMPORT EXPORT Dataset Analysis - Inspired by NITI Aayog Trade watch",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "README.md",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "readme_what_mospi_provides",
+      "label": "What MoSPI provides",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "README.md",
+      "source_location": "L19",
+      "_origin": "ast"
+    },
+    {
+      "id": "readme_access_workflow",
+      "label": "Access workflow",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "README.md",
+      "source_location": "L40",
+      "_origin": "ast"
+    },
+    {
+      "id": "readme_session_findings_as_of_2026_07_18",
+      "label": "Session findings (as of 2026-07-18)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "README.md",
+      "source_location": "L55",
+      "_origin": "ast"
+    },
+    {
+      "id": "readme_state_wise_cpi_vs_national_wpi_trends",
+      "label": "State-wise CPI vs. national WPI trends",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "README.md",
+      "source_location": "L66",
+      "_origin": "ast"
+    },
+    {
+      "id": "readme_cpi_inflation_heatmap_choropleth",
+      "label": "CPI inflation heatmap (choropleth)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "README.md",
+      "source_location": "L74",
+      "_origin": "ast"
+    },
+    {
+      "id": "readme_rbi_foreign_exchange_reserves_currency_trend",
+      "label": "RBI foreign exchange reserves + currency trend",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "README.md",
+      "source_location": "L78",
+      "_origin": "ast"
+    },
+    {
+      "id": "readme_effective_buying_power_the_china_currency_manipulation_comparison",
+      "label": "Effective buying power & the China currency-manipulation comparison",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "README.md",
+      "source_location": "L90",
+      "_origin": "ast"
+    },
+    {
+      "id": "readme_trade_balance_is_india_an_export_surplus_country",
+      "label": "Trade balance — is India an export-surplus country?",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "README.md",
+      "source_location": "L100",
+      "_origin": "ast"
+    },
+    {
+      "id": "readme_hsn_wise_historical_trends_which_imports_are_growing_fastest",
+      "label": "HSN-wise historical trends — which imports are growing fastest?",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "README.md",
+      "source_location": "L116",
+      "_origin": "ast"
+    },
+    {
+      "id": "readme_imported_fertiliser_fuel_prices_diesel_cpi_wpi",
+      "label": "Imported fertiliser & fuel prices → diesel → CPI/WPI",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "README.md",
+      "source_location": "L126",
+      "_origin": "ast"
+    },
+    {
+      "id": "readme_are_import_dependent_sectors_getting_government_attention",
+      "label": "Are import-dependent sectors getting government attention?",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "README.md",
+      "source_location": "L134",
+      "_origin": "ast"
+    },
+    {
+      "id": "readme_where_india_s_forex_actually_goes_country_by_country_with_a_decade_of_policy_history",
+      "label": "Where India's forex actually goes — country by country, with a decade of policy history",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "README.md",
+      "source_location": "L142",
+      "_origin": "ast"
+    },
+    {
+      "id": "readme_priority_trade_partners_by_import_growth_sector_and_real_pli_coverage",
+      "label": "Priority trade partners by import-growth sector, and real PLI coverage",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "README.md",
+      "source_location": "L152",
+      "_origin": "ast"
+    },
+    {
+      "id": "readme_priority_export_destinations_by_growth_sector_and_the_export_side_of_pli",
+      "label": "Priority export destinations by growth sector, and the export side of PLI",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "README.md",
+      "source_location": "L160",
+      "_origin": "ast"
+    },
+    {
+      "id": "readme_gdp_growth_trend_with_revision_history",
+      "label": "GDP growth trend, with revision history",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "README.md",
+      "source_location": "L168",
+      "_origin": "ast"
+    },
+    {
+      "id": "readme_five_year_synthesis_trade_currency_amp_policy_fy2021_22_to_fy2025_26",
+      "label": "Five-year synthesis: trade, currency &amp; policy, FY2021-22 to FY2025-26",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "README.md",
+      "source_location": "L178",
+      "_origin": "ast"
+    },
+    {
+      "id": "readme_known_quirks_caveats",
+      "label": "Known quirks / caveats",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "README.md",
+      "source_location": "L188",
+      "_origin": "ast"
+    }
+  ],
+  "links": [
+    {
+      "source": "readme",
+      "target": "readme_import_export_dataset_analysis_inspired_by_niti_aayog_trade_watch",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "readme_import_export_dataset_analysis_inspired_by_niti_aayog_trade_watch",
+      "target": "readme_what_mospi_provides",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L19",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "readme_import_export_dataset_analysis_inspired_by_niti_aayog_trade_watch",
+      "target": "readme_access_workflow",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L40",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "readme_import_export_dataset_analysis_inspired_by_niti_aayog_trade_watch",
+      "target": "readme_session_findings_as_of_2026_07_18",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L55",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "readme_import_export_dataset_analysis_inspired_by_niti_aayog_trade_watch",
+      "target": "readme_state_wise_cpi_vs_national_wpi_trends",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L66",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "readme_import_export_dataset_analysis_inspired_by_niti_aayog_trade_watch",
+      "target": "readme_cpi_inflation_heatmap_choropleth",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L74",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "readme_import_export_dataset_analysis_inspired_by_niti_aayog_trade_watch",
+      "target": "readme_rbi_foreign_exchange_reserves_currency_trend",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L78",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "readme_import_export_dataset_analysis_inspired_by_niti_aayog_trade_watch",
+      "target": "readme_effective_buying_power_the_china_currency_manipulation_comparison",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L90",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "readme_import_export_dataset_analysis_inspired_by_niti_aayog_trade_watch",
+      "target": "readme_trade_balance_is_india_an_export_surplus_country",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L100",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "readme_import_export_dataset_analysis_inspired_by_niti_aayog_trade_watch",
+      "target": "readme_hsn_wise_historical_trends_which_imports_are_growing_fastest",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L116",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "readme_import_export_dataset_analysis_inspired_by_niti_aayog_trade_watch",
+      "target": "readme_imported_fertiliser_fuel_prices_diesel_cpi_wpi",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L126",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "readme_import_export_dataset_analysis_inspired_by_niti_aayog_trade_watch",
+      "target": "readme_are_import_dependent_sectors_getting_government_attention",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L134",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "readme_import_export_dataset_analysis_inspired_by_niti_aayog_trade_watch",
+      "target": "readme_where_india_s_forex_actually_goes_country_by_country_with_a_decade_of_policy_history",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L142",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "readme_import_export_dataset_analysis_inspired_by_niti_aayog_trade_watch",
+      "target": "readme_priority_trade_partners_by_import_growth_sector_and_real_pli_coverage",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L152",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "readme_import_export_dataset_analysis_inspired_by_niti_aayog_trade_watch",
+      "target": "readme_priority_export_destinations_by_growth_sector_and_the_export_side_of_pli",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L160",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "readme_import_export_dataset_analysis_inspired_by_niti_aayog_trade_watch",
+      "target": "readme_gdp_growth_trend_with_revision_history",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L168",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "readme_import_export_dataset_analysis_inspired_by_niti_aayog_trade_watch",
+      "target": "readme_five_year_synthesis_trade_currency_amp_policy_fy2021_22_to_fy2025_26",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L178",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "readme_import_export_dataset_analysis_inspired_by_niti_aayog_trade_watch",
+      "target": "readme_known_quirks_caveats",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L188",
+      "weight": 1.0,
+      "_origin": "ast"
+    }
+  ],
+  "directed": false
+}
