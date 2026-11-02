@@ -1,26 +1,56 @@
-# IMPORT EXPORT Dataset Analysis - Inspired by NITI Aayog Trade watch
+# India trade, inflation and currency analysis from MoSPI, RBI and TRADESTAT data
+
+A chronological set of data bulletins on India's macro picture — CPI/WPI inflation, GDP
+growth, RBI forex reserves and the rupee, the HSN-level merchandise trade balance, import
+dependency, country-wise deficits and PLI scheme coverage — built from India's official
+statistics: the MoSPI data API (`api.mospi.gov.in`), RBI's weekly archives, and the Commerce
+Ministry's TRADESTAT database. Each bulletin is a self-contained HTML chart under `charts/`
+with its underlying numbers as JSON under `data/`, plus a standalone FY2025-26 report and a
+Colab notebook that loads every dataset live from GitHub.
+
+> Status: archived snapshot (data, charts and notebook only — no collector code). Figures are
+> as pulled on 2026-07-18. This repo has been split into two actively-maintained successors
+> (see Related repositories); nothing here changes any more. Educational use only; not
+> investment or policy advice.
 
 <!-- how-to-use-with-ai -->
-> **New here?** See [How to use this repo with AI (Claude, Gemini, ChatGPT)](HOW_TO_USE_WITH_AI.md) — clone it, paste it into an AI tool, and ask in plain English.
+> **New here?** See [How to use this repo with AI (Claude, Gemini, ChatGPT)](HOW_TO_USE_WITH_AI.md).
 
+## What it does
+- Documents the four-step MoSPI connector workflow (`list_datasets → get_indicators → get_metadata → get_data`) and the 25-dataset catalogue it exposes.
+- Records a 2026-07-18 snapshot of CPI, IIP, WPI and RBI reserves (`data/mospi_snapshot_2026-07-18.json`).
+- Publishes 14 interactive HTML bulletins under `charts/` (state CPI vs WPI, CPI choropleth, reserves and USD/INR, real exchange rate, trade balance, HSN trends, fertiliser/fuel pass-through, policy gaps, country deficits, import/export partner priority and PLI coverage, GDP revisions, five-year synthesis, sector/policy recommendations).
+- Ships every chart's source numbers as JSON under `data/` (20 files) and cross-validation logs against TIA Portal, DGFT and PIB.
+- Provides `reports/FY2025-26_sample_report.html`, a standalone FY2025-26 snapshot standardised to US$ Million with a cross-source consistency-check log.
+- Provides `notebooks/mospi_live_reference.ipynb` ([open in Colab](https://colab.research.google.com/github/herrrickshaw/mospi-dataset-analysis-public/blob/main/notebooks/mospi_live_reference.ipynb)), a notebook that loads all datasets live from GitHub plus two live-scrape cells (RBI reserves, USD/INR).
 
-> **This repo has been split into two independent, actively-maintained repos** — kept here for history, but new work happens in the split successors:
-> - [`india-trade-data-analysis`](https://github.com/herrrickshaw/india-trade-data-analysis) — MoSPI macro indicators (CPI/WPI/GDP), currency &amp; forex, TRADESTAT trade-balance/HSN analysis, the five-year synthesis, the FY2025-26 sample report, and the Colab notebook.
-> - [`india-trade-sector-policy-recommendations`](https://github.com/herrrickshaw/india-trade-sector-policy-recommendations) — PLI scheme coverage, import-dependency policy gaps, country-by-country trade-relationship history, and the tiered sector/policy recommendations bulletin (incl. a CBAM export-risk flag and a declining-export-sector flag, both cross-checked against NITI Aayog's Trade Watch Quarterly).
->
-> Everything below is unchanged from before the split and still resolves correctly in this repo — it's just no longer where new sections get added.
+## Quick start
+```bash
+git clone https://github.com/herrrickshaw/mospi-dataset-analysis-public.git
+cd mospi-dataset-analysis-public
+open charts/five_year_trade_currency_synthesis.html   # the capstone bulletin; any charts/*.html opens in a browser
+```
 
-A record of accessing India's official statistics via the **MoSPI (Ministry of Statistics and Programme Implementation)** data API/connector, plus a snapshot of the latest published figures pulled on 2026-07-18.
+There is nothing to install. For live figures, open `notebooks/mospi_live_reference.ipynb` in
+Google Colab. The repo reads chronologically — each bulletin was added as a new question came
+up, often building on the one before it; the
+[five-year synthesis](#five-year-synthesis-trade-currency--policy-fy2021-22-to-fy2025-26)
+re-cuts every thread to one consistent window if you want the short version first.
 
-This repo reads chronologically — each section was added as a new question came up, often building on the one before it. The **[five-year synthesis](#five-year-synthesis-trade-currency--policy-fy2021-22-to-fy2025-26)** near the end re-cuts every thread below to one consistent window if you want the short version first.
+## How it works
 
-**Quick references, outside the chronological bulletins below:**
-- [`reports/FY2025-26_sample_report.html`](reports/FY2025-26_sample_report.html) / [`reports/FY2025-26_sample_report.pdf`](reports/FY2025-26_sample_report.pdf) — a standalone FY2025-26 snapshot: every figure re-derived from the datasets below, standardised to **US$ Million throughout** (PLI ₹ crore figures converted at a documented rate), with a dedicated cross-source consistency-check log.
-- [`notebooks/mospi_live_reference.ipynb`](notebooks/mospi_live_reference.ipynb) — open in Colab — loads every dataset in this repo live from GitHub, plus two working live-scrape cells (RBI reserves, live USD/INR) so you can reference current figures without waiting for this repo's next commit.
+| Stage | Where | Output |
+|---|---|---|
+| Discover a MoSPI dataset | `list_datasets()` → `get_indicators(dataset)` → `get_metadata(dataset, indicator_code…)` | valid filter values (years, states, categories) |
+| Fetch | `get_data(dataset, filters)` | raw series, saved as `data/*.json` |
+| Bridge gaps | scrapes of RBI WSS (`rbi.org.in/scripts/WSSView.aspx?Id=N`), RBI Reference Rate Archive, TRADESTAT POST queries | series extended past the connector's frozen endpoints |
+| Analyse and render | hand-built, self-contained HTML (no external tiles or API calls at render time) | `charts/*.html` |
 
-**Contents:** [MoSPI dataset catalogue](#what-mospi-provides) · [Access workflow](#access-workflow) · [Session findings](#session-findings-as-of-2026-07-18) · [State CPI vs. WPI](#state-wise-cpi-vs-national-wpi-trends) · [CPI heatmap](#cpi-inflation-heatmap-choropleth) · [Forex &amp; currency](#rbi-foreign-exchange-reserves--currency-trend) · [Real exchange rate &amp; China comparison](#effective-buying-power--the-china-currency-manipulation-comparison) · [Trade balance](#trade-balance--is-india-an-export-surplus-country) · [HSN growth trends](#hsn-wise-historical-trends--which-imports-are-growing-fastest) · [Fertiliser/fuel → inflation](#imported-fertiliser--fuel-prices--diesel--cpiwpi) · [Import policy gaps](#are-import-dependent-sectors-getting-government-attention) · [Country-by-country forex](#where-indias-forex-actually-goes--country-by-country-with-a-decade-of-policy-history) · [Import partners &amp; PLI](#priority-trade-partners-by-import-growth-sector-and-real-pli-coverage) · [Export destinations &amp; PLI](#priority-export-destinations-by-growth-sector-and-the-export-side-of-pli) · [GDP growth](#gdp-growth-trend-with-revision-history) · [Five-year synthesis](#five-year-synthesis-trade-currency--policy-fy2021-22-to-fy2025-26) · [Known quirks](#known-quirks--caveats)
-
-## What MoSPI provides
+Filter codes are dataset-specific and not standardised (e.g. `indicator_code=3` means different
+things in different datasets) — always resolve them via `get_metadata` rather than guessing.
+The workflow was exercised through the MoSPI MCP connector inside Claude Code; it is not a
+standalone script, since reproducing it outside that environment would require
+reverse-engineering `api.mospi.gov.in`'s undocumented auth/request format from scratch.
 
 The connector fronts `api.mospi.gov.in` and exposes **25 datasets** covering 500+ indicators:
 
@@ -41,20 +71,30 @@ The connector fronts `api.mospi.gov.in` and exposes **25 datasets** covering 500
 | NSS75E–NSS80 | Various NSS survey rounds (education, disability, housing, telecom, land & livestock, AIDIS, AYUSH) |
 | CPIALRL | CPI for Agricultural/Rural Labourers |
 
-## Access workflow
+## Repository layout
+| Path | Purpose |
+|---|---|
+| `charts/*.html` | 14 self-contained interactive bulletins (open in a browser) |
+| `data/*.json` | 20 source/derived datasets, one per bulletin plus the MoSPI snapshot and validation logs |
+| `reports/FY2025-26_sample_report.html` | Standalone FY2025-26 report, US$ Million throughout |
+| `notebooks/mospi_live_reference.ipynb` | Colab live-reference notebook |
+| `HOW_TO_USE_WITH_AI.md` | Plain-language guide for handing the repo to an AI assistant |
+| `.github/workflows/quality-gates.yml` | gitleaks secret scan on push / PR |
+| `graphify-out/` | Generated graphify knowledge-graph cache (not hand-written) |
 
-Four steps, each depending on the previous:
+All data here is tracked; nothing is generated inside this repo.
 
-```
-list_datasets()                          -> identify the dataset
-get_indicators(dataset)                  -> list available indicators
-get_metadata(dataset, indicator_code...) -> valid filter values (years, states, categories...)
-get_data(dataset, filters)                -> fetch the actual data
-```
-
-Filter codes are dataset-specific and not standardized (e.g. `indicator_code=3` means different things in different datasets) — always resolve them via `get_metadata` rather than guessing.
-
-This repo currently documents that workflow as exercised through the MoSPI MCP connector inside Claude Code; it is not (yet) a standalone script, since reproducing it outside that environment would require reverse-engineering `api.mospi.gov.in`'s undocumented auth/request format from scratch.
+## Data sources
+| Source | What is taken | Access route | Licence / caveat |
+|---|---|---|---|
+| MoSPI data API (`api.mospi.gov.in`) | CPI, WPI, IIP, NAS (GDP), RBI reserves/BoP series | MoSPI MCP connector (`list_datasets`/`get_indicators`/`get_metadata`/`get_data`) | Undocumented auth; RBI series frozen at June 2025; NAS metadata endpoint returns 500 |
+| RBI Weekly Statistical Supplement | Weekly forex reserves, Sep 1998 → today | Scraped: sequential `rbi.org.in/scripts/WSSView.aspx?Id=N`, no key needed | "As on" date is 7 days before publish date |
+| RBI Reference Rate Archive | USD/INR daily | Scraped: `rbi.org.in/scripts/referenceratearchive.aspx` date-range form | WSS exchange-rate table (`PARAM1=6`) discontinued Dec 2012 |
+| TRADESTAT (`tradestat.commerce.gov.in`) | HS-2 chapter exports/imports FY2018-19→FY2025-26, country×commodity | Scraped: GET search page for session cookie + CSRF, then POST; two FYs per query | Laravel/Livewire; cold GET returns 405 |
+| Commerce Ministry TIA Portal, DGFT, PIB | Cross-validation totals, bilateral balances | Public pages | DGFT "Import Export Data Bank" links back to TRADESTAT |
+| NIRYAT (`niryat.gov.in`) | Visualisation ideas only | Blocked at TLS level (DGFT-family bot protection) | Described from public documentation, not first-hand |
+| amCharts `amcharts4-geodata` (`india2023Low`) | India state boundaries for the choropleth | Reprojected to SVG locally | MIT |
+| Brookings, Hamilton (IJCB), Bhattacharya & Gupta (NIPFP), Mishra & Roy (IPF), JETIR 2025 | Literature context | Cited inside the bulletins | — |
 
 ## Session findings (as of 2026-07-18)
 
@@ -67,7 +107,11 @@ This repo currently documents that workflow as exercised through the MoSPI MCP c
 
 Raw responses: [`data/mospi_snapshot_2026-07-18.json`](data/mospi_snapshot_2026-07-18.json).
 
-## State-wise CPI vs. national WPI trends
+## Bulletins (chronological)
+
+**Contents:** [State CPI vs. WPI](#state-wise-cpi-vs-national-wpi-trends) · [CPI heatmap](#cpi-inflation-heatmap-choropleth) · [Forex & currency](#rbi-foreign-exchange-reserves--currency-trend) · [Real exchange rate & China comparison](#effective-buying-power--the-china-currency-manipulation-comparison) · [Trade balance](#trade-balance--is-india-an-export-surplus-country) · [HSN growth trends](#hsn-wise-historical-trends--which-imports-are-growing-fastest) · [Fertiliser/fuel → inflation](#imported-fertiliser--fuel-prices--diesel--cpiwpi) · [Import policy gaps](#are-import-dependent-sectors-getting-government-attention) · [Country-by-country forex](#where-indias-forex-actually-goes--country-by-country-with-a-decade-of-policy-history) · [Import partners & PLI](#priority-trade-partners-by-import-growth-sector-and-real-pli-coverage) · [Export destinations & PLI](#priority-export-destinations-by-growth-sector-and-the-export-side-of-pli) · [GDP growth](#gdp-growth-trend-with-revision-history) · [Five-year synthesis](#five-year-synthesis-trade-currency--policy-fy2021-22-to-fy2025-26)
+
+### State-wise CPI vs. national WPI trends
 
 [`charts/cpi_wpi_state_trends.html`](charts/cpi_wpi_state_trends.html) — open in a browser — charts Combined-sector CPI (base 2024) across 14 major states plus the All-India benchmark from January 2025 through June 2026, ranked by latest year-on-year inflation, alongside the national WPI trend over the same window (WPI has no state-level breakdown in MoSPI's data).
 
@@ -75,11 +119,11 @@ Headline: **Telangana runs hottest at +6.36% YoY**, **NCT of Delhi coolest at +2
 
 Underlying data: [`data/cpi_statewise_trend_2025-01_to_2026-06.json`](data/cpi_statewise_trend_2025-01_to_2026-06.json), [`data/wpi_national_trend_2025-01_to_2026-04.json`](data/wpi_national_trend_2025-01_to_2026-04.json).
 
-## CPI inflation heatmap (choropleth)
+### CPI inflation heatmap (choropleth)
 
 [`charts/cpi_india_heatmap.html`](charts/cpi_india_heatmap.html) — open in a browser — a choropleth of India shaded by June 2026 CPI year-on-year inflation for the 13 states in this dataset (all other states/UTs shown in gray as "not tracked", not as low inflation). State boundaries come from amCharts' `amcharts4-geodata` (`india2023Low`, MIT-licensed), reprojected to SVG locally — no external map tiles or API calls at render time.
 
-## RBI foreign exchange reserves + currency trend
+### RBI foreign exchange reserves + currency trend
 
 [`charts/rbi_forex_reserves_trend.html`](charts/rbi_forex_reserves_trend.html) — open in a browser — two segments on India's external sector. India's total forex reserves from Jan 2015 to the latest available reading. The MoSPI connector itself is confirmed still frozen at June 2025 (re-checked 2026-07-18, no change) — everything from June 2025 onward is a **real weekly series scraped directly from RBI's own site**, shown as a visually distinct dashed extension, never silently merged with the connector data.
 
@@ -91,7 +135,7 @@ That scrape changes the story from the previous version of this chart: reserves 
 
 Underlying data: [`data/rbi_forex_reserves_2015-01_to_2025-06.json`](data/rbi_forex_reserves_2015-01_to_2025-06.json) (reserves) and [`data/rbi_usd_inr_exchange_rate_2015-01_to_2026-07.json`](data/rbi_usd_inr_exchange_rate_2015-01_to_2026-07.json) (currency).
 
-## Effective buying power & the China currency-manipulation comparison
+### Effective buying power & the China currency-manipulation comparison
 
 [`charts/real_exchange_rate_and_currency_policy.html`](charts/real_exchange_rate_and_currency_policy.html) — open in a browser — a follow-on to the currency segment, separating the rupee's nominal fall into "just India's higher inflation catching up" versus a genuine real (purchasing-power-adjusted) depreciation, using India's implied GDP deflator (from the GDP chart's own NAS data) against US CPI-U.
 
@@ -101,7 +145,7 @@ That's then read against the framework China was scrutinized under: the US Treas
 
 Underlying data: [`data/rupee_real_exchange_rate_2015_to_2026.json`](data/rupee_real_exchange_rate_2015_to_2026.json).
 
-## Trade balance — is India an export-surplus country?
+### Trade balance — is India an export-surplus country?
 
 [`charts/trade_balance_hsn_analysis.html`](charts/trade_balance_hsn_analysis.html) — open in a browser — HSN (2-digit HS chapter) merchandise export and import data from the Commerce Ministry's own **TRADESTAT** database (`tradestat.commerce.gov.in`, not MoSPI/RBI), summed across all 98 tracked chapters to reconstruct India's national trade balance for FY2018-19 through FY2025-26.
 
@@ -117,7 +161,7 @@ Underlying data: [`data/tradestat_hsn_export_import_2018-19_to_2025-26.json`](da
 
 Underlying validation data: [`data/trade_data_cross_validation_2026-07-18.json`](data/trade_data_cross_validation_2026-07-18.json).
 
-## HSN-wise historical trends — which imports are growing fastest?
+### HSN-wise historical trends — which imports are growing fastest?
 
 [`charts/hsn_historical_trends.html`](charts/hsn_historical_trends.html) — open in a browser — the same TRADESTAT chapter-level data as the trade-balance bulletin above, re-cut to track each HS-2-digit chapter's own 8-year trajectory (FY2018-19 → FY2025-26) rather than just its latest-year snapshot. Ranks the top-12 import and top-12 export chapters by FY2025-26 value (independently-scaled sparklines per chapter), then re-ranks the same 12 import chapters by **CAGR** to separate "large" from "fast-growing."
 
@@ -127,7 +171,7 @@ Read against the trade-balance bulletin: the chapters driving the *deficit* (min
 
 Underlying data: [`data/hsn_historical_trends_2018-19_to_2025-26.json`](data/hsn_historical_trends_2018-19_to_2025-26.json).
 
-## Imported fertiliser & fuel prices → diesel → CPI/WPI
+### Imported fertiliser & fuel prices → diesel → CPI/WPI
 
 [`charts/fertiliser_fuel_price_transmission.html`](charts/fertiliser_fuel_price_transmission.html) — open in a browser — correlates the MoSPI connector's own WPI item-level series for diesel (HSD) and fertilisers (Urea, DAP) against WPI and CPI headline/food inflation, 2012–2026, to test the import-price pass-through described in five published studies (cited in full inside the bulletin: James Hamilton's IJCB framing paper, Bhattacharya & Gupta's NIPFP food-inflation SVAR, Mishra & Roy's India Policy Forum paper, a JETIR 2025 survey, and an MBA thesis on India's import composition).
 
@@ -135,7 +179,7 @@ Underlying data: [`data/hsn_historical_trends_2018-19_to_2025-26.json`](data/hsn
 
 Underlying data: [`data/fertiliser_fuel_price_transmission_2012_to_2026.json`](data/fertiliser_fuel_price_transmission_2012_to_2026.json).
 
-## Are import-dependent sectors getting government attention?
+### Are import-dependent sectors getting government attention?
 
 [`charts/import_dependency_policy_gap_analysis.html`](charts/import_dependency_policy_gap_analysis.html) — open in a browser — cross-references this repo's own 12-chapter import ranking (value and growth, FY2018-19 → FY2025-26) against a compiled six-month roundup of PIB-reported government schemes (Budget 2026-27, Cabinet Decisions Feb–Jun 2026, PLI/ISM 2.0 scorecards), to check whether the sectors India depends on most for imports are actually getting matching policy attention.
 
@@ -143,7 +187,7 @@ Underlying data: [`data/fertiliser_fuel_price_transmission_2012_to_2026.json`](d
 
 Underlying data: [`data/import_dependency_policy_gap_analysis_2026-07-18.json`](data/import_dependency_policy_gap_analysis_2026-07-18.json).
 
-## Where India's forex actually goes — country by country, with a decade of policy history
+### Where India's forex actually goes — country by country, with a decade of policy history
 
 [`charts/country_trade_deficit_and_policy_history.html`](charts/country_trade_deficit_and_policy_history.html) — open in a browser — ranks India's FY2025-26 bilateral trade balance by partner country (Commerce Ministry TIA Portal), then traces the policy history behind the five biggest deficit relationships back several years — not just the six-month window used above — to check whether sustained attention has actually narrowed each gap. Was also prompted by a look at the Commerce Ministry's **NIRYAT portal** (niryat.gov.in) for visualization ideas; direct access was blocked at the TLS level (the same DGFT-family bot protection this repo has run into before), so its World Map/Commodity/Table-view design and traffic-light target-tracking pattern are described here from public documentation rather than a first-hand look.
 
@@ -153,15 +197,15 @@ Underlying data: [`data/import_dependency_policy_gap_analysis_2026-07-18.json`](
 
 Underlying data: [`data/country_trade_deficit_and_policy_history_2026-07-18.json`](data/country_trade_deficit_and_policy_history_2026-07-18.json) (country balances, policy timeline) and [`data/country_commodity_breakdown_2026-07-18.json`](data/country_commodity_breakdown_2026-07-18.json) (TRADESTAT country×commodity validation).
 
-## Priority trade partners by import-growth sector, and real PLI coverage
+### Priority trade partners by import-growth sector, and real PLI coverage
 
 [`charts/sector_country_priority_and_pli_coverage.html`](charts/sector_country_priority_and_pli_coverage.html) — open in a browser — maps all 12 of this repo's fastest-growing/highest-value import chapters to their actual top supplier countries (TRADESTAT "commodity-wise, all countries" report), builds a cross-sector country-priority ranking, and checks exactly which Production Linked Incentive sub-schemes — including White Goods and Specialty Steel — reach these chapters in practice.
 
-**Headline: China supplies 8 of the 12 growth chapters ($102.4bn combined, #1/#2 rank in 5 of them) — more than double any other country — while PLI schemes cover the money-value of only 2 of the 12 outright.** UAE ($56.6bn, 7 sectors) and Russia ($52.6bn, only 3 sectors but #1 in both mineral fuels and fertilisers) round out the top tier; the USA is the most diversified major partner (9 of 12 sectors, never dominant in any one) and the one country in overall bilateral surplus. On the policy side: **PLI White Goods** (₹11,198 crore committed across all 85 selected companies, targeting AC compressors, copper tubes and aluminium foils) turns out to touch HS84 (machinery) rather than HS85, since compressors are classified there — a precise, easy-to-miss detail. **PLI Specialty Steel** is the most substantial single lever found (₹44,106 crore in rounds 1.0/1.1, plus a further ₹11,887 crore in round 1.2, MoUs signed 9 February 2026, targeting 42 million tonnes of production by FY2026-27 explicitly to cut imports) and directly targets HS72. Seven of the twelve growth chapters — mineral fuels, gems &amp; jewellery, plastics, edible oils, fertilisers, inorganic chemicals, and aircraft — have no PLI sub-scheme at all.
+**Headline: China supplies 8 of the 12 growth chapters ($102.4bn combined, #1/#2 rank in 5 of them) — more than double any other country — while PLI schemes cover the money-value of only 2 of the 12 outright.** UAE ($56.6bn, 7 sectors) and Russia ($52.6bn, only 3 sectors but #1 in both mineral fuels and fertilisers) round out the top tier; the USA is the most diversified major partner (9 of 12 sectors, never dominant in any one) and the one country in overall bilateral surplus. On the policy side: **PLI White Goods** (₹11,198 crore committed across all 85 selected companies, targeting AC compressors, copper tubes and aluminium foils) turns out to touch HS84 (machinery) rather than HS85, since compressors are classified there — a precise, easy-to-miss detail. **PLI Specialty Steel** is the most substantial single lever found (₹44,106 crore in rounds 1.0/1.1, plus a further ₹11,887 crore in round 1.2, MoUs signed 9 February 2026, targeting 42 million tonnes of production by FY2026-27 explicitly to cut imports) and directly targets HS72. Seven of the twelve growth chapters — mineral fuels, gems & jewellery, plastics, edible oils, fertilisers, inorganic chemicals, and aircraft — have no PLI sub-scheme at all.
 
 Underlying data: [`data/sector_country_priority_and_pli_coverage_2026-07-18.json`](data/sector_country_priority_and_pli_coverage_2026-07-18.json).
 
-## Priority export destinations by growth sector, and the export side of PLI
+### Priority export destinations by growth sector, and the export side of PLI
 
 [`charts/export_destination_priority_and_pli_coverage.html`](charts/export_destination_priority_and_pli_coverage.html) — open in a browser — the export-side mirror: maps the 12 fastest-growing/highest-value HSN **export** chapters to their top destination countries, ranks countries by cross-sector exposure, and checks PLI Auto, PLI Bulk Drugs, and PLI Textiles coverage.
 
@@ -169,7 +213,7 @@ Underlying data: [`data/sector_country_priority_and_pli_coverage_2026-07-18.json
 
 Underlying data: [`data/export_destination_priority_and_pli_coverage_2026-07-18.json`](data/export_destination_priority_and_pli_coverage_2026-07-18.json).
 
-## GDP growth trend, with revision history
+### GDP growth trend, with revision history
 
 [`charts/gdp_growth_trend.html`](charts/gdp_growth_trend.html) — open in a browser — real (constant-price) GDP growth by fiscal year, FY2012-13 through FY2025-26, from the MoSPI connector's NAS dataset. Bars show the latest revised estimate for each year; a tick marks where the original First Advance Estimate landed, so the gap between tick and bar visualizes how much each year's number moved as later data came in.
 
@@ -179,7 +223,7 @@ Headline: **FY2025-26 opens at +7% real growth** (First Advance Estimate only �
 
 Underlying data: [`data/gdp_growth_rate_2012-13_to_2025-26.json`](data/gdp_growth_rate_2012-13_to_2025-26.json).
 
-## Five-year synthesis: trade, currency &amp; policy, FY2021-22 to FY2025-26
+### Five-year synthesis: trade, currency & policy, FY2021-22 to FY2025-26
 
 [`charts/five_year_trade_currency_synthesis.html`](charts/five_year_trade_currency_synthesis.html) — open in a browser — a capstone that re-cuts every dataset already collected above to one consistent five-year window, rather than the mix of 8-year (HSN), 14-year (WPI/CPI), and decade-plus (currency/reserves) windows used elsewhere in this repo. No new data collection — every figure is re-derived from the JSON files already cited above.
 
@@ -189,10 +233,24 @@ Laid alongside the PLI policy timeline compressed to the same five years — Aut
 
 Underlying data: [`data/five_year_trade_currency_synthesis_2026-07-18.json`](data/five_year_trade_currency_synthesis_2026-07-18.json).
 
-## Known quirks / caveats
+### Sector and policy recommendations
 
-- **RBI forex reserves lag hard** — requesting 2025/2026 explicitly still only returned data through June 2025. Don't assume this series is current to the same month.
-- **WPI's April 2026 jump** (+~6% over one quarter) and **IIP's February 2026 dip** (index fell from 169.9 in Jan to 158.8 in Feb, then rose to 173.2 in March) both look unusually steep/non-monotonic — worth cross-checking against an official MoSPI/RBI press release before treating either as fact.
-- **NAS (GDP) indicator list** hit an upstream `500` from `api.mospi.gov.in` during this session and silently fell back to a bundled local indicator list (`_source: local_definitions_fallback`) — the live GDP endpoint may be intermittently flaky.
+[`charts/sector_and_policy_recommendations.html`](charts/sector_and_policy_recommendations.html) — open in a browser — the tiered sector/policy recommendations bulletin, with underlying data in [`data/sector_and_policy_recommendations_2026-07-18.json`](data/sector_and_policy_recommendations_2026-07-18.json). Its write-up lives in the successor repo `india-trade-sector-policy-recommendations` (see below).
+
+## Limitations and known issues
+- **Snapshot, not live**: every figure is as pulled on 2026-07-18; the live successors and the Colab notebook are the places to look for current numbers.
+- **RBI forex reserves lag hard** — requesting 2025/2026 explicitly still only returned data through June 2025 from the MoSPI connector. Don't assume this series is current to the same month.
+- **WPI's April 2026 jump** (+~6% over one quarter) and **IIP's February 2026 dip** (index fell from 169.9 in Jan to 158.8 in Feb, then rose to 173.2 in March) both look unusually steep/non-monotonic — cross-check against an official MoSPI/RBI press release before treating either as fact.
+- **NAS (GDP) indicator list** hit an upstream `500` from `api.mospi.gov.in` and silently fell back to a bundled local indicator list (`_source: local_definitions_fallback`) — the live GDP endpoint may be intermittently flaky.
 - **IIP's `get_data` requires an explicit `type` param** (`General`/`Sectoral`/`Use-based category`) — omitting it errors with `missing_required: type`, even though `category_code` alone looks sufficient.
 - Large hierarchical metadata payloads (CPI, WPI) can exceed a single response's size limit and need paging/streaming rather than one bulk pull.
+- The collection workflow is not reproducible outside the MoSPI MCP connector (no collector scripts are committed).
+- The FY2025-26 sample report is available as HTML only; the PDF version referenced by earlier versions of this README is no longer in the repo.
+
+## Related repositories
+This repo was split into two independent, actively-maintained successors; new work happens there:
+- [`india-trade-data-analysis`](https://github.com/herrrickshaw/india-trade-data-analysis) — MoSPI macro indicators (CPI/WPI/GDP), currency & forex, TRADESTAT trade-balance/HSN analysis, the five-year synthesis, the FY2025-26 sample report, and the Colab notebook.
+- [`india-trade-sector-policy-recommendations`](https://github.com/herrrickshaw/india-trade-sector-policy-recommendations) — PLI scheme coverage, import-dependency policy gaps, country-by-country trade-relationship history, and the tiered sector/policy recommendations bulletin (incl. a CBAM export-risk flag and a declining-export-sector flag, both cross-checked against NITI Aayog's Trade Watch Quarterly).
+
+## Licence
+No licence file yet — all rights reserved. Underlying statistics are published by MoSPI, RBI and the Commerce Ministry under their own terms.
